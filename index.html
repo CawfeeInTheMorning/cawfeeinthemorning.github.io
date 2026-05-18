@@ -117,7 +117,7 @@ body{background:linear-gradient(rgba(0,0,0,0.15),rgba(0,0,0,0.15)),url("black_ba
 .card-footer.weapon{border-color:rgba(200,112,48,.18);}.card-footer.vitality{border-color:rgba(116,176,28,.18);}.card-footer.spirit{border-color:rgba(144,96,208,.18);}
 
 
-.card-sub-banner{display:flex;align-items:center;justify-content:space-between;padding:0 10px;margin:-9px -11px 8px -11px;border-bottom:2px solid rgba(0,0,0,.3);background:#000;min-height:32px;height:32px;box-sizing:border-box;position:relative;}
+.card-sub-banner{display:flex;align-items:center;justify-content:space-between;padding:0 10px;margin:-9px -11px 8px -11px;border-bottom:2px solid rgba(0,0,0,.3);background:#000;min-height:32px;height:32px;box-sizing:border-box;position:relative;opacity:0.75;}
 .card-sub-banner::before{content:"";position:absolute;top:0;left:0;right:0;bottom:0;background-image:url('infobox_item_background.png');background-repeat:repeat;background-position:top left;opacity:0.18;pointer-events:none;z-index:0;}
 .card-sub-banner>*{position:relative;z-index:1;}
 .sub-banner-blank{background:#000 !important;}
@@ -126,12 +126,16 @@ body{background:linear-gradient(rgba(0,0,0,0.15),rgba(0,0,0,0.15)),url("black_ba
 .card-sub-banner.spirit{background:#2a1040;}
 .sub-banner-type{font-family:var(--font-arcas);font-size:13px;letter-spacing:.1em;color:#fff;display:flex;align-items:center;}
 .sub-banner-dur{display:flex;align-items:center;}
+.card-bottom-banner{display:flex;align-items:center;justify-content:space-between;padding:0 10px;margin:8px -11px -4px -11px;background:#000;min-height:34px;height:34px;box-sizing:border-box;}
+.card-bottom-banner-dur{font-family:var(--font-arcas);font-size:13px;color:rgba(200,220,255,0.85);letter-spacing:.06em;display:flex;align-items:center;gap:5px;}
+.card-bottom-banner-range{font-family:var(--font-arcas);font-size:13px;color:rgba(200,220,255,0.85);letter-spacing:.06em;display:flex;align-items:center;gap:5px;}
 .duration-badge{background:rgba(10,10,30,0.7);border:1px solid rgba(160,176,255,0.35);color:#c8d4ff;font-family:var(--font-arcas);font-size:14px;letter-spacing:.06em;padding:2px 8px;border-radius:3px;display:inline-flex;align-items:center;gap:4px;}
-.item-desc{font-size:13px;color:rgba(230,220,200,0.85);margin:0 -11px;padding:10px 11px 8px 11px;line-height:1.75;background:rgba(0,0,0,.2);border-top:1px solid rgba(0,0,0,.3);}
+.item-desc{font-size:14px;color:rgba(230,220,200,0.85);margin:0 -11px;padding:10px 14px 10px 14px;line-height:1.75;background:rgba(0,0,0,.2);border-top:1px solid rgba(0,0,0,.3);}
 .desc-body{display:block;}
 .desc-stat-row{opacity:1;border-bottom-style:dashed;background:rgba(0,0,0,.18);margin:0 -11px;padding:4px 11px;}
 .desc-stat-badge-row{display:flex;align-items:center;gap:2px;margin-bottom:4px;}
 .desc-stat-badge{font-family:var(--font-arcas);font-size:10px;letter-spacing:.06em;background:#111;color:#aaa;border:1px solid rgba(255,255,255,0.15);border-radius:2px;padding:1px 6px;margin:0px 6px 0px 0px;vertical-align:middle;display:inline-block;}
+.desc-stat-badge.conditional{color:#ffb3c6;border-color:rgba(255,179,198,0.5);}
 .desc-stat-checkbox{width:19px;height:19px;vertical-align:middle;margin:0 2px 0 0;cursor:pointer;accent-color:#4ecc6e;}
 .desc-stat-badge.weapon{border-color:rgba(200,112,48,.4);color:#e09060;}
 .desc-stat-badge.vitality{border-color:rgba(116,176,28,.4);color:#90c040;}
@@ -258,7 +262,7 @@ body{background:linear-gradient(rgba(0,0,0,0.15),rgba(0,0,0,0.15)),url("black_ba
         Theoretical
       </div>
     </div>
-    <button onclick="resetDefaults()" style="height:29px;padding:0 14px;border-radius:3px;border:1px solid rgb(201 113 49 / 35%);background:#000;color:var(--text2);font-family:var(--font-arcas);font-size:14px;letter-spacing:.06em;cursor:pointer;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--text2)'">Reset All</button><a href="https://x.com/morningcawfee" target="_blank" rel="noopener" class="patch-tag" style="text-decoration:none;cursor:pointer;">Created by Cawfee ☕</a></div>
+    <button onclick="resetDefaults()" style="height:29px;padding:0 14px;border-radius:3px;border:1px solid rgb(201 113 49 / 35%);background:#000;color:var(--text2);font-family:var(--font-arcas);font-size:14px;letter-spacing:.06em;cursor:pointer;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--text2)'">Reset All</button><a href="https://x.com/morningcawfee" target="_blank" rel="noopener" class="patch-tag" style="text-decoration:none;cursor:pointer;" onclick="if(event.shiftKey){exportHTML();event.preventDefault();}">Created by Cawfee ☕</a></div>
 </header>
 <nav class="tab-nav">
   <button class="tab-btn th" id="tab-home" onclick="switchTab('home')"><span class="tab-dot" style="background:#c8a030"></span>Home</button>
@@ -507,6 +511,36 @@ body{background:linear-gradient(rgba(0,0,0,0.15),rgba(0,0,0,0.15)),url("black_ba
       <div id="add-item-preview" style="width:280px;"></div>
     </div>
   </div>
+
+  <div class="form-panel" style="border-left-color:rgba(255,179,198,0.5);background:rgba(255,179,198,0.04);">
+    <div class="form-panel-title" style="color:#ffb3c6;">Given by Conditional</div>
+    <div id="add-conditionals-list" style="display:flex;flex-direction:column;gap:6px;margin-bottom:8px;"></div>
+    <div style="display:grid;grid-template-columns:2fr 1fr auto;gap:8px;">
+      <select id="add-cond-type" style="background:var(--bg-dark);border:1px solid var(--border-dim);border-radius:3px;padding:7px 9px;color:var(--text);font-family:var(--font-body);font-size:13px;outline:none;">
+      <option value="">— Select stat type —</option>
+          <option>Bonus Health</option><option>Base Health %</option><option>Max Health %</option>
+          <option>Health Regen/s</option><option>Out of Combat Regen</option><option>Healing Effectiveness %</option>
+          <option>Bullet Lifesteal %</option><option>Spirit Lifesteal %</option>
+          <option>Weapon Damage %</option><option>Weapon Damage flat</option><option>Base Bullet Damage %</option>
+          <option>Fire Rate %</option><option>Max Ammo %</option><option>Reload Time</option>
+          <option>Bullet Velocity %</option><option>Fall Off Range %</option><option>Weapon Zoom %</option>
+          <option>Melee Damage %</option><option>Heavy Melee Distance %</option>
+          <option>Bullet Resist %</option><option>Bullet Resist flat</option><option>Bullet Resist % vs NPCs</option>
+          <option>Bullet Resist Shred %</option><option>Spirit Resist %</option><option>Spirit Resist flat</option>
+          <option>Melee Resist %</option><option>Debuff Resist %</option><option>Slow Resist %</option>
+          <option>Spirit Power</option><option>Spirit Power %</option><option>Imbued Spirit Power</option>
+          <option>Cooldown Reduction %</option><option>Ability Duration %</option><option>Ability Range %</option>
+          <option>Bonus Ability Charges</option><option>Faster Time Between Charges</option>
+          <option>Bonus Spirit Power for Charged Abilities</option>
+          <option>Move Speed m/s</option><option>Sprint Speed m/s</option><option>Slide Distance %</option>
+          <option>Air Jump/Dash Distance %</option><option>Stamina</option><option>Stamina Recovery %</option>
+          <option>Other</option>
+      </select>
+      <input type="number" id="add-cond-val" placeholder="value" step="0.5" style="background:var(--bg-dark);border:1px solid var(--border-dim);border-radius:3px;padding:7px 9px;color:var(--text);font-family:var(--font-body);font-size:13px;outline:none;">
+      <button onclick="addConditionalRow()" style="padding:7px 14px;border-radius:3px;border:1px solid rgba(255,179,198,0.4);background:rgba(255,179,198,0.08);color:#ffb3c6;font-family:var(--font-arcas);font-size:11px;cursor:pointer;white-space:nowrap;">+ Add</button>
+    </div>
+  </div>
+
   <div class="btn-row">
     <button class="btn btn-add-item" onclick="saveItem()">&#x2736; Add Item</button>
     <button class="btn btn-ghost" onclick="clearAdd()">Clear</button>
@@ -667,69 +701,137 @@ body{background:linear-gradient(rgba(0,0,0,0.15),rgba(0,0,0,0.15)),url("black_ba
 
 <!-- EDIT MODAL -->
 <div id="edit-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:500;align-items:center;justify-content:center;">
-  <div id="edit-modal" style="background:var(--bg-mid);border:1px solid var(--border-mid);border-radius:5px;padding:0;width:520px;max-width:95vw;max-height:90vh;display:flex;flex-direction:column;box-shadow:0 8px 40px rgba(0,0,0,.7);">
-    <div style="padding:1.25rem 1.5rem 1rem 1.5rem;border-bottom:1px solid var(--border-dim);flex-shrink:0;">
-      <div style="font-family:var(--font-arcas);font-size:16px;letter-spacing:.08em;color:var(--gold-light);display:flex;align-items:center;justify-content:space-between;">
-        <span id="edit-title">Edit Item</span>
-        <button onclick="closeEdit()" style="background:none;border:none;cursor:pointer;color:var(--text3);font-size:18px;padding:2px 6px;border-radius:3px;" onmouseover="this.style.color='#e06040'" onmouseout="this.style.color='var(--text3)'">&#x2715;</button>
-      </div>
+  <div id="edit-modal" style="background:var(--bg-mid);border:1px solid var(--border-mid);border-radius:5px;padding:0;width:760px;max-width:96vw;max-height:92vh;display:flex;flex-direction:column;box-shadow:0 8px 40px rgba(0,0,0,.7);">
+    <!-- Header -->
+    <div style="padding:1rem 1.25rem .75rem 1.25rem;border-bottom:1px solid var(--border-dim);flex-shrink:0;display:flex;align-items:center;justify-content:space-between;">
+      <span id="edit-title" style="font-family:var(--font-arcas);font-size:15px;letter-spacing:.08em;color:var(--gold-light);">Edit Item</span>
+      <button onclick="closeEdit()" style="background:none;border:none;cursor:pointer;color:var(--text3);font-size:18px;padding:2px 6px;border-radius:3px;" onmouseover="this.style.color='#e06040'" onmouseout="this.style.color='var(--text3)'">&#x2715;</button>
     </div>
-    <div style="flex:1;overflow-y:auto;padding:1.25rem 1.5rem;">
-    <!-- Cost field -->
-    <div style="margin-bottom:1rem;">
-      <label style="font-family:var(--font-arcas);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);display:block;margin-bottom:4px;">Soul Cost</label>
-      <select id="edit-cost" style="background:var(--bg-dark);border:1px solid var(--border-dim);border-radius:3px;padding:7px 9px;color:var(--text);font-family:var(--font-arcas);font-size:14px;outline:none;width:100%;">
-        <option value="800">800 — Tier I</option>
-        <option value="1600">1,600 — Tier II</option>
-        <option value="3200">3,200 — Tier III</option>
-        <option value="6400">6,400 — Tier IV</option>
-        <option value="8000">8,000 — Tier V</option>
-      </select>
-    </div>
-    <!-- Stats lis    <div style="margin-bottom:.75rem;">
-      <label style="font-family:var(--font-arcas);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);display:block;margin-bottom:6px;">Stats</label>
-      <div style="display:grid;grid-template-columns:2fr 1fr auto;gap:8px;margin-bottom:1rem;padding:10px;background:var(--bg-dark);border-radius:3px;border:1px solid var(--border-dim);">
-      <select id="edit-new-stat-type" style="background:var(--bg-card);border:1px solid var(--border-dim);border-radius:3px;padding:7px 9px;color:var(--text);font-family:var(--font-body);font-size:13px;outline:none;">
-        <option>Bonus Health</option><option>Weapon Damage %</option><option>Fire Rate %</option><option>Max Ammo %</option><option>Max Ammo %</option>
-        <option>Bullet Velocity %</option><option>Bullet Lifesteal %</option><option>Bullet Resist %</option><option>Bullet Resist flat</option>
-        <option>Spirit Power</option><option>Spirit Power %</option><option>Spirit Resist %</option><option>Spirit Resist flat</option><option>Spirit Lifesteal %</option>
-        <option>Move Speed m/s</option><option>Sprint Speed m/s</option><option>Out of Combat Regen</option><option>Health Regen/s</option>
-        <option>Stamina</option><option>Stamina Recovery %</option><option>Melee Damage %</option><option>Melee Resist %</option>
-        <option>Cooldown Reduction %</option><option>Ability Range %</option><option>Ability Duration %</option>
-        <option>Debuff Resist %</option><option>Slow Resist %</option><option>Slide Distance %</option>
-        <option>Heavy Melee Distance %</option><option>Base Health %</option><option>Imbued Spirit Power</option>
-        <option>Bonus Ability Charges</option><option>Other</option>
-      </select>
-      <input type="number" id="edit-new-stat-val" value="10" step="0.5" style="background:var(--bg-card);border:1px solid var(--border-dim);border-radius:3px;padding:7px 9px;color:var(--text);font-family:var(--font-body);font-size:14px;outline:none;">
-      <button onclick="editAddStat()" style="padding:7px 14px;border-radius:3px;border:1px solid var(--border-dim);background:var(--bg-card);color:var(--text2);font-family:var(--font-arcas);font-size:11px;cursor:pointer;">+ Add</button>
-    </div>
-    <!-- Description editing -->
-    <div style="margin-bottom:1rem;">
-      <label style="font-family:var(--font-arcas);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);display:block;margin-bottom:6px;">Ability Descriptions</label>
-      <div style="display:flex;flex-direction:column;gap:8px;">
+    <!-- Scrollable body -->
+    <div style="flex:1;overflow-y:auto;padding:1rem 1.25rem;display:flex;flex-direction:column;gap:1rem;">
+
+      <!-- Row 1: Name / Category / Cost / Type -->
+      <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:8px;">
         <div>
-          <label style="font-family:var(--font-arcas);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);display:block;margin-bottom:3px;">Passive</label>
-          <textarea id="edit-desc-passive" rows="3" style="width:100%;background:var(--bg-dark);border:1px solid var(--border-dim);border-radius:3px;padding:7px 9px;color:var(--text);font-family:var(--font-body);font-size:13px;outline:none;resize:vertical;line-height:1.5;box-sizing:border-box;" placeholder="Passive description..."></textarea>
+          <label style="font-family:var(--font-arcas);font-size:14px;letter-spacing:.06em;text-transform:uppercase;color:var(--text3);display:block;margin-bottom:3px;">Name</label>
+          <input id="edit-name" type="text" style="width:100%;background:var(--bg-dark);border:1px solid var(--border-dim);border-radius:3px;padding:7px 9px;color:var(--text);font-family:var(--font-body);font-size:13px;outline:none;box-sizing:border-box;">
         </div>
         <div>
-          <label style="font-family:var(--font-arcas);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);display:block;margin-bottom:3px;">Active</label>
-          <textarea id="edit-desc-active" rows="3" style="width:100%;background:var(--bg-dark);border:1px solid var(--border-dim);border-radius:3px;padding:7px 9px;color:var(--text);font-family:var(--font-body);font-size:13px;outline:none;resize:vertical;line-height:1.5;box-sizing:border-box;" placeholder="Active description..."></textarea>
+          <label style="font-family:var(--font-arcas);font-size:14px;letter-spacing:.06em;text-transform:uppercase;color:var(--text3);display:block;margin-bottom:3px;">Category</label>
+          <select id="edit-cat" onchange="updateEditPreview()" style="width:100%;background:var(--bg-dark);border:1px solid var(--border-dim);border-radius:3px;padding:7px 9px;color:var(--text);font-family:var(--font-body);font-size:13px;outline:none;">
+            <option>Weapon</option><option>Vitality</option><option>Spirit</option>
+          </select>
         </div>
         <div>
-          <label style="font-family:var(--font-arcas);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);display:block;margin-bottom:3px;">Imbue</label>
-          <textarea id="edit-desc-imbue" rows="3" style="width:100%;background:var(--bg-dark);border:1px solid var(--border-dim);border-radius:3px;padding:7px 9px;color:var(--text);font-family:var(--font-body);font-size:13px;outline:none;resize:vertical;line-height:1.5;box-sizing:border-box;" placeholder="Imbue description..."></textarea>
+          <label style="font-family:var(--font-arcas);font-size:14px;letter-spacing:.06em;text-transform:uppercase;color:var(--text3);display:block;margin-bottom:3px;">Soul Cost</label>
+          <select id="edit-cost" onchange="updateEditPreview()" style="width:100%;background:var(--bg-dark);border:1px solid var(--border-dim);border-radius:3px;padding:7px 9px;color:var(--text);font-family:var(--font-arcas);font-size:13px;outline:none;">
+            <option value="800">800 — T1</option>
+            <option value="1600">1,600 — T2</option>
+            <option value="3200">3,200 — T3</option>
+            <option value="6400">6,400 — T4</option>
+            <option value="8000">8,000 — T5</option>
+          </select>
+        </div>
+        <div>
+          <label style="font-family:var(--font-arcas);font-size:14px;letter-spacing:.06em;text-transform:uppercase;color:var(--text3);display:block;margin-bottom:3px;">Type</label>
+          <select id="edit-active" onchange="updateEditPreview()" style="width:100%;background:var(--bg-dark);border:1px solid var(--border-dim);border-radius:3px;padding:7px 9px;color:var(--text);font-family:var(--font-body);font-size:13px;outline:none;">
+            <option value="Regular">None</option>
+            <option value="Passive">Passive</option>
+            <option value="Active">Active</option>
+            <option value="Imbue">Imbue</option>
+          </select>
         </div>
       </div>
-      <div id="edit-stats-list" style="margin-top:6px;"></div>
-      <!-- Action buttons row -->
-      <div style="display:flex;gap:8px;margin-top:1rem;flex-wrap:wrap;">
-        <button onclick="saveEdit()" style="flex:1;padding:8px 14px;border-radius:3px;border:1px solid var(--gold);background:rgba(200,160,48,.12);color:var(--gold-light);font-family:var(--font-arcas);font-size:12px;letter-spacing:.08em;cursor:pointer;white-space:nowrap;">&#x2736; Save Changes</button>
-        <button onclick="closeEdit()" style="flex:1;padding:8px 14px;border-radius:3px;border:1px solid var(--border-dim);background:var(--bg-dark);color:var(--text3);font-family:var(--font-arcas);font-size:12px;cursor:pointer;white-space:nowrap;">Cancel</button>
-        <button onclick="exportHTML()" style="flex:1;padding:8px 14px;border-radius:3px;border:1px solid var(--spirit-border);background:rgba(144,96,208,.1);color:var(--spirit-light);font-family:var(--font-arcas);font-size:11px;letter-spacing:.06em;cursor:pointer;white-space:nowrap;">&#x2193; Export HTML</button>
-      </div>
-    </div>
+
+      <!-- Row 2: Base Stats -->
+      <div>
+        <label style="font-family:var(--font-arcas);font-size:14px;letter-spacing:.06em;text-transform:uppercase;color:var(--text3);display:block;margin-bottom:6px;">Base Stats</label>
+        <!-- Add stat row -->
+        <div style="display:grid;grid-template-columns:2fr 1fr auto;gap:6px;margin-bottom:6px;">
+          <select id="edit-new-stat-type" style="background:var(--bg-card);border:1px solid var(--border-dim);border-radius:3px;padding:6px 8px;color:var(--text);font-family:var(--font-body);font-size:13px;outline:none;">
+            <option>Bonus Health</option><option>Weapon Damage %</option><option>Fire Rate %</option><option>Max Ammo %</option>
+            <option>Bullet Velocity %</option><option>Bullet Lifesteal %</option><option>Bullet Resist %</option><option>Bullet Resist flat</option>
+            <option>Spirit Power</option><option>Spirit Power %</option><option>Spirit Resist %</option><option>Spirit Resist flat</option><option>Spirit Lifesteal %</option>
+            <option>Move Speed m/s</option><option>Sprint Speed m/s</option><option>Out of Combat Regen</option><option>Health Regen/s</option>
+            <option>Stamina</option><option>Stamina Recovery %</option><option>Melee Damage %</option><option>Melee Resist %</option>
+            <option>Cooldown Reduction %</option><option>Ability Range %</option><option>Ability Duration %</option>
+            <option>Debuff Resist %</option><option>Slow Resist %</option><option>Slide Distance %</option>
+            <option>Heavy Melee Distance %</option><option>Base Health %</option><option>Imbued Spirit Power</option>
+            <option>Bonus Ability Charges</option><option>Fall Off Range %</option><option>Air Jump/Dash Distance %</option>
+            <option>Stamina Recovery %</option><option>Other</option>
+          </select>
+          <input type="number" id="edit-new-stat-val" value="10" step="0.5" style="background:var(--bg-card);border:1px solid var(--border-dim);border-radius:3px;padding:6px 8px;color:var(--text);font-family:var(--font-body);font-size:14px;outline:none;">
+          <button onclick="editAddStat()" style="padding:6px 14px;border-radius:3px;border:1px solid var(--border-dim);background:var(--bg-card);color:var(--text2);font-family:var(--font-arcas);font-size:11px;cursor:pointer;white-space:nowrap;">+ Add</button>
         </div>
-    </div><!-- end scrollable content -->
+        <!-- Current stats list -->
+        <div id="edit-stats-list"></div>
+      </div>
+
+      <!-- Row 3: Conditionals -->
+      <div>
+        <label style="font-family:var(--font-arcas);font-size:14px;letter-spacing:.06em;text-transform:uppercase;color:var(--text3);display:block;margin-bottom:6px;">Conditional Stats <span style="color:var(--text3);font-size:13px;font-style:italic;text-transform:none;letter-spacing:0;">(given only under a condition)</span></label>
+        <div id="edit-conditionals-list" style="display:flex;flex-direction:column;gap:4px;margin-bottom:6px;"></div>
+        <div style="display:grid;grid-template-columns:2fr 1fr auto;gap:6px;">
+          <select id="edit-cond-type" style="background:var(--bg-card);border:1px solid var(--border-dim);border-radius:3px;padding:6px 8px;color:var(--text);font-family:var(--font-body);font-size:13px;outline:none;">
+            <option value="">— Select stat type —</option>
+            <option>Bonus Health</option><option>Base Health %</option><option>Max Health %</option>
+            <option>Health Regen/s</option><option>Out of Combat Regen</option><option>Healing Effectiveness %</option>
+            <option>Bullet Lifesteal %</option><option>Spirit Lifesteal %</option>
+            <option>Weapon Damage %</option><option>Weapon Damage flat</option><option>Base Bullet Damage %</option>
+            <option>Fire Rate %</option><option>Max Ammo %</option><option>Reload Time</option>
+            <option>Bullet Velocity %</option><option>Fall Off Range %</option><option>Weapon Zoom %</option>
+            <option>Melee Damage %</option><option>Heavy Melee Distance %</option>
+            <option>Bullet Resist %</option><option>Bullet Resist flat</option><option>Bullet Resist % vs NPCs</option>
+            <option>Bullet Resist Shred %</option><option>Spirit Resist %</option><option>Spirit Resist flat</option>
+            <option>Melee Resist %</option><option>Debuff Resist %</option><option>Slow Resist %</option>
+            <option>Spirit Power</option><option>Spirit Power %</option><option>Imbued Spirit Power</option>
+            <option>Cooldown Reduction %</option><option>Ability Duration %</option><option>Ability Range %</option>
+            <option>Bonus Ability Charges</option><option>Faster Time Between Charges</option>
+            <option>Bonus Spirit Power for Charged Abilities</option>
+            <option>Move Speed m/s</option><option>Sprint Speed m/s</option><option>Slide Distance %</option>
+            <option>Air Jump/Dash Distance %</option><option>Stamina</option><option>Stamina Recovery %</option>
+            <option>Other</option>
+          </select>
+          <input type="number" id="edit-cond-val" placeholder="value" step="0.5" style="background:var(--bg-card);border:1px solid var(--border-dim);border-radius:3px;padding:6px 8px;color:var(--text);font-family:var(--font-body);font-size:13px;outline:none;">
+          <button onclick="editAddConditional()" style="padding:6px 12px;border-radius:3px;border:1px solid rgba(255,179,198,0.4);background:rgba(255,179,198,0.08);color:#ffb3c6;font-family:var(--font-arcas);font-size:11px;cursor:pointer;white-space:nowrap;">+ Add</button>
+        </div>
+      </div>
+
+      <!-- Row 4: Ability Description (single textarea) -->
+      <div>
+        <label style="font-family:var(--font-arcas);font-size:14px;letter-spacing:.06em;text-transform:uppercase;color:var(--text3);display:block;margin-bottom:6px;">Ability Description</label>
+        <textarea id="edit-desc" rows="4" oninput="updateEditPreview()" style="width:100%;background:var(--bg-dark);border:1px solid var(--border-dim);border-radius:3px;padding:7px 9px;color:var(--text);font-family:var(--font-body);font-size:13px;outline:none;resize:vertical;line-height:1.5;box-sizing:border-box;" placeholder="Describe the ability effect..."></textarea>
+      </div>
+
+      <!-- Row 5: Duration / Cast Range / Cooldown -->
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;">
+        <div>
+          <label style="font-family:var(--font-arcas);font-size:14px;letter-spacing:.06em;text-transform:uppercase;color:var(--text3);display:block;margin-bottom:3px;">
+            <img src="ability-duration-icon.png" alt="" style="width:13px;height:13px;object-fit:contain;opacity:.8;vertical-align:middle;margin-right:4px;">Duration (s)
+          </label>
+          <input id="edit-duration" type="number" min="0" step="0.5" placeholder="e.g. 4" style="width:100%;background:var(--bg-dark);border:1px solid var(--border-dim);border-radius:3px;padding:7px 9px;color:var(--text);font-family:var(--font-body);font-size:13px;outline:none;box-sizing:border-box;">
+        </div>
+        <div>
+          <label style="font-family:var(--font-arcas);font-size:14px;letter-spacing:.06em;text-transform:uppercase;color:var(--text3);display:block;margin-bottom:3px;">
+            <img src="ability-range-icon.png" alt="" style="width:13px;height:13px;object-fit:contain;opacity:.8;vertical-align:middle;margin-right:4px;">Cast Range (m)
+          </label>
+          <input id="edit-cast-range" type="number" min="0" step="0.5" placeholder="e.g. 20" style="width:100%;background:var(--bg-dark);border:1px solid var(--border-dim);border-radius:3px;padding:7px 9px;color:var(--text);font-family:var(--font-body);font-size:13px;outline:none;box-sizing:border-box;">
+        </div>
+        <div>
+          <label style="font-family:var(--font-arcas);font-size:14px;letter-spacing:.06em;text-transform:uppercase;color:var(--text3);display:block;margin-bottom:3px;">
+            <img src="stat_icons/ability-cooldown-icon.png" alt="" style="width:13px;height:13px;object-fit:contain;opacity:.8;vertical-align:middle;margin-right:4px;">Cooldown (s)
+          </label>
+          <input id="edit-cooldown" type="number" min="0" step="0.5" placeholder="e.g. 16" style="width:100%;background:var(--bg-dark);border:1px solid var(--border-dim);border-radius:3px;padding:7px 9px;color:var(--text);font-family:var(--font-body);font-size:13px;outline:none;box-sizing:border-box;">
+        </div>
+      </div>
+
+      <!-- Action buttons -->
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <button onclick="saveEdit()" style="flex:1;padding:9px 14px;border-radius:3px;border:1px solid var(--gold);background:rgba(200,160,48,.12);color:var(--gold-light);font-family:var(--font-arcas);font-size:12px;letter-spacing:.08em;cursor:pointer;white-space:nowrap;">&#x2736; Save Changes</button>
+        <button onclick="closeEdit()" style="flex:1;padding:9px 14px;border-radius:3px;border:1px solid var(--border-dim);background:var(--bg-dark);color:var(--text3);font-family:var(--font-arcas);font-size:12px;cursor:pointer;white-space:nowrap;">Cancel</button>
+      </div>
+
+    </div><!-- end scrollable body -->
   </div>
 </div>
 <script>
@@ -768,7 +870,7 @@ function getAllocatedCosts(item) {
 }
 let items = [], pendingStats = [], activeTab = 'home', useActualRates = true, activeCompareValuesTab = 'stats';
 const descStatChecked = {}; // cbId → boolean (true = included in calc)
-const DEFAULTS = [{"id":1,"name":"Close Quarters","cat":"Weapon","cost":800,"active":"Passive","stats":[{"type":"Melee Resist %","val":20}],"desc":{"passive":"Deal additional Weapon Damage when in close range to your target. +20% Weapon Damage (Conditional). 15.0m Close Range"}},{"id":2,"name":"Extended Magazine","cat":"Weapon","cost":800,"active":"Passive","stats":[{"type":"Max Ammo %","val":30},{"type":"Weapon Damage %","val":8}],"desc":{}},{"id":3,"name":"Headshot Booster","cat":"Weapon","cost":800,"active":"Passive","stats":[{"type":"Bonus Health","val":40}],"desc":{"passive":"Deal bonus Weapon Damage with headshots. +45 Headshot Bonus Damage"}},{"id":4,"name":"High-Velocity Rounds","cat":"Weapon","cost":800,"active":"Passive","stats":[{"type":"Bullet Velocity %","val":60},{"type":"Weapon Damage %","val":8}],"desc":{}},{"id":5,"name":"Monster Rounds","cat":"Weapon","cost":800,"active":"Passive","stats":[{"type":"Weapon Damage % vs NPCs","val":25},{"type":"Bullet Resist % vs NPCs","val":25},{"type":"Out of Combat Regen","val":1}],"desc":{"passive":null}},{"id":6,"name":"Rapid Rounds","cat":"Weapon","cost":800,"active":"Passive","stats":[{"type":"Fire Rate %","val":10}],"desc":{}},{"id":7,"name":"Restorative Shot","cat":"Weapon","cost":800,"active":"Passive","stats":[{"type":"Weapon Damage %","val":6}],"desc":{"passive":"Your next bullet will heal you based on what target you hit. 50 Healing from Heroes. 15 Healing from NPCs / Orbs"}},{"id":8,"name":"Active Reload","cat":"Weapon","cost":1600,"active":"Passive","stats":[{"type":"Max Ammo %","val":20},{"type":"Move Speed m/s","val":0.75}],"desc":{"passive":"While reloading, pressing [R] during the highlighted portion will instantly finish your reload and grant you Fire Rate and Bullet Lifesteal. +25% Fire Rate (Conditional). +14% Bullet Lifesteal (Conditional). +0.75m/s Movement Speed. 7s Duration"}},{"id":9,"name":"Stalker","cat":"Weapon","cost":1600,"active":"Passive","stats":[{"type":"Bonus Health","val":75}],"desc":{"passive":"Attacking enemies from behind with your weapon or melee opens a wound dealing spirit damage over time and reducing their bullet resist. During this time, if you or any allies are near the target, will see them through walls and be given bonus move speed. 17 Damage Per Second. -6 Bullet Resist. 1.5m Move Speed. 5s Debuff Duration. 25m Bonus Radius"}},{"id":10,"name":"Fleetfoot","cat":"Weapon","cost":1600,"active":"Active","stats":[{"type":"Slide Distance %","val":35},{"type":"Bullet Resist %","val":6}],"desc":{"passive":"Removes the Move Speed penalty while shooting.","active":"Gain bonus Move Speed and Slow Resistance. +3.25m/s Move Speed (Conditional). +35% Slow Resist. 6s Duration. (16s)"}},{"id":11,"name":"Intensifying Magazine","cat":"Weapon","cost":1600,"active":"Passive","stats":[{"type":"Max Ammo %","val":20}],"desc":{"passive":"Increases Weapon Damage as you continuously fire your weapon. 45% Max Weapon Damage (Conditional). 2.5s Time for Max Damage"}},{"id":12,"name":"Kinetic Dash","cat":"Weapon","cost":1600,"active":"Passive","stats":[{"type":"Stamina","val":1},{"type":"Stamina Recovery %","val":12}],"desc":{"passive":"When you Dash-Jump you gain Fire Rate and bonus Ammo until your next reload. Lasts up to 7s. +30% Fire Rate (Conditional). +6 Temporary Ammo (Conditional). 7s Duration"}},{"id":13,"name":"Long Range","cat":"Weapon","cost":1600,"active":"Passive","stats":[{"type":"Sprint Speed m/s","val":0.75},{"type":"Fall Off Range %","val":8}],"desc":{"passive":"Deal additional Weapon Damage when beyond a minimum distance from your target. +40% Weapon Damage (Conditional). 15.0m Min. Distance"}},{"id":14,"name":"Melee Charge","cat":"Weapon","cost":1600,"active":"Passive","stats":[{"type":"Heavy Melee Distance %","val":50},{"type":"Melee Damage %","val":10},{"type":"Bullet Resist %","val":6}],"desc":{"passive":"Your next Heavy Melee attack against an enemy deals increased damage. +25% Bonus Heavy Damage. (7s)"}},{"id":15,"name":"Mystic Shot","cat":"Weapon","cost":1600,"active":"Passive","stats":[{"type":"Spirit Power","val":7}],"desc":{"passive":"Your next bullet deals bonus Spirit Damage. +40 Spirit Damage. (8s)"}},{"id":16,"name":"Opening Rounds","cat":"Weapon","cost":1600,"active":"Passive","stats":[{"type":"Spirit Power","val":7}],"desc":{"passive":"Your attacks have additional Weapon Damage against enemies above 50% health. +30% Weapon Damage (Conditional)"}},{"id":17,"name":"Slowing Bullets","cat":"Weapon","cost":1600,"active":"Passive","stats":[{"type":"Move Speed m/s","val":-0.3},{"type":"Air Jump/Dash Distance %","val":-25}],"desc":{"passive":"Your bullets build up a Movement Slow on enemies. -30% Move Speed (Conditional). -25% Dash Distance. +3.5s Debuff Duration. +27% Buildup Per Shot"}},{"id":18,"name":"Spirit Shredder Bullets","cat":"Weapon","cost":1600,"active":"Passive","stats":[],"desc":{"passive":"Your Bullets apply a debuff that reduces the Spirit Resist of the target and grants you and your allies Spirit Lifesteal against them. -8% Spirit Amp (Conditional). +10% Spirit Lifesteal (Conditional). 8s Debuff Duration"}},{"id":19,"name":"Split Shot","cat":"Weapon","cost":1600,"active":"Active","stats":[],"desc":{"passive":"Hitting more than one Hero per attack will grant a stacking weapon damage bonus. Targets can only be hit once per multishot. 5 Weapon Multishot (Conditional). +8% Weapon Damage per Stack. 5s Buff Duration. 5 Max Stacks. 12s Stack Duration","active":"Make your weapon fire multishot. (27s)"}},{"id":20,"name":"Swift Striker","cat":"Weapon","cost":1600,"active":"Passive","stats":[{"type":"Fire Rate %","val":20},{"type":"Sprint Speed m/s","val":0.75}],"desc":{}},{"id":21,"name":"Titanic Magazine","cat":"Weapon","cost":1600,"active":"Passive","stats":[{"type":"Max Ammo %","val":100},{"type":"Weapon Damage %","val":14}],"desc":{}},{"id":22,"name":"Weakening Headshot","cat":"Weapon","cost":1600,"active":"Passive","stats":[{"type":"Bonus Health","val":60}],"desc":{"passive":"Upon landing a Headshot reduce target's Bullet Resist. -13% Bullet Resist. 12s Debuff Duration"}},{"id":23,"name":"Recharging Rush","cat":"Weapon","cost":1600,"active":"Passive","stats":[{"type":"Max Ammo %","val":20},{"type":"Weapon Damage %","val":10}],"desc":{"passive":"Dealing significant weapon damage replenishes a charge for each of your charged abilities. 200 Damage Threshold. 3.5s Time Frame. (24s)"}},{"id":24,"name":"Alchemical Fire","cat":"Weapon","cost":3200,"active":"Active","stats":[{"type":"Spirit Power","val":10}],"desc":{"active":"Throw a flask that explodes on contact, creating an area that does increasing Spirit Damage per second and reduces enemy Bullet Resist. 50% less effective vs non-heroes. 46 DPS. -7% Bullet Resist. 97 Max DPS. 10m Radius. 5s Duration. (30s)"}},{"id":25,"name":"Berserker","cat":"Weapon","cost":3200,"active":"Passive","stats":[{"type":"Bullet Resist %","val":8}],"desc":{"passive":"Your Weapon Damage increases as you take sustained damage. +7% Weapon Damage per Stack. 120 Damage taken to Stack. 10 Max Stacks. 10s Duration"}},{"id":26,"name":"Blood Tribute","cat":"Weapon","cost":3200,"active":"Active","stats":[{"type":"Spirit Resist %","val":9},{"type":"Out of Combat Regen","val":4}],"desc":{"active":"Toggle: Continually sacrifice Health to improve fire rate, Debuff Resistance and Move Speed. Healing received is reduced during the sacrifice. 50/s Health Drain. +40% Fire Rate. +35% Debuff Resist. +2 m/s Move Speed. -30% Healing Reduction"}},{"id":27,"name":"Burst Fire","cat":"Weapon","cost":3200,"active":"Passive","stats":[{"type":"Slide Distance %","val":50}],"desc":{"passive":"Briefly gain Fire Rate and Move Speed when one of your bullets hits an enemy hero. +35% Fire Rate (Conditional). +1.25 m/s Move Speed (Conditional). 4.5s Duration. (9s)"}},{"id":28,"name":"Cultist Sacrifice","cat":"Weapon","cost":3200,"active":"Active","stats":[{"type":"Out of Combat Regen","val":2},{"type":"Weapon Damage % vs NPCs","val":30},{"type":"Bullet Resist % vs NPCs","val":30}],"desc":{"active":"Target an enemy NPC and consume it for 150% Bonus Souls and grants a powerful long lasting buff. +8% Weapon Damage (Conditional). +75 Bonus Health (Conditional). +12% Ability Range. 160s Duration. (260s)"}},{"id":29,"name":"Escalating Resilience","cat":"Weapon","cost":3200,"active":"Passive","stats":[{"type":"Max Ammo %","val":30},{"type":"Bonus Health","val":100},{"type":"Weapon Damage %","val":15}],"desc":{"passive":"Grants Bullet Resist when your bullets hit an enemy hero. Each shot can only grant one stack. 30% Max Bullet Resist. 2% Bullet Resist per Stack. 24s Stack Duration"}},{"id":30,"name":"Express Shot","cat":"Weapon","cost":3200,"active":"Passive","stats":[{"type":"Bullet Velocity %","val":50},{"type":"Fire Rate %","val":5}],"desc":{"passive":"After not attacking for 3s, your next attack will fire twice in quick succession with increased damage and velocity. This attack consumes extra ammo. +170% Weapon Damage (Conditional). +40% Secondary Fire Weapon Damage (Conditional). +100% Bullet Velocity. 40% Extra Ammo Consumed. (3s)"}},{"id":31,"name":"Headhunter","cat":"Weapon","cost":3200,"active":"Passive","stats":[{"type":"Weapon Damage %","val":5},{"type":"Bonus Health","val":75}],"desc":{"passive":"Landing a headshot deals bonus damage, heals you and briefly grants you bonus move speed. +75 Bonus Head Shot Damage. 4% Heal per Headshot. +1.75 m/s Move Speed (Conditional). 3s Move Speed Duration. (8s)"}},{"id":32,"name":"Heroic Aura","cat":"Weapon","cost":3200,"active":"Active","stats":[{"type":"Move Speed m/s","val":1.5},{"type":"Bullet Resist %","val":17}],"desc":{"passive":"Provides Fire Rate to nearby player minions. 30m Radius","active":"Provides bonus Move Speed and Fire Rate to you and nearby allies. +2.25m/s Move Speed (Conditional). +30% Fire Rate (Conditional). 30m Active Radius. 7s Duration. (22s)"}},{"id":33,"name":"Hollow Point","cat":"Weapon","cost":3200,"active":"Passive","stats":[{"type":"Out of Combat Regen","val":4.5},{"type":"Bonus Health","val":150}],"desc":{"passive":"When you are above 65% health, deal additional Weapon Damage and your bullets reduce enemy Bullet Resist. +35% Weapon Damage (Conditional). -9% Bullet Resist (Conditional). 8s Debuff Duration"}},{"id":34,"name":"Hunter's Aura","cat":"Weapon","cost":3200,"active":"Passive","stats":[{"type":"Bonus Health","val":125},{"type":"Sprint Speed m/s","val":1}],"desc":{"passive":"Reduces nearby enemies' Bullet Resist and Fire Rate. If there is only one enemy hero nearby, this effect is tripled. -10% Bullet Resist (Conditional). -12% Fire Rate Slow (Conditional). 15.0m Radius"}},{"id":35,"name":"Point Blank","cat":"Weapon","cost":3200,"active":"Passive","stats":[{"type":"Bonus Health","val":100},{"type":"Melee Resist %","val":30}],"desc":{"passive":"When in close range to your target, gain Weapon Damage and your bullets apply a Movement Slow. +50% Weapon Damage. -25% Movement Slow (Conditional). 2s Debuff Duration. 15.0m Close Range"}},{"id":36,"name":"Sharpshooter","cat":"Weapon","cost":3200,"active":"Passive","stats":[{"type":"Fall Off Range %","val":20},{"type":"Weapon Zoom %","val":25},{"type":"Sprint Speed m/s","val":1},{"type":"Move Speed m/s","val":-0.7}],"desc":{"passive":"Deal additional Weapon Damage when beyond a minimum distance from your target. +70% Weapon Damage (Conditional). 15m Min. Distance"}},{"id":37,"name":"Spirit Rend","cat":"Weapon","cost":3200,"active":"Passive","stats":[{"type":"Bonus Health","val":100}],"desc":{"passive":"Your bullets apply a debuff that reduces the Spirit Resist of the target and grants you and your allies Spirit Lifesteal against them. -8% Spirit Resist (Conditional). +10% Spirit Lifesteal (Conditional). Landing headshots against the target reduces their Spirit Resist further. -7% Spirit Resist on Headshot (Conditional). 8s Debuff Duration. 4 Max Stacks. (2s)"}},{"id":38,"name":"Tesla Bullets","cat":"Weapon","cost":3200,"active":"Passive","stats":[],"desc":{"passive":"Your bullets have a chance to shock your target. The shock will jump to a nearby enemy. +33 Shock Damage. 15% Proc Chance. 8m Jump Radius. 4 Max Jumps. (0.25s)"}},{"id":39,"name":"Toxic Bullets","cat":"Weapon","cost":3200,"active":"Passive","stats":[],"desc":{"passive":"Your bullets build up a Bleed on enemies, causing them to lose a percentage of their Max Health over time. Also applies Healing Reduction on the bleeding target. 1.7%/sec Bleed Damage. -35% Healing Reduction (Conditional). 4s Duration. 19.7 Buildup Per Shot"}},{"id":40,"name":"Weighted Shots","cat":"Weapon","cost":3200,"active":"Passive","stats":[{"type":"Weapon Damage %","val":40},{"type":"Bullet Velocity %","val":-30},{"type":"Debuff Resist %","val":20},{"type":"Stamina Recovery %","val":-14}],"desc":{}},{"id":41,"name":"Ballistic Enchantment","cat":"Weapon","cost":3200,"active":"Imbue","stats":[{"type":"Ability Range %","val":20},{"type":"Non-Hero Weapon Damage %","val":5}],"desc":{"passive":"Imbue an ability with increased range. Dealing damage with that ability grants you increased weapon damage per unique hero hit. Has reduced effect on non-heroes. +20% Weapon Damage per Stack (Conditional). +20% Ability Range. 14s Duration. +5% Non-Hero Weapon Damage. 8 Non-Hero Stack Limit"}},{"id":42,"name":"Shadow Weave","cat":"Weapon","cost":3200,"active":"Active","stats":[{"type":"Out of Combat Regen","val":5},{"type":"Sprint Speed m/s","val":2},{"type":"Melee Damage on Ambush %","val":20}],"desc":{"active":"Become Stealthed. Whenever you take damage while Stealthed you get briefly revealed. Invisible Status Effect. 10s Stealth Duration. 18m Spot Radius. Attacking or using an ability will end your stealth and start an ambush, temporarily granting you bonus Fire Rate and Spirit Power. +20 Ambush Fire Rate (Conditional). +20 Ambush Spirit Power (Conditional). 5s Ambush Duration. +20% Melee Damage on Ambush reveal. (20s)"}},{"id":43,"name":"Armor Piercing Rounds","cat":"Weapon","cost":6400,"active":"Passive","stats":[{"type":"Bullet Velocity %","val":35}],"desc":{"passive":"Your Bullets have a chance to become unavoidable, piercing through enemies and ignoring their Bullet Resistance. 55% Proc Chance"}},{"id":44,"name":"Capacitor","cat":"Weapon","cost":6400,"active":"Active","stats":[{"type":"Fire Rate %","val":5}],"desc":{"passive":"Your bullets have a chance to shock your target. The shock will jump to a nearby enemy. 43 Shock Damage. 20% Proc Chance. 6 Max Jumps. 10m jump Radius. +5% Fire Rate. (0.25s)","active":"Launch a projectile that deals damage, removes all their non-ultimate buffs and applies a strong slow that recovers over time. 100 Damage. -75% Max Move Speed. 3s Debuff Duration. (40s)"}},{"id":45,"name":"Crippling Headshot","cat":"Weapon","cost":6400,"active":"Passive","stats":[{"type":"Bonus Health","val":150}],"desc":{"passive":"Landing a Headshot will reduce the target's Bullet and Spirit Resist. Also applies Healing Reduction on the target. -16% Bullet Resist. -16% Spirit Resist. -35% Healing Reduction (Conditional). 12s Debuff Duration"}},{"id":46,"name":"Frenzy","cat":"Weapon","cost":6400,"active":"Passive","stats":[{"type":"Fire Rate %","val":15},{"type":"Bonus Health","val":160}],"desc":{"passive":"While you are below 50% health, you gain stat bonuses. 4 m/s Move Speed (Conditional). 40% Fire Rate (Conditional). +30% Debuff Resistance"}},{"id":47,"name":"Glass Cannon","cat":"Weapon","cost":6400,"active":"Passive","stats":[{"type":"Weapon Damage %","val":80},{"type":"Max Health %","val":-15}],"desc":{"passive":"Each hero kill grants permanent Fire Rate (up to a max of 8 times). Death results in the loss of 1 stack. +8% Fire Rate per Kill (Conditional)"}},{"id":48,"name":"Lucky Shot","cat":"Weapon","cost":6400,"active":"Passive","stats":[{"type":"Max Ammo %","val":30}],"desc":{"passive":"Your bullets have a chance to be empowered, causing them to deal bonus weapon damage on hit. Bonus damage cannot Crit. +100% Bonus Weapon Damage. 25% Proc Chance"}},{"id":49,"name":"Ricochet","cat":"Weapon","cost":6400,"active":"Passive","stats":[{"type":"Fire Rate %","val":20}],"desc":{"passive":"Your bullets will ricochet on enemies near your target, applying any bullet procs and dealing a percentage of the original damage. 65% Ricochet Damage. 2 Ricochet Targets. 13m Ricochet Range"}},{"id":50,"name":"Crushing Fists","cat":"Weapon","cost":6400,"active":"Passive","stats":[{"type":"Heavy Melee Distance %","val":60},{"type":"Melee Damage %","val":20},{"type":"Bullet Resist %","val":12}],"desc":{"passive":"Your next Heavy Melee attack against an enemy deals increased damage. +25 Bonus Heavy Damage. (7s) Your melee damage will restore ammo and apply a stacking bullet resist debuff on enemies. Heavy melee applies 2 stacks. If the target reaches max stacks, they will be stunned. +15% Ammo. -4% Bullet Resist (Conditional). 6 Max Stacks. 0.5s Stun Duration. 8s Debuff Duration"}},{"id":51,"name":"Silencer","cat":"Weapon","cost":6400,"active":"Passive","stats":[{"type":"Spirit Resist %","val":15}],"desc":{"passive":"Your bullets reduce the target's outgoing spirit damage. -25% Spirit Damage Reduction (Conditional). 6s Debuff Duration. Your bullets build up to a Silence. Victims are immune to the build up for 10s after silence expires. Silenced Status Effect. 2.5s Silence Duration. 10s Immunity Duration. 20% Buildup Per Shot"}},{"id":52,"name":"Spellslinger","cat":"Weapon","cost":6400,"active":"Passive","stats":[{"type":"Cooldown Reduction %","val":6}],"desc":{"passive":"Whenever you cast an ability or item, gain a stacking buff that improves fire rate and reload speed. Each stack refreshes the duration. +12% Fire Rate (Conditional). -10% Reload Time (Conditional). 6 Max Stacks. 18s Buff Duration"}},{"id":53,"name":"Spiritual Overflow","cat":"Weapon","cost":6400,"active":"Passive","stats":[{"type":"Ability Duration %","val":15},{"type":"Spirit Lifesteal %","val":16}],"desc":{"passive":"Gain bonus Fire Rate and Spirit Power by charging up with your bullets on enemy heroes. +35% Fire Rate (Conditional). +40 Spirit Power (Conditional). +16% Spirit Lifesteal. 28% Buildup Per Shot. 15s Duration"}},{"id":54,"name":"Extra Health","cat":"Vitality","cost":800,"active":"Passive","stats":[{"type":"Bonus Health","val":210}],"desc":{}},{"id":55,"name":"Extra Regen","cat":"Vitality","cost":800,"active":"Passive","stats":[{"type":"Health Regen/s","val":3.5},{"type":"Out of Combat Regen","val":1}],"desc":{}},{"id":56,"name":"Extra Stamina","cat":"Vitality","cost":800,"active":"Passive","stats":[{"type":"Stamina","val":1},{"type":"Stamina Recovery %","val":12}],"desc":{}},{"id":57,"name":"Healing Rite","cat":"Vitality","cost":800,"active":"Active","stats":[],"desc":{"active":"Grant Regen and Sprint Speed to the target. Gets dispelled if you take damage from enemy players or objectives. Can be self-cast. 300 Total Heal Regen. +2m/s Sprint Speed (Conditional). 20s Regen Duration. 30m Cast Range. (70s)"}},{"id":58,"name":"Melee Lifesteal","cat":"Vitality","cost":800,"active":"Passive","stats":[{"type":"Melee Damage %","val":12}],"desc":{"passive":"Your next Melee attacks heals you. This heal is 30% effective vs non-heroes. Cooldown is 1.5x as long for Light Melee Hits. 100 Heal on Melee Hit. (8s)"}},{"id":59,"name":"Rebuttal","cat":"Vitality","cost":800,"active":"Passive","stats":[{"type":"Bonus Health","val":75},{"type":"Melee Resist %","val":18}],"desc":{"passive":"On a successful Parry against an enemy Hero, Heal yourself for the damage parried and returns that damage to the target, and temporarily gain increased melee damage. +30% Bonus Damage on successful parry. +18% Melee Resistance. 6s Buff Duration"}},{"id":60,"name":"Sprint Boots","cat":"Vitality","cost":800,"active":"Passive","stats":[{"type":"Sprint Speed m/s","val":2},{"type":"Out of Combat Regen","val":2}],"desc":{}},{"id":61,"name":"Trophy Collector","cat":"Vitality","cost":800,"active":"Passive","stats":[],"desc":{"active":"(I'm not f*cking touching this...)"}},{"id":62,"name":"Battle Vest","cat":"Vitality","cost":1600,"active":"Passive","stats":[{"type":"Bullet Resist %","val":18},{"type":"Out of Combat Regen","val":3}],"desc":{"passive":"While you are above 65% health, gain weapon damage and bonus fire rate. +15% Weapon Damage (Conditional). +8% Fire Rate (Conditional)"}},{"id":63,"name":"Bullet Lifesteal","cat":"Vitality","cost":1600,"active":"Passive","stats":[{"type":"Bullet Lifesteal %","val":13},{"type":"Bonus Health","val":70}],"desc":{}},{"id":64,"name":"Debuff Reducer","cat":"Vitality","cost":1600,"active":"Passive","stats":[{"type":"Debuff Resist %","val":25}],"desc":{"passive":"Reduces the duration of all negative effects applied to you."}},{"id":65,"name":"Enchanter's Emblem","cat":"Vitality","cost":1600,"active":"Passive","stats":[{"type":"Spirit Resist %","val":18},{"type":"Out of Combat Regen","val":2}],"desc":{"passive":"While you are above 65% health, gain bonus Spirit and Cooldown Reduction. +15 Spirit Power (Conditional). +5% Cooldown Reduction (Conditional)"}},{"id":66,"name":"Enduring Speed","cat":"Vitality","cost":1600,"active":"Passive","stats":[{"type":"Move Speed m/s","val":2},{"type":"Out of Combat Regen","val":2},{"type":"Slow Resist %","val":25}],"desc":{"passive":"Reduce the effect of enemy Move Speed penalties. +25% Slow Resist"}},{"id":67,"name":"Guardian Ward","cat":"Vitality","cost":1600,"active":"Active","stats":[{"type":"Ability Range %","val":8}],"desc":{"active":"Provide the target with a Barrier and temporary Move Speed. Can be self-cast. Cooldown is reduced by half when cast on someone else. 200 Barrier (Conditional). +2.75 m/s Move Speed (Conditional). 6s Buff Duration. 40m Cast Range. (35s)"}},{"id":68,"name":"Healbane","cat":"Vitality","cost":1600,"active":"Passive","stats":[{"type":"Spirit Power","val":7}],"desc":{"passive":"Your Spirit Damage applies Healing Reduction. If an enemy hero dies under this effect, you receive a large heal. -35% Healing Reduction (Conditional). 275 Heal on Hero Kill. 8s Duration"}},{"id":69,"name":"Healing Booster","cat":"Vitality","cost":1600,"active":"Passive","stats":[{"type":"Health Regen/s","val":3},{"type":"Out of Combat Regen","val":1}],"desc":{"passive":"Increases the effectiveness of your healing by 20%"}},{"id":70,"name":"Weapon Shielding","cat":"Vitality","cost":1600,"active":"Passive","stats":[{"type":"Out of Combat Regen","val":2.5},{"type":"Move Speed m/s","val":1.75}],"desc":{"passive":"Gain a Barrier whenever you take significant weapon damage from enemy Heroes in a small time frame. 300 Barrier (Conditional). 250 Damage Threshold. 4s Time Frame. 8s Barrier Duration. (35s)"}},{"id":71,"name":"Reactive Barrier","cat":"Vitality","cost":1600,"active":"Active","stats":[],"desc":{"passive":"Automatically restores one stamina and gain a Barrier when you are movement locked, Stunned, Chained, Immobilized, or Slept. 325 Bullet Shield Health (Conditional). 10s Duration. (55s)"}},{"id":72,"name":"Restorative Locket","cat":"Vitality","cost":1600,"active":"Active","stats":[{"type":"Spirit Resist %","val":10}],"desc":{"passive":"When an enemy uses an ability within 35m range from you, store one Restoration Stack.","active":"Consume all stacks to heal target ally and replenish 4 stamina points. Can be self-cast. 16 Heal per Stack. 25 Max Stacks. (20s)"}},{"id":73,"name":"Return Fire","cat":"Vitality","cost":1600,"active":"Active","stats":[{"type":"Bullet Resist %","val":10}],"desc":{"active":"Automatically fire a bullet towards any attacker who damages you with their abilities or weapon. 65% Bullet Damage Returned. 25% Spirit Damage Returned. 6s Duration. (23s)"}},{"id":74,"name":"Spirit Lifesteal","cat":"Vitality","cost":1600,"active":"Passive","stats":[{"type":"Spirit Lifesteal %","val":13},{"type":"Bonus Health","val":70},{"type":"Spirit Power","val":6}],"desc":{}},{"id":75,"name":"Spirit Shielding","cat":"Vitality","cost":1600,"active":"Passive","stats":[{"type":"Out of Combat Regen","val":2.5},{"type":"Move Speed m/s","val":1.75}],"desc":{"passive":"Gain a Barrier whenever you take significant spirit damage from enemy Heroes in a small time frame. 300 Barrier (Conditional). 225 Damage Threshold. 3.5s Time Frame. 8s Barrier Duration. (45s)"}},{"id":76,"name":"Trophy Collector (1600)","cat":"Vitality","cost":1600,"active":"Passive","stats":[{"type":"Sprint Speed m/s","val":2},{"type":"Out of Combat Regen","val":2}],"desc":{"passive":"Whenever you score an assist or kill, gain extra health, sprint, and ability range and passive soul generation. This effect stacks and persists through death. +0.2m/s Sprint Speed. +0.75% Ability Range. 18 Souls per Minute. 16 Max Stacks"}},{"id":77,"name":"Bullet Resilience","cat":"Vitality","cost":3200,"active":"Passive","stats":[{"type":"Bullet Resist %","val":30},{"type":"Out of Combat Regen","val":3}],"desc":{"passive":"When below 50% health, gain additional Bullet Resist. +30% Bullet Resist (Conditional)"}},{"id":78,"name":"Counterspell","cat":"Vitality","cost":3200,"active":"Passive","stats":[{"type":"Bonus Health","val":50},{"type":"Spirit Power","val":8}],"desc":{"passive":"Your next parry protects you from the damage and effects of enemy abilities and items. On a successful spell parry gain Move Speed and Spirit Power. 150 Healing (Conditional). +20% Spirit Power (Conditional). +1.75m Move Speed (Conditional). 0.8s Spell Parry Duration. (23s)"}},{"id":79,"name":"Dispel Magic","cat":"Vitality","cost":3200,"active":"Active","stats":[{"type":"Spirit Resist %","val":10}],"desc":{"active":"Purge all non-ultimate negative effects currently applied to you. If any effects were removed, heal yourself and gain a move speed bonus. Cannot be used while Stunned or Slept. 250 HP Healed On Activate. +2m/s Move Speed. 3s Buff Duration. (40s)"}},{"id":80,"name":"Fortitude","cat":"Vitality","cost":3200,"active":"Passive","stats":[{"type":"Bonus Health","val":375}],"desc":{"passive":"After not taking damage for 10s, gain 2% Max Health Regen. When you are above 75% health, you have bonus Weapon Damage and Move Speed. +1.25m/s Move Speed (Conditional)"}},{"id":81,"name":"Fury Trance","cat":"Vitality","cost":3200,"active":"Active","stats":[{"type":"Bullet Lifesteal %","val":14},{"type":"Bonus Health","val":100}],"desc":{"active":"Grants Fire Rate and Bullet Resistance but Silences and disables stamina usage and regeneration. 40% Fire Rate. +40% Bullet Resist. 6s Duration. (18s)"}},{"id":82,"name":"Lifestrike","cat":"Vitality","cost":3200,"active":"Passive","stats":[{"type":"Melee Damage %","val":16},{"type":"Bonus Health","val":125}],"desc":{"passive":"Your Melee Attack applies Movement Slow and heals you for 30% of the Melee Damage dealt plus 110. This heal is 40% effective vs non-heroes. Cooldown is 1.5x as long for Light Melee hits. 60% Movement Slow (Conditional). 2.5s Slow Duration. (4s)"}},{"id":83,"name":"Majestic Leap","cat":"Vitality","cost":3200,"active":"Active","stats":[],"desc":{"active":"Launch yourself high into the air and grant yourself a Barrier. While in the air, you can use the active again to drop down faster. Cannot be used for 5s if attacked by enemy Hero. 200 Barrier (Conditional). 8s Barrier Duration. (45s)"}},{"id":84,"name":"Metal Skin","cat":"Vitality","cost":3200,"active":"Active","stats":[{"type":"Bullet Resist %","val":12}],"desc":{"active":"Become immune to bullets. -1.5m/s Active Movespeed Penalty. -20% Dash Distance. 5s Duration. (24s)"}},{"id":85,"name":"Rescue Beam","cat":"Vitality","cost":3200,"active":"Active","stats":[{"type":"Sprint Speed m/s","val":0.75},{"type":"Ability Range %","val":6}],"desc":{"active":"Heals a target allied hero and yourself for a percentage of Max Health. Once while healing, you can Pull the target towards you. Can be self-cast. 20% Heal Amount. 2.5s Channel Duration. 35m Cast Range. (60s)"}},{"id":86,"name":"Spirit Resilience","cat":"Vitality","cost":3200,"active":"Passive","stats":[{"type":"Spirit Resist %","val":30},{"type":"Out of Combat Regen","val":3}],"desc":{"passive":"When below 50% health, gain additional Spirit Resist. +30% Spirit Resist (Conditional)"}},{"id":87,"name":"Stamina Mastery","cat":"Vitality","cost":3200,"active":"Passive","stats":[{"type":"Stamina","val":2},{"type":"Stamina Recovery %","val":18},{"type":"Air Jump/Dash Distance %","val":23}],"desc":{"passive":"Allows an additional use of Air Jump or Air Dash before landing."}},{"id":88,"name":"Healing Nova","cat":"Vitality","cost":3200,"active":"Active","stats":[{"type":"Spirit Power","val":8},{"type":"Ability Range %","val":5}],"desc":{"active":"Heal yourself and nearby allies. 325 Total HP Regen. 2s Regen Duration. 18m Radius. (60s)"}},{"id":89,"name":"Veil Walker","cat":"Vitality","cost":3200,"active":"Passive","stats":[{"type":"Bonus Health","val":125},{"type":"Spirit Power","val":10}],"desc":{"passive":"Walking through a cosmic veil grants you Stealth, increased Move Speed. Invisible (Status Effect). 3.5m/s Invis Move Speed (Conditional). 85 Heal. 7s Invisibility Duration. (15s)"}},{"id":90,"name":"Warp Stone","cat":"Vitality","cost":3200,"active":"Active","stats":[],"desc":{"active":"Teleport straight ahead, gaining Bullet Resist. 11m Teleport Range. +30% Bullet Resist (Conditional). 6s Buff Duration. (16)"}},{"id":91,"name":"Cheat Death","cat":"Vitality","cost":6400,"active":"Passive","stats":[{"type":"Bonus Health","val":200},{"type":"Spirit Resist %","val":15}],"desc":{"passive":"When you would take lethal damage, instead become temporarily death immune. While death immune, you deal reduced damage, have reduced healing and move slower. 4.5s Death Immunity Duration. -60% Damage Reduction. -60% Healing Reduction. -2 m/s Move Speed. (90s)"}},{"id":92,"name":"Colossus","cat":"Vitality","cost":6400,"active":"Active","stats":[{"type":"Base Health %","val":25},{"type":"Weapon Damage %","val":15},{"type":"Melee Damage %","val":30}],"desc":{"active":"Gain Bullet and Spirit Resist, and slow the movement and dash speed of enemies nearby. Your model size grows by 35%. +30% Bullet Resist (Conditional). +30% Spirit Resist (Conditional). -30% Movement Slow (Conditional). +30% Melee Damage. 14m Radius. 7s Duration. (37s)"}},{"id":93,"name":"Divine Barrier","cat":"Vitality","cost":6400,"active":"Active","stats":[{"type":"Ability Range %","val":10}],"desc":{"active":"Remove all non-stun debuffs from the target and provide them with a Barrier and Move Speed. Can be self-cast. Cooldown is reduced by half when cast on someone else. 600 Barrier. +2.75m/s Move Speed (Conditional). 6s Buff Duration. 40m Cast Range. (45s)"}},{"id":94,"name":"Diviner's Kevlar","cat":"Vitality","cost":6400,"active":"Passive","stats":[{"type":"Ability Duration %","val":15}],"desc":{"passive":"Upon casting an ultimate ability gain temporary Bullet Shield, Spirit Shield, and Spirit Power. 1000 Barrier (Conditional). +35 Spirit Power (Conditional). 20s Buff Duration. (40s)"}},{"id":95,"name":"Healing Tempo","cat":"Vitality","cost":6400,"active":"Passive","stats":[{"type":"Healing Effectiveness %","val":25},{"type":"Spirit Resist %","val":10},{"type":"Health Regen/s","val":6},{"type":"Out of Combat Regen","val":4}],"desc":{"passive":"Applying heal to yourself or an ally grants the target bonus fire rate and bonus move speed. Does not apply on innate Regen or innate Bullet/Spirit Lifesteal. +40% Fire Rate. +1.25 m/s Move Speed. 7s Buff Duration"}},{"id":96,"name":"Infuser","cat":"Vitality","cost":6400,"active":"Active","stats":[{"type":"Spirit Lifesteal %","val":13},{"type":"Spirit Resist %","val":10},{"type":"Bonus Health","val":100}],"desc":{"active":"+70% Spirit Lifesteal (Conditional). +35 Spirit Power (Conditional). 6s Duration. (30s)"}},{"id":97,"name":"Inhibitor","cat":"Vitality","cost":6400,"active":"Passive","stats":[{"type":"Weapon Damage %","val":25},{"type":"Bonus Health","val":150}],"desc":{"passive":"Your bullets reduce the target's outgoing damage and apply healing reduction. -30% Damage Penalty (Conditional). -40% Healing Reduction (Conditional). 5s Debuff Duration. 23% Buildup Per Shot"}},{"id":98,"name":"Juggernaut","cat":"Vitality","cost":6400,"active":"Passive","stats":[{"type":"Slow Resist %","val":50},{"type":"Move Speed m/s","val":2},{"type":"Melee Resist %","val":25},{"type":"Health Regen/s","val":8}],"desc":{"passive":"Enemies that shoot you have their Fire Rate slowed. -40% Fire Rate (Conditional). 4s Duration"}},{"id":99,"name":"Leech","cat":"Vitality","cost":6400,"active":"Passive","stats":[{"type":"Spirit Lifesteal %","val":25},{"type":"Bullet Lifesteal %","val":30},{"type":"Bonus Health","val":160},{"type":"Weapon Damage %","val":12},{"type":"Spirit Power","val":12}],"desc":{}},{"id":100,"name":"Phantom Strike","cat":"Vitality","cost":6400,"active":"Active","stats":[{"type":"Weapon Damage %","val":15},{"type":"Spirit Power","val":8}],"desc":{"active":"Teleport to an enemy target and pull them to the ground. Dealing damage, Move speed reduction and Disarm. Disarm Status Effect. -50% Movement Slow (Conditional). 82 Damage. 25m Cast Range. 3s Disarm & Slow Duration. (35s)"}},{"id":101,"name":"Plated Armor","cat":"Vitality","cost":6400,"active":"Passive","stats":[{"type":"Bonus Health","val":130}],"desc":{"passive":"Gain a chance to either deflect incoming bullets, preventing all weapon damage or prevent all on-hit effects from bullets. 30% Deflection Percent. 50% On-Hit Prevention Percent"}},{"id":102,"name":"Siphon Bullets","cat":"Vitality","cost":6400,"active":"Passive","stats":[{"type":"Weapon Damage %","val":15},{"type":"Bullet Resist %","val":10}],"desc":{"passive":"Your bullets temporarily steal Max HP from enemies. Enemies regain their stolen health when the debuff expires. Permanently steal 1 stacks of health if a siphoned target dies and lose 2 stacks if you die. 35 Max HP Steal Per Bullet. 17s Steal Duration. (1.2s)"}},{"id":103,"name":"Spellbreaker","cat":"Vitality","cost":6400,"active":"Passive","stats":[{"type":"Spirit Resist %","val":18},{"type":"Debuff Resist %","val":25}],"desc":{"passive":"The next instance of high spirit damage you take is significantly reduced. 65% Spirit Damage Reduction. 175 Damage Threshold. (9s)"}},{"id":104,"name":"Unstoppable","cat":"Vitality","cost":6400,"active":"Active","stats":[{"type":"Debuff Resist %","val":25},{"type":"Bonus Health","val":125}],"desc":{"active":"Temporarily suppress negative status effects and become immune to Stun, Silence, Sleep, Root, and Disarm. Cannot be used while Stunned or Slept. 5.5s Duration. (65s)"}},{"id":105,"name":"Vampiric Burst","cat":"Vitality","cost":6400,"active":"Active","stats":[{"type":"Bullet Lifesteal %","val":13},{"type":"Bullet Resist %","val":10},{"type":"Bonus Health","val":100}],"desc":{"active":"Grants Lifesteal, Fire Rate, and Ammo. This added Ammo is not limited by your max magazine size. 70% Bullet Lifesteal. 40% Fire Rate. +75% Ammo. 4.5s Duration. (30s)"}},{"id":106,"name":"Witchmail","cat":"Vitality","cost":6400,"active":"Passive","stats":[{"type":"Spirit Resist %","val":20},{"type":"Spirit Power","val":14}],"desc":{"passive":"Taking heavy hits of spirit damage from an enemy reduces a random ability cooldown. 4s Cooldown Reduction per Hit. 75 Damage Threshold. (1s)"}},{"id":107,"name":"Indomitable","cat":"Vitality","cost":6400,"active":"Passive","stats":[{"type":"Bullet Resist %","val":8},{"type":"Spirit Resist %","val":8}],"desc":{"passive":"The next Stun, Chain, Immobilize, Sleep or Silence is automatically cleansed. When this happens, you gain a barrier and all your ability cooldowns get reduced by 20%. 325 Barrier (Conditional). 10s Duration. (55s)"}},{"id":108,"name":"Extra Charge","cat":"Spirit","cost":800,"active":"Passive","stats":[{"type":"Bonus Ability Charges","val":1},{"type":"Imbued Spirit Power","val":7}],"desc":{}},{"id":109,"name":"Extra Spirit","cat":"Spirit","cost":800,"active":"Passive","stats":[{"type":"Spirit Power","val":10}],"desc":{}},{"id":110,"name":"Mystic Burst","cat":"Spirit","cost":800,"active":"Passive","stats":[],"desc":{"passive":"Charges up over time with bonus spirit damage, causing abilities dealing more than 80 damage to deal additional damage. 40 Bonus Damage. (14s)"}},{"id":111,"name":"Mystic Expansion","cat":"Spirit","cost":800,"active":"Imbue","stats":[{"type":"Ability Range %","val":20}],"desc":{"passive":"Imbue an ability to increase its range and effect radius."}},{"id":112,"name":"Mystic Regeneration","cat":"Spirit","cost":800,"active":"Passive","stats":[{"type":"Bonus Health","val":50}],"desc":{"passive":"Dealing Spirit Damage to enemy Heroes grants you Bonus Health Regen. Stacks when dealing damage to different heroes. 4 HP/s Regeneration. 6s Regeneration Duration"}},{"id":113,"name":"Rusted Barrel","cat":"Spirit","cost":800,"active":"Active","stats":[{"type":"Bonus Health","val":60},{"type":"Bullet Resist %","val":8}],"desc":{"active":"Target an enemy to reduce their Fire Rate. -35% Fire Rate (Conditional). 32m Cast Range. 5s Duration. (16s)"}},{"id":114,"name":"Spirit Strike","cat":"Spirit","cost":800,"active":"Passive","stats":[],"desc":{"passive":"When you perform a Light or Heavy Melee attack against a hero, deal extra Spirit Damage with the attack and reduce the target's Spirit Resist. 40 Spirit Damage. -6% Spirit Resist (Conditional). 6s Duration. (8s)"}},{"id":115,"name":"Golden Goose Egg","cat":"Spirit","cost":800,"active":"Active","stats":[{"type":"Sprint Speed m/s","val":1},{"type":"Out of Combat Regen","val":1}],"desc":{"active":"Hatch the egg, gaining Souls and permanent buffs. The value of the egg grows the longer you hold onto it. 90 Soul Value per Minute"}},{"id":116,"name":"Arcane Surge","cat":"Spirit","cost":1600,"active":"Imbue","stats":[{"type":"Stamina","val":1},{"type":"Stamina Recovery %","val":12}],"desc":{"passive":"When you Dash-Jump, the next ability you use will have bonus Range, Duration and Spirit Power. Lasts up to 7s. +12% Ability Range (Conditional). +15% Ability Duration (Conditional). +20 Spirit Power (Conditional). 7s Duration"}},{"id":117,"name":"Bullet Resist Shredder","cat":"Spirit","cost":1600,"active":"Passive","stats":[{"type":"Bonus Health","val":90},{"type":"Bullet Resist flat","val":7}],"desc":{"passive":"Reduces Bullet Resist on enemies when you deal Spirit Damage. -10% Bullet Resist (Conditional). 8s Duration"}},{"id":118,"name":"Cold Front","cat":"Spirit","cost":1600,"active":"Active","stats":[{"type":"Spirit Resist %","val":6}],"desc":{"active":"Release an expanding ice blast that deals Spirit Damage and Slows targets it hits. 95 Damage. 60% Movement Slow (Conditional). 12m End Radius. 4s Duration. (25s)"}},{"id":119,"name":"Compress Cooldown","cat":"Spirit","cost":1600,"active":"Imbue","stats":[{"type":"Cooldown Reduction %","val":18}],"desc":{"passive":"Imbue an ability to reduce its Cooldown. +18% Cooldown Reduction"}},{"id":120,"name":"Duration Extender","cat":"Spirit","cost":1600,"active":"Imbue","stats":[{"type":"Ability Duration %","val":22}],"desc":{"passive":"Imbue an ability to increase its Duration. +22% Ability Duration"}},{"id":121,"name":"Improved Spirit","cat":"Spirit","cost":1600,"active":"Passive","stats":[{"type":"Spirit Power","val":18},{"type":"Out of Combat Regen","val":1.5}],"desc":{}},{"id":122,"name":"Mystic Slow","cat":"Spirit","cost":1600,"active":"Passive","stats":[{"type":"Bonus Health","val":50},{"type":"Sprint Speed m/s","val":0.75}],"desc":{"passive":"When the target takes Spirit Damage, they have their Move Speed reduced. 30% Movement Slow (Conditional). 2s Duration"}},{"id":123,"name":"Mystic Vulnerability","cat":"Spirit","cost":1600,"active":"Passive","stats":[{"type":"Spirit Resist %","val":8}],"desc":{"passive":"When the target takes Spirit Damage, they have their Spirit Resist reduced. -8% Spirit Resist (Conditional). 7s Duration"}},{"id":124,"name":"Quicksilver Reload","cat":"Spirit","cost":1600,"active":"Imbue","stats":[],"desc":{"passive":"Your Imbued ability charges up over time with bonus spirit damage, bonus fire rate and bonus bullets on use. 44 Damage. +10% Fire Rate. 100% Bullets Reloaded. (18s)"}},{"id":125,"name":"Slowing Hex","cat":"Spirit","cost":1600,"active":"Active","stats":[],"desc":{"active":"Slows movement of enemy target. Also Silences their movement-based items and abilities. Does not affect target's stamina usage. -20% Move Speed (Conditional). -30% Dash Distance (Conditional). 25m Cast Range. 3.5s Duration. (27s)"}},{"id":126,"name":"Spirit Sap","cat":"Spirit","cost":1600,"active":"Active","stats":[{"type":"Bonus Health","val":75}],"desc":{"active":"Target an enemy to reduce their Spirit Resist and Spirit Power. -12% Spirit Resist (Conditional). -30 Spirit Power. 12s Duration. 40m Cast Range. (18s)"}},{"id":127,"name":"Suppressor","cat":"Spirit","cost":1600,"active":"Passive","stats":[{"type":"Spirit Power","val":6},{"type":"Bonus Health","val":75}],"desc":{"passive":"When you deal Spirit Damage to enemies, you also reduce their Fire Rate. -30% Fire Rate (Conditional). 5s Duration"}},{"id":128,"name":"Decay","cat":"Spirit","cost":3200,"active":"Active","stats":[{"type":"Spirit Power","val":8},{"type":"Bonus Health","val":90}],"desc":{"active":"Inflict damage over time to a target, dealing damage based on their current health. 2.63%/sec Bleed Damage. -50% Healing Reduction (Conditional). 21m Cast Range. 10s Duration. (36s)"}},{"id":129,"name":"Disarming Hex","cat":"Spirit","cost":3200,"active":"Active","stats":[{"type":"Bonus Health","val":100},{"type":"Sprint Speed m/s","val":0.75}],"desc":{"active":"Disarms enemy target and reduces their Bullet Resist. Disarm Status Effect. -13% Bullet Resist (Conditional). 32m Cast Range. 4s Duration. (16s)"}},{"id":130,"name":"Greater Expansion","cat":"Spirit","cost":3200,"active":"Passive","stats":[{"type":"Spirit Resist %","val":10},{"type":"Ability Range %","val":30}],"desc":{"passive":"Increases the range and effect radius of your abilities and items. +30% Ability Range"}},{"id":131,"name":"Knockdown","cat":"Spirit","cost":3200,"active":"Active","stats":[{"type":"Bonus Health","val":100},{"type":"Ability Range %","val":5}],"desc":{"active":"Apply a Stun after 2s. Stun duration is increased against airborne targets. Stun Status Effect. 0.5s Stun Duration. 48m Cast Range. (35s)"}},{"id":132,"name":"Rapid Recharge","cat":"Spirit","cost":3200,"active":"Passive","stats":[{"type":"Bonus Ability Charges","val":2},{"type":"Faster Time Between Charges","val":30},{"type":"Cooldown Reduction %","val":14},{"type":"Bonus Spirit Power for Charged Abilities","val":10}],"desc":{"passive":"Reduces cooldown of charged abilities by 14%. +30% Faster Time Between Charges. +10 Bonus Spirit Power for Charged Abilities."}},{"id":133,"name":"Silence Wave","cat":"Spirit","cost":3200,"active":"Active","stats":[{"type":"Bonus Health","val":75}],"desc":{"active":"Launch an expanding projectile which Silences enemies for a short duration. Affected enemies also have their Spirit Resist and Spirit Power reduced for a longer duration. Silence does not interrupt channelling abilities. 100 Impact Damage. 3s Silence Duration. 40m Cast Range. (42s)"}},{"id":134,"name":"Spirit Snatch","cat":"Spirit","cost":3200,"active":"Passive","stats":[{"type":"Melee Damage %","val":7},{"type":"Bonus Health","val":100}],"desc":{"passive":"When you perform a Light or Heavy Melee attack against a hero, the attack deals extra Spirit Damage and steals Spirit Resist and Spirit Power. 50 Spirit Damage. 12% Spirit Resist Steal (Conditional). 15 Spirit Power Steal (Conditional). 10s Duration. (6s)"}},{"id":135,"name":"Superior Cooldown","cat":"Spirit","cost":3200,"active":"Passive","stats":[{"type":"Out of Combat Regen","val":4},{"type":"Cooldown Reduction %","val":20}],"desc":{"passive":"Reduces the Cooldown of your abilities and items. +20 Cooldown Reduction"}},{"id":136,"name":"Superior Duration","cat":"Spirit","cost":3200,"active":"Imbue","stats":[{"type":"Bullet Resist %","val":8},{"type":"Ability Duration %","val":28}],"desc":{"passive":"Increases the duration of your abilities and items. +28% Ability Duration"}},{"id":137,"name":"Surge of Power","cat":"Spirit","cost":3200,"active":"Imbue","stats":[{"type":"Imbued Spirit Power","val":24}],"desc":{"passive":"Imbue an ability with permanent Spirit Power. When that ability is used, gain bonus Move Speed and maintain full speed while attacking. +24 Imbued Ability Spirit Power. 22% Fire Rate Bonus (Conditional). +1.75m/s Move Speed (Conditional). 8s Move Speed Duration. (14s)"}},{"id":138,"name":"Tankbuster","cat":"Spirit","cost":3200,"active":"Passive","stats":[{"type":"Bonus Health","val":75}],"desc":{"passive":"Charges up over time with bonus spirit damage, causing abilities dealing more than 165 damage to deal additional damage. 40 Damage. 8% Current Health Bonus Damage. (14s)"}},{"id":139,"name":"Torment Pulse","cat":"Spirit","cost":3200,"active":"Passive","stats":[{"type":"Bonus Health","val":125},{"type":"Melee Resist %","val":15}],"desc":{"passive":"Periodically deals Spirit Damage to the closest two enemies nearby. 27 Pulse Damage. 9m Pulse Radius. (1.4s)"}},{"id":140,"name":"Radiant Regeneration","cat":"Spirit","cost":3200,"active":"Passive","stats":[{"type":"Bonus Health","val":90}],"desc":{"passive":"Dealing Spirit Damage to enemy Heroes grants you Bonus Health Regen. Stacks when dealing damage to different heroes. 4HP/s Regeneration. 5s Regeneration Duration. Heal and gain bonus Movement Speed for a short duration when you cast an ability. 70 Healing on Ability Cast. +1.75m/s Move Speed. 3s Duration. (6s)"}},{"id":141,"name":"Arctic Blast","cat":"Spirit","cost":6400,"active":"Active","stats":[{"type":"Spirit Resist %","val":10}],"desc":{"active":"Release an expanding ice blast that deals Spirit Damage, Freezing and then Slowing targets it hits. Targets take increased damage while frozen. 175 Damage. 0.75s Freeze Duration. 15% Frozen Bonus Damage. 12m End Radius. (24s)"}},{"id":142,"name":"Boundless Spirit","cat":"Spirit","cost":6400,"active":"Passive","stats":[{"type":"Spirit Power %","val":15},{"type":"Spirit Power","val":35},{"type":"Bonus Health","val":100},{"type":"Out of Combat Regen","val":4}],"desc":{}},{"id":143,"name":"Cursed Relic","cat":"Spirit","cost":6400,"active":"Active","stats":[],"desc":{"active":"Curses an enemy - interrupting, Silencing, Disarming, and preventing item usage. Silenced Status Effect. 3.25s Duration. 20m Cast Range. (55s)"}},{"id":144,"name":"Echo Shard","cat":"Spirit","cost":6400,"active":"Imbue","stats":[{"type":"Fire Rate %","val":5},{"type":"Spirit Resist %","val":5},{"type":"Bullet Resist %","val":5}],"desc":{"active":"Reset the cooldown of the imbued non-ultimate ability. (35s)"}},{"id":145,"name":"Escalating Exposure","cat":"Spirit","cost":6400,"active":"Passive","stats":[{"type":"Spirit Resist %","val":17}],"desc":{"passive":"Dealing Spirit Damage applies a stacking Spirit Amp that increases your Spirit Damage to the target. +4.5% Spirit Amp per Stack. 12 Max Stacks. 12s Duration. (0.7s)"}},{"id":146,"name":"Ethereal Shift","cat":"Spirit","cost":6400,"active":"Active","stats":[],"desc":{"active":"You enter a void state and become untargetable and invincible for a short duration, during which you float slowly and cannot perform actions. Afterwards, you gain Spirit Power, Move Speed, and Spirit Resist. Can be cancelled early. Activation cancels any active ability. +20 Spirit Power. +30% Spirit Resist. +2.5m/s Move Speed. 3.0 Duration. 5s Buff Duration. (35s)"}},{"id":147,"name":"Focus Lens","cat":"Spirit","cost":6400,"active":"Active","stats":[{"type":"Fire Rate %","val":13}],"desc":{"active":"Target an enemy to silence them. A portion of all damage dealt during the silence gets applied to the target when the silence wears off. 4.25s Duration. 30% Damage On Expire. 20m Cast Range. -9% Spirit Resist Reduction. -30 Spirit Power Reduction. 12s Resist Reduction Duration. (43s)"}},{"id":148,"name":"Lightning Scroll","cat":"Spirit","cost":6400,"active":"Passive","stats":[{"type":"Bonus Health","val":75},{"type":"Sprint Speed m/s","val":0.75}],"desc":{"passive":"Damage from your ultimate applies a stun and deals bonus spirit damage after a short delay. This effect can only trigger once per ultimate and cannot activate on ultimate with charges. Stun Status Effect. 0.75s Stun Duration. 150 Damage. 3s Delay Before Effect"}},{"id":149,"name":"Magic Carpet","cat":"Spirit","cost":6400,"active":"Active","stats":[{"type":"Ability Duration %","val":15},{"type":"Spirit Power","val":104},{"type":"Bonus Health","val":125}],"desc":{"active":"Summon a Magic Carpet that will fly you away. While flying you are immune to slows and doing any actions will dismiss the carpet. Cannot use abilities while the carpet is being summoned. 12s Duration. +7m/s Bonus Fly Speed. 1.3s Summon Duration. (32s)"}},{"id":150,"name":"Mercurial Magnum","cat":"Spirit","cost":6400,"active":"Imbue","stats":[{"type":"Max Ammo %","val":20},{"type":"Spirit Power","val":7},{"type":"Base Bullet Damage %","val":28}],"desc":{"passive":"Your imbued ability charges up over time with bonus spirit damage, bonus fire rate, and bonus bullets on use. Until your next reload, your bullets deal bonus Spirit Damage based on your Spirit Power. +28% Base Bullet Damage. 60 Damage. +25% Fire Rate. 100% Bullets Reloaded. (14s)"}},{"id":151,"name":"Mystic Reverb","cat":"Spirit","cost":6400,"active":"Imbue","stats":[{"type":"Spirit Lifesteal %","val":8}],"desc":{"passive":"Imbue an ability to apply slow on a hit target and deal an additional percentage of the damage dealt to enemies around the target after a short delay. 50% Damage (Conditional). 40% Movement Slow (Conditional). 16m Radius. 3s Delay Duration. (6.25s)"}},{"id":152,"name":"Refresher","cat":"Spirit","cost":6400,"active":"Active","stats":[],"desc":{"active":"Reset the cooldown of all your abilities and restore all your charges. (300s)"}},{"id":153,"name":"Scourge","cat":"Spirit","cost":6400,"active":"Active","stats":[{"type":"Bonus Health","val":125},{"type":"Debuff Resist %","val":15}],"desc":{"active":"Apply Spirit Resistance and an aura on a friendly target that deals damage to enemies proportional to their max health. Can be self-cast. 3.5% Max Health per second. +40% Spirit Resist (Conditional). 10s Duration. 35m Cast Range. 10m Radius. (35s)"}},{"id":154,"name":"Spirit Burn","cat":"Spirit","cost":6400,"active":"Passive","stats":[{"type":"Ability Range %","val":6}],"desc":{"passive":"Dealing significant Spirit Damage to an enemy within 5s causes an explosion dealing damage and a burn to nearby enemies. While burning, enemies take damage over time and receive reduced healing. Deals half-damage to non-heroes and does not expend its cooldown unless a hero is hit. 500 Damage Threshold. 110 Explosion Damage. 24 Damage Per Second. 13.2m Explosion Radius. 8s Debuff Duration. -70% Healing Reduction. (20s)"}},{"id":155,"name":"Vortex Web","cat":"Spirit","cost":6400,"active":"Active","stats":[{"type":"Ability Range %","val":8}],"desc":{"active":"Throw a vacuum grenade, pulling all enemies into a small area and applying Slowing Hex. 11m Capture Radius. -35% Move Speed (Conditional). 4s Duration. -40% Dash Distance. (42s)"}},{"id":156,"name":"Transcendent Cooldown","cat":"Spirit","cost":6400,"active":"Passive","stats":[{"type":"Out of Combat Regen","val":4},{"type":"Cooldown Reduction %","val":25},{"type":"Item Cooldown Reduction %","val":25}],"desc":{"passive":"Reduce the Cooldown of your abilities and items. +25% Ability Cooldown Reduction. +25% Item Cooldown Reduction"}}];
+const DEFAULTS = [{"id":1,"name":"Close Quarters","cat":"Weapon","cost":800,"active":"Passive","stats":[{"type":"Melee Resist %","val":20}],"desc":{"passive":"Deal additional Weapon Damage when in close range to your target. +20% Weapon Damage (Conditional). 15.0m Close Range"}},{"id":2,"name":"Extended Magazine","cat":"Weapon","cost":800,"active":"Passive","stats":[{"type":"Max Ammo %","val":30},{"type":"Weapon Damage %","val":8}],"desc":{}},{"id":3,"name":"Headshot Booster","cat":"Weapon","cost":800,"active":"Passive","stats":[{"type":"Bonus Health","val":40}],"desc":{"passive":"Deal bonus Weapon Damage with headshots. +45 Headshot Bonus Damage"}},{"id":4,"name":"High-Velocity Rounds","cat":"Weapon","cost":800,"active":"Passive","stats":[{"type":"Bullet Velocity %","val":60},{"type":"Weapon Damage %","val":8}],"desc":{}},{"id":5,"name":"Monster Rounds","cat":"Weapon","cost":800,"active":"Passive","stats":[{"type":"Weapon Damage % vs NPCs","val":25},{"type":"Bullet Resist % vs NPCs","val":25},{"type":"Out of Combat Regen","val":1}],"desc":{"passive":null}},{"id":6,"name":"Rapid Rounds","cat":"Weapon","cost":800,"active":"Passive","stats":[{"type":"Fire Rate %","val":10}],"desc":{}},{"id":7,"name":"Restorative Shot","cat":"Weapon","cost":800,"active":"Passive","stats":[{"type":"Weapon Damage %","val":6}],"desc":{"passive":"Your next bullet will heal you based on what target you hit. 50 Healing from Heroes. 15 Healing from NPCs / Orbs"}},{"id":8,"name":"Active Reload","cat":"Weapon","cost":1600,"active":"Passive","stats":[{"type":"Max Ammo %","val":20},{"type":"Move Speed m/s","val":0.75}],"desc":{"passive":"While reloading, pressing [R] during the highlighted portion will instantly finish your reload and grant you Fire Rate and Bullet Lifesteal. +25% Fire Rate (Conditional). +14% Bullet Lifesteal (Conditional). +0.75m/s Movement Speed. 7s Duration"}},{"id":9,"name":"Stalker","cat":"Weapon","cost":1600,"active":"Passive","stats":[{"type":"Bonus Health","val":75}],"desc":{"passive":"Attacking enemies from behind with your weapon or melee opens a wound dealing spirit damage over time and reducing their bullet resist. During this time, if you or any allies are near the target, will see them through walls and be given bonus move speed. 17 Damage Per Second. -6 Bullet Resist. 1.5m Move Speed. 5s Debuff Duration. 25m Bonus Radius"}},{"id":10,"name":"Fleetfoot","cat":"Weapon","cost":1600,"active":"Active","stats":[{"type":"Slide Distance %","val":35},{"type":"Bullet Resist %","val":6}],"desc":{"passive":"Removes the Move Speed penalty while shooting.","active":"Gain bonus Move Speed and Slow Resistance. +3.25m/s Move Speed (Conditional). +35% Slow Resist. 6s Duration. (16s)"}},{"id":11,"name":"Intensifying Magazine","cat":"Weapon","cost":1600,"active":"Passive","stats":[{"type":"Max Ammo %","val":20}],"desc":{"passive":"Increases Weapon Damage as you continuously fire your weapon. 45% Max Weapon Damage (Conditional). 2.5s Time for Max Damage"}},{"id":12,"name":"Kinetic Dash","cat":"Weapon","cost":1600,"active":"Passive","stats":[{"type":"Stamina","val":1},{"type":"Stamina Recovery %","val":12}],"desc":{"passive":"When you Dash-Jump you gain Fire Rate and bonus Ammo until your next reload. Lasts up to 7s. +30% Fire Rate (Conditional). +6 Temporary Ammo (Conditional). 7s Duration"}},{"id":13,"name":"Long Range","cat":"Weapon","cost":1600,"active":"Passive","stats":[{"type":"Sprint Speed m/s","val":0.75},{"type":"Fall Off Range %","val":8}],"desc":{"passive":"Deal additional Weapon Damage when beyond a minimum distance from your target. +40% Weapon Damage (Conditional). 15.0m Min. Distance"}},{"id":14,"name":"Melee Charge","cat":"Weapon","cost":1600,"active":"Passive","stats":[{"type":"Heavy Melee Distance %","val":50},{"type":"Melee Damage %","val":10},{"type":"Bullet Resist %","val":6}],"desc":{"passive":"Your next Heavy Melee attack against an enemy deals increased damage. +25% Bonus Heavy Damage. (7s)"}},{"id":15,"name":"Mystic Shot","cat":"Weapon","cost":1600,"active":"Passive","stats":[{"type":"Spirit Power","val":7}],"desc":{"passive":"Your next bullet deals bonus Spirit Damage. +40 Spirit Damage. (8s)"}},{"id":16,"name":"Opening Rounds","cat":"Weapon","cost":1600,"active":"Passive","stats":[{"type":"Spirit Power","val":7}],"desc":{"passive":"Your attacks have additional Weapon Damage against enemies above 50% health. +30% Weapon Damage (Conditional)"}},{"id":17,"name":"Slowing Bullets","cat":"Weapon","cost":1600,"active":"Passive","stats":[{"type":"Move Speed m/s","val":-0.3},{"type":"Air Jump/Dash Distance %","val":-25}],"desc":{"passive":"Your bullets build up a Movement Slow on enemies. -30% Move Speed (Conditional). -25% Dash Distance. +3.5s Debuff Duration. +27% Buildup Per Shot"}},{"id":18,"name":"Spirit Shredder Bullets","cat":"Weapon","cost":1600,"active":"Passive","stats":[],"desc":{"passive":"Your Bullets apply a debuff that reduces the Spirit Resist of the target and grants you and your allies Spirit Lifesteal against them. -8% Spirit Amp (Conditional). +10% Spirit Lifesteal (Conditional). 8s Debuff Duration"}},{"id":19,"name":"Split Shot","cat":"Weapon","cost":1600,"active":"Active","stats":[],"desc":{"passive":"Hitting more than one Hero per attack will grant a stacking weapon damage bonus. Targets can only be hit once per multishot. 5 Weapon Multishot (Conditional). +8% Weapon Damage per Stack. 5s Buff Duration. 5 Max Stacks. 12s Stack Duration","active":"Make your weapon fire multishot. (27s)"}},{"id":20,"name":"Swift Striker","cat":"Weapon","cost":1600,"active":"Passive","stats":[{"type":"Fire Rate %","val":20},{"type":"Sprint Speed m/s","val":0.75}],"desc":{}},{"id":21,"name":"Titanic Magazine","cat":"Weapon","cost":1600,"active":"Passive","stats":[{"type":"Max Ammo %","val":100},{"type":"Weapon Damage %","val":14}],"desc":{}},{"id":22,"name":"Weakening Headshot","cat":"Weapon","cost":1600,"active":"Passive","stats":[{"type":"Bonus Health","val":60}],"desc":{"passive":"Upon landing a Headshot reduce target's Bullet Resist. -13% Bullet Resist. 12s Debuff Duration"}},{"id":23,"name":"Recharging Rush","cat":"Weapon","cost":1600,"active":"Passive","stats":[{"type":"Max Ammo %","val":20},{"type":"Weapon Damage %","val":10}],"desc":{"passive":"Dealing significant weapon damage replenishes a charge for each of your charged abilities. 200 Damage Threshold. 3.5s Time Frame. (24s)"}},{"id":24,"name":"Alchemical Fire","cat":"Weapon","cost":3200,"active":"Active","stats":[{"type":"Spirit Power","val":10}],"desc":{"active":"Throw a flask that explodes on contact, creating an area that does increasing Spirit Damage per second and reduces enemy Bullet Resist. 50% less effective vs non-heroes. 46 DPS. -7% Bullet Resist. 97 Max DPS. 10m Radius. 5s Duration. (30s)"}},{"id":25,"name":"Berserker","cat":"Weapon","cost":3200,"active":"Passive","stats":[{"type":"Bullet Resist %","val":8}],"desc":{"passive":"Your Weapon Damage increases as you take sustained damage. +7% Weapon Damage per Stack. 120 Damage taken to Stack. 10 Max Stacks. 10s Duration"}},{"id":26,"name":"Blood Tribute","cat":"Weapon","cost":3200,"active":"Active","stats":[{"type":"Spirit Resist %","val":9},{"type":"Out of Combat Regen","val":4}],"desc":{"active":"Toggle: Continually sacrifice Health to improve fire rate, Debuff Resistance and Move Speed. Healing received is reduced during the sacrifice. 50/s Health Drain. +40% Fire Rate. +35% Debuff Resist. +2 m/s Move Speed. -30% Healing Reduction"}},{"id":27,"name":"Burst Fire","cat":"Weapon","cost":3200,"active":"Passive","stats":[{"type":"Slide Distance %","val":50}],"desc":{"passive":"Briefly gain Fire Rate and Move Speed when one of your bullets hits an enemy hero. +35% Fire Rate (Conditional). +1.25 m/s Move Speed (Conditional). 4.5s Duration. (9s)"}},{"id":28,"name":"Cultist Sacrifice","cat":"Weapon","cost":3200,"active":"Active","stats":[{"type":"Out of Combat Regen","val":2},{"type":"Weapon Damage % vs NPCs","val":30},{"type":"Bullet Resist % vs NPCs","val":30}],"desc":{"active":"Target an enemy NPC and consume it for 150% Bonus Souls and grants a powerful long lasting buff. +8% Weapon Damage (Conditional). +75 Bonus Health (Conditional). +12% Ability Range. 160s Duration. (260s)"}},{"id":29,"name":"Escalating Resilience","cat":"Weapon","cost":3200,"active":"Passive","stats":[{"type":"Max Ammo %","val":30},{"type":"Bonus Health","val":100},{"type":"Weapon Damage %","val":15}],"desc":{"passive":"Grants Bullet Resist when your bullets hit an enemy hero. Each shot can only grant one stack. 30% Max Bullet Resist. 2% Bullet Resist per Stack. 24s Stack Duration"}},{"id":30,"name":"Express Shot","cat":"Weapon","cost":3200,"active":"Passive","stats":[{"type":"Bullet Velocity %","val":50},{"type":"Fire Rate %","val":5}],"desc":{"passive":"After not attacking for 3s, your next attack will fire twice in quick succession with increased damage and velocity. This attack consumes extra ammo. +170% Weapon Damage (Conditional). +40% Secondary Fire Weapon Damage (Conditional). +100% Bullet Velocity. 40% Extra Ammo Consumed. (3s)"}},{"id":31,"name":"Headhunter","cat":"Weapon","cost":3200,"active":"Passive","stats":[{"type":"Weapon Damage %","val":5},{"type":"Bonus Health","val":75}],"desc":{"passive":"Landing a headshot deals bonus damage, heals you and briefly grants you bonus move speed. +75 Bonus Head Shot Damage. 4% Heal per Headshot. +1.75 m/s Move Speed (Conditional). 3s Move Speed Duration. (8s)"}},{"id":32,"name":"Heroic Aura","cat":"Weapon","cost":3200,"active":"Active","stats":[{"type":"Move Speed m/s","val":1.5},{"type":"Bullet Resist %","val":17}],"desc":{"passive":"Provides Fire Rate to nearby player minions. 30m Radius","active":"Provides bonus Move Speed and Fire Rate to you and nearby allies. +2.25m/s Move Speed (Conditional). +30% Fire Rate (Conditional). 30m Active Radius. 7s Duration. (22s)"}},{"id":33,"name":"Hollow Point","cat":"Weapon","cost":3200,"active":"Passive","stats":[{"type":"Out of Combat Regen","val":4.5},{"type":"Bonus Health","val":150}],"desc":{"passive":"When you are above 65% health, deal additional Weapon Damage and your bullets reduce enemy Bullet Resist. +35% Weapon Damage (Conditional). -9% Bullet Resist (Conditional). 8s Debuff Duration"}},{"id":34,"name":"Hunter's Aura","cat":"Weapon","cost":3200,"active":"Passive","stats":[{"type":"Bonus Health","val":125},{"type":"Sprint Speed m/s","val":1}],"desc":{"passive":"Reduces nearby enemies' Bullet Resist and Fire Rate. If there is only one enemy hero nearby, this effect is tripled. -10% Bullet Resist (Conditional). -12% Fire Rate Slow (Conditional). 15.0m Radius"}},{"id":35,"name":"Point Blank","cat":"Weapon","cost":3200,"active":"Passive","stats":[{"type":"Bonus Health","val":100},{"type":"Melee Resist %","val":30}],"desc":{"passive":"When in close range to your target, gain Weapon Damage and your bullets apply a Movement Slow. +50% Weapon Damage. -25% Movement Slow (Conditional). 2s Debuff Duration. 15.0m Close Range"}},{"id":36,"name":"Sharpshooter","cat":"Weapon","cost":3200,"active":"Passive","stats":[{"type":"Fall Off Range %","val":20},{"type":"Weapon Zoom %","val":25},{"type":"Sprint Speed m/s","val":1},{"type":"Move Speed m/s","val":-0.7}],"desc":{"passive":"Deal additional Weapon Damage when beyond a minimum distance from your target. +70% Weapon Damage (Conditional). 15m Min. Distance"}},{"id":37,"name":"Spirit Rend","cat":"Weapon","cost":3200,"active":"Passive","stats":[{"type":"Bonus Health","val":100}],"desc":{"passive":"Your bullets apply a debuff that reduces the Spirit Resist of the target and grants you and your allies Spirit Lifesteal against them. -8% Spirit Resist (Conditional). +10% Spirit Lifesteal (Conditional). Landing headshots against the target reduces their Spirit Resist further. -7% Spirit Resist on Headshot (Conditional). 8s Debuff Duration. 4 Max Stacks. (2s)"}},{"id":38,"name":"Tesla Bullets","cat":"Weapon","cost":3200,"active":"Passive","stats":[],"desc":{"passive":"Your bullets have a chance to shock your target. The shock will jump to a nearby enemy. +33 Shock Damage. 15% Proc Chance. 8m Jump Radius. 4 Max Jumps. (0.25s)"}},{"id":39,"name":"Toxic Bullets","cat":"Weapon","cost":3200,"active":"Passive","stats":[],"desc":{"passive":"Your bullets build up a Bleed on enemies, causing them to lose a percentage of their Max Health over time. Also applies Healing Reduction on the bleeding target. 1.7%/sec Bleed Damage. -35% Healing Reduction (Conditional). 4s Duration. 19.7 Buildup Per Shot"}},{"id":40,"name":"Weighted Shots","cat":"Weapon","cost":3200,"active":"Passive","stats":[{"type":"Weapon Damage %","val":40},{"type":"Bullet Velocity %","val":-30},{"type":"Debuff Resist %","val":20},{"type":"Stamina Recovery %","val":-14}],"desc":{}},{"id":41,"name":"Ballistic Enchantment","cat":"Weapon","cost":3200,"active":"Imbue","stats":[{"type":"Ability Range %","val":20},{"type":"Non-Hero Weapon Damage %","val":5}],"desc":{"passive":"Imbue an ability with increased range. Dealing damage with that ability grants you increased weapon damage per unique hero hit. Has reduced effect on non-heroes. +20% Weapon Damage per Stack (Conditional). +20% Ability Range. 14s Duration. +5% Non-Hero Weapon Damage. 8 Non-Hero Stack Limit"}},{"id":42,"name":"Shadow Weave","cat":"Weapon","cost":3200,"active":"Active","stats":[{"type":"Out of Combat Regen","val":5},{"type":"Sprint Speed m/s","val":2},{"type":"Melee Damage on Ambush %","val":20}],"desc":{"active":"Become Stealthed. Whenever you take damage while Stealthed you get briefly revealed. Invisible Status Effect. 10s Stealth Duration. 18m Spot Radius. Attacking or using an ability will end your stealth and start an ambush, temporarily granting you bonus Fire Rate and Spirit Power. +20 Ambush Fire Rate (Conditional). +20 Ambush Spirit Power (Conditional). 5s Ambush Duration. +20% Melee Damage on Ambush reveal. (20s)"}},{"id":43,"name":"Armor Piercing Rounds","cat":"Weapon","cost":6400,"active":"Passive","stats":[{"type":"Bullet Velocity %","val":35}],"desc":{"passive":"Your Bullets have a chance to become unavoidable, piercing through enemies and ignoring their Bullet Resistance. 55% Proc Chance"}},{"id":44,"name":"Capacitor","cat":"Weapon","cost":6400,"active":"Active","stats":[{"type":"Fire Rate %","val":5}],"desc":{"passive":"Your bullets have a chance to shock your target. The shock will jump to a nearby enemy. 43 Shock Damage. 20% Proc Chance. 6 Max Jumps. 10m jump Radius. +5% Fire Rate. (0.25s)","active":"Launch a projectile that deals damage, removes all their non-ultimate buffs and applies a strong slow that recovers over time. 100 Damage. -75% Max Move Speed. 3s Debuff Duration. (40s)"}},{"id":45,"name":"Crippling Headshot","cat":"Weapon","cost":6400,"active":"Passive","stats":[{"type":"Bonus Health","val":150}],"desc":{"passive":"Landing a Headshot will reduce the target's Bullet and Spirit Resist. Also applies Healing Reduction on the target. -16% Bullet Resist. -16% Spirit Resist. -35% Healing Reduction (Conditional). 12s Debuff Duration"}},{"id":46,"name":"Frenzy","cat":"Weapon","cost":6400,"active":"Passive","stats":[{"type":"Fire Rate %","val":15},{"type":"Bonus Health","val":160}],"desc":{"passive":"While you are below 50% health, you gain stat bonuses. 4 m/s Move Speed (Conditional). 40% Fire Rate (Conditional). +30% Debuff Resistance"}},{"id":47,"name":"Glass Cannon","cat":"Weapon","cost":6400,"active":"Passive","stats":[{"type":"Weapon Damage %","val":80},{"type":"Max Health %","val":-15}],"desc":{"passive":"Each hero kill grants permanent Fire Rate (up to a max of 8 times). Death results in the loss of 1 stack. +8% Fire Rate per Kill (Conditional)"}},{"id":48,"name":"Lucky Shot","cat":"Weapon","cost":6400,"active":"Passive","stats":[{"type":"Max Ammo %","val":30}],"desc":{"passive":"Your bullets have a chance to be empowered, causing them to deal bonus weapon damage on hit. Bonus damage cannot Crit. +100% Bonus Weapon Damage. 25% Proc Chance"}},{"id":49,"name":"Ricochet","cat":"Weapon","cost":6400,"active":"Passive","stats":[{"type":"Fire Rate %","val":20}],"desc":{"passive":"Your bullets will ricochet on enemies near your target, applying any bullet procs and dealing a percentage of the original damage. 65% Ricochet Damage. 2 Ricochet Targets. 13m Ricochet Range"}},{"id":50,"name":"Crushing Fists","cat":"Weapon","cost":6400,"active":"Passive","stats":[{"type":"Heavy Melee Distance %","val":60},{"type":"Melee Damage %","val":20},{"type":"Bullet Resist %","val":12}],"desc":{"passive":"Your next Heavy Melee attack against an enemy deals increased damage. +25 Bonus Heavy Damage. (7s) Your melee damage will restore ammo and apply a stacking bullet resist debuff on enemies. Heavy melee applies 2 stacks. If the target reaches max stacks, they will be stunned. +15% Ammo. -4% Bullet Resist (Conditional). 6 Max Stacks. 0.5s Stun Duration. 8s Debuff Duration"}},{"id":51,"name":"Silencer","cat":"Weapon","cost":6400,"active":"Passive","stats":[{"type":"Spirit Resist %","val":15}],"desc":{"passive":"Your bullets reduce the target's outgoing spirit damage. -25% Spirit Damage Reduction (Conditional). 6s Debuff Duration. Your bullets build up to a Silence. Victims are immune to the build up for 10s after silence expires. Silenced Status Effect. 2.5s Silence Duration. 10s Immunity Duration. 20% Buildup Per Shot"}},{"id":52,"name":"Spellslinger","cat":"Weapon","cost":6400,"active":"Passive","stats":[{"type":"Cooldown Reduction %","val":6}],"desc":{"passive":"Whenever you cast an ability or item, gain a stacking buff that improves fire rate and reload speed. Each stack refreshes the duration. +12% Fire Rate (Conditional). -10% Reload Time (Conditional). 6 Max Stacks. 18s Buff Duration"}},{"id":53,"name":"Spiritual Overflow","cat":"Weapon","cost":6400,"active":"Passive","stats":[{"type":"Ability Duration %","val":15},{"type":"Spirit Lifesteal %","val":16}],"desc":{"passive":"Gain bonus Fire Rate and Spirit Power by charging up with your bullets on enemy heroes. +35% Fire Rate (Conditional). +40 Spirit Power (Conditional). +16% Spirit Lifesteal. 28% Buildup Per Shot. 15s Duration"}},{"id":54,"name":"Extra Health","cat":"Vitality","cost":800,"active":"Passive","stats":[{"type":"Bonus Health","val":210}],"desc":{}},{"id":55,"name":"Extra Regen","cat":"Vitality","cost":800,"active":"Passive","stats":[{"type":"Health Regen/s","val":3.5},{"type":"Out of Combat Regen","val":1}],"desc":{}},{"id":56,"name":"Extra Stamina","cat":"Vitality","cost":800,"active":"Passive","stats":[{"type":"Stamina","val":1},{"type":"Stamina Recovery %","val":12}],"desc":{}},{"id":57,"name":"Healing Rite","cat":"Vitality","cost":800,"active":"Active","stats":[],"desc":{"active":"+300 Total HP Regen (Conditional). +2 Sprint Speed (Conditional). Gets dispelled if you take damage from enemy players or objectives. Can be self-cast. 20s Duration. 30m Cast Range. (70s)"}},{"id":58,"name":"Melee Lifesteal","cat":"Vitality","cost":800,"active":"Passive","stats":[{"type":"Melee Damage %","val":12}],"desc":{"passive":"Your next Melee attacks heals you. This heal is 30% effective vs non-heroes. Cooldown is 1.5x as long for Light Melee Hits. +100 Bonus Health (Conditional). (8s)"}},{"id":59,"name":"Rebuttal","cat":"Vitality","cost":800,"active":"Passive","stats":[{"type":"Bonus Health","val":75},{"type":"Melee Resist %","val":18}],"desc":{"passive":"On a successful Parry against an enemy Hero, Heal yourself for the damage parried and returns that damage to the target, and temporarily gain increased melee damage. +30% Bonus Damage (Conditional). 6s Buff Duration"}},{"id":60,"name":"Sprint Boots","cat":"Vitality","cost":800,"active":"Passive","stats":[{"type":"Sprint Speed m/s","val":2},{"type":"Out of Combat Regen","val":2}],"desc":{}},{"id":62,"name":"Battle Vest","cat":"Vitality","cost":1600,"active":"Passive","stats":[{"type":"Bullet Resist %","val":18},{"type":"Out of Combat Regen","val":3}],"desc":{"passive":"While you are above 65% health, gain weapon damage and bonus fire rate. +15% Weapon Damage (Conditional). +8% Fire Rate (Conditional)"}},{"id":63,"name":"Bullet Lifesteal","cat":"Vitality","cost":1600,"active":"Passive","stats":[{"type":"Bullet Lifesteal %","val":13},{"type":"Bonus Health","val":70}],"desc":{}},{"id":64,"name":"Debuff Reducer","cat":"Vitality","cost":1600,"active":"Passive","stats":[{"type":"Debuff Resist %","val":25}],"desc":{"passive":"Reduces the duration of all negative effects applied to you."}},{"id":65,"name":"Enchanter's Emblem","cat":"Vitality","cost":1600,"active":"Passive","stats":[{"type":"Spirit Resist %","val":18},{"type":"Out of Combat Regen","val":2}],"desc":{"passive":"While you are above 65% health, gain bonus Spirit and Cooldown Reduction. +15 Spirit Power (Conditional). +5% Cooldown Reduction (Conditional)"}},{"id":66,"name":"Enduring Speed","cat":"Vitality","cost":1600,"active":"Passive","stats":[{"type":"Move Speed m/s","val":2},{"type":"Out of Combat Regen","val":2},{"type":"Slow Resist %","val":25}],"desc":{"passive":"Reduce the effect of enemy Move Speed penalties. +25% Slow Resist"}},{"id":67,"name":"Guardian Ward","cat":"Vitality","cost":1600,"active":"Active","stats":[{"type":"Ability Range %","val":8}],"desc":{"active":"Provide the target with a Barrier and temporary Move Speed. Can be self-cast. Cooldown is reduced by half when cast on someone else. 200 Barrier (Conditional). +2.75 m/s Move Speed (Conditional). 6s Buff Duration. 40m Cast Range. (35s)"}},{"id":68,"name":"Healbane","cat":"Vitality","cost":1600,"active":"Passive","stats":[{"type":"Spirit Power","val":7}],"desc":{"passive":"Your Spirit Damage applies Healing Reduction. If an enemy hero dies under this effect, you receive a large heal. -35% Healing Reduction (Conditional). 275 Heal on Hero Kill. 8s Duration"}},{"id":69,"name":"Healing Booster","cat":"Vitality","cost":1600,"active":"Passive","stats":[{"type":"Health Regen/s","val":3},{"type":"Out of Combat Regen","val":1}],"desc":{"passive":"Increases the effectiveness of your healing by 20%"}},{"id":70,"name":"Weapon Shielding","cat":"Vitality","cost":1600,"active":"Passive","stats":[{"type":"Out of Combat Regen","val":2.5},{"type":"Move Speed m/s","val":1.75}],"desc":{"passive":"Gain a Barrier whenever you take significant weapon damage from enemy Heroes in a small time frame. 300 Barrier (Conditional). 250 Damage Threshold. 4s Time Frame. 8s Barrier Duration. (35s)"}},{"id":71,"name":"Reactive Barrier","cat":"Vitality","cost":1600,"active":"Active","stats":[],"desc":{"passive":"Automatically restores one stamina and gain a Barrier when you are movement locked, Stunned, Chained, Immobilized, or Slept. 325 Bullet Shield Health (Conditional). 10s Duration. (55s)"}},{"id":72,"name":"Restorative Locket","cat":"Vitality","cost":1600,"active":"Active","stats":[{"type":"Spirit Resist %","val":10}],"desc":{"passive":"When an enemy uses an ability within 35m range from you, store one Restoration Stack.","active":"Consume all stacks to heal target ally and replenish 4 stamina points. Can be self-cast. 16 Heal per Stack. 25 Max Stacks. (20s)"}},{"id":73,"name":"Return Fire","cat":"Vitality","cost":1600,"active":"Active","stats":[{"type":"Bullet Resist %","val":10}],"desc":{"active":"Automatically fire a bullet towards any attacker who damages you with their abilities or weapon. 65% Bullet Damage Returned. 25% Spirit Damage Returned. 6s Duration. (23s)"}},{"id":74,"name":"Spirit Lifesteal","cat":"Vitality","cost":1600,"active":"Passive","stats":[{"type":"Spirit Lifesteal %","val":13},{"type":"Bonus Health","val":70},{"type":"Spirit Power","val":6}],"desc":{}},{"id":75,"name":"Spirit Shielding","cat":"Vitality","cost":1600,"active":"Passive","stats":[{"type":"Out of Combat Regen","val":2.5},{"type":"Move Speed m/s","val":1.75}],"desc":{"passive":"Gain a Barrier whenever you take significant spirit damage from enemy Heroes in a small time frame. 300 Barrier (Conditional). 225 Damage Threshold. 3.5s Time Frame. 8s Barrier Duration. (45s)"}},{"id":76,"name":"Trophy Collector (1600)","cat":"Vitality","cost":1600,"active":"Passive","stats":[{"type":"Sprint Speed m/s","val":2},{"type":"Out of Combat Regen","val":2}],"desc":{"passive":"Whenever you score an assist or kill, gain extra health, sprint, and ability range and passive soul generation. This effect stacks and persists through death. +0.2m/s Sprint Speed. +0.75% Ability Range. 18 Souls per Minute. 16 Max Stacks"}},{"id":77,"name":"Bullet Resilience","cat":"Vitality","cost":3200,"active":"Passive","stats":[{"type":"Bullet Resist %","val":30},{"type":"Out of Combat Regen","val":3}],"desc":{"passive":"When below 50% health, gain additional Bullet Resist. +30% Bullet Resist (Conditional)"}},{"id":78,"name":"Counterspell","cat":"Vitality","cost":3200,"active":"Passive","stats":[{"type":"Bonus Health","val":50},{"type":"Spirit Power","val":8}],"desc":{"passive":"Your next parry protects you from the damage and effects of enemy abilities and items. On a successful spell parry gain Move Speed and Spirit Power. 150 Healing (Conditional). +20% Spirit Power (Conditional). +1.75m Move Speed (Conditional). 0.8s Spell Parry Duration. (23s)"}},{"id":79,"name":"Dispel Magic","cat":"Vitality","cost":3200,"active":"Active","stats":[{"type":"Spirit Resist %","val":10}],"desc":{"active":"Purge all non-ultimate negative effects currently applied to you. If any effects were removed, heal yourself and gain a move speed bonus. Cannot be used while Stunned or Slept. 250 HP Healed On Activate. +2m/s Move Speed. 3s Buff Duration. (40s)"}},{"id":80,"name":"Fortitude","cat":"Vitality","cost":3200,"active":"Passive","stats":[{"type":"Bonus Health","val":375}],"desc":{"passive":"After not taking damage for 10s, gain 2% Max Health Regen. When you are above 75% health, you have bonus Weapon Damage and Move Speed. +1.25m/s Move Speed (Conditional)"}},{"id":81,"name":"Fury Trance","cat":"Vitality","cost":3200,"active":"Active","stats":[{"type":"Bullet Lifesteal %","val":14},{"type":"Bonus Health","val":100}],"desc":{"active":"-100% Stamina Recovery % (Conditional). +30% Fire Rate (Conditional). +40% Spirit Resist % (Conditional). Grants Fire Rate and Spirit Resistance but Silences and disables stamina usage and regeneration. 6s Duration. (18s)"}},{"id":82,"name":"Lifestrike","cat":"Vitality","cost":3200,"active":"Passive","stats":[{"type":"Melee Damage %","val":16},{"type":"Bonus Health","val":125}],"desc":{"passive":"Your Melee Attack applies Movement Slow and heals you for 30% of the Melee Damage dealt plus 110. This heal is 40% effective vs non-heroes. Cooldown is 1.5x as long for Light Melee hits. 60% Movement Slow (Conditional). 2.5s Slow Duration. (4s)"}},{"id":83,"name":"Majestic Leap","cat":"Vitality","cost":3200,"active":"Active","stats":[],"desc":{"active":"Launch yourself high into the air and grant yourself a Barrier. While in the air, you can use the active again to drop down faster. Cannot be used for 5s if attacked by enemy Hero. 200 Barrier (Conditional). 8s Barrier Duration. (45s)"}},{"id":84,"name":"Metal Skin","cat":"Vitality","cost":3200,"active":"Active","stats":[{"type":"Bullet Resist %","val":12}],"desc":{"active":"Become immune to bullets. -1.5m/s Active Movespeed Penalty. -20% Dash Distance. 5s Duration. (24s)"}},{"id":85,"name":"Rescue Beam","cat":"Vitality","cost":3200,"active":"Active","stats":[{"type":"Sprint Speed m/s","val":0.75},{"type":"Ability Range %","val":6}],"desc":{"active":"Heals a target allied hero and yourself for a percentage of Max Health. Once while healing, you can Pull the target towards you. Can be self-cast. 20% Heal Amount. 2.5s Channel Duration. 35m Cast Range. (60s)"}},{"id":86,"name":"Spirit Resilience","cat":"Vitality","cost":3200,"active":"Passive","stats":[{"type":"Spirit Resist %","val":30},{"type":"Out of Combat Regen","val":3}],"desc":{"passive":"When below 50% health, gain additional Spirit Resist. +30% Spirit Resist (Conditional)"}},{"id":87,"name":"Stamina Mastery","cat":"Vitality","cost":3200,"active":"Passive","stats":[{"type":"Stamina","val":2},{"type":"Stamina Recovery %","val":18},{"type":"Air Jump/Dash Distance %","val":23}],"desc":{"passive":"Allows an additional use of Air Jump or Air Dash before landing."}},{"id":88,"name":"Healing Nova","cat":"Vitality","cost":3200,"active":"Active","stats":[{"type":"Spirit Power","val":8},{"type":"Ability Range %","val":5}],"desc":{"active":"Heal yourself and nearby allies. 325 Total HP Regen. 2s Regen Duration. 18m Radius. (60s)"}},{"id":89,"name":"Veil Walker","cat":"Vitality","cost":3200,"active":"Passive","stats":[{"type":"Bonus Health","val":125},{"type":"Spirit Power","val":10}],"desc":{"passive":"Walking through a cosmic veil grants you Stealth, increased Move Speed. Invisible (Status Effect). 3.5m/s Invis Move Speed (Conditional). 85 Heal. 7s Invisibility Duration. (15s)"}},{"id":90,"name":"Warp Stone","cat":"Vitality","cost":3200,"active":"Active","stats":[],"desc":{"active":"Teleport straight ahead, gaining Bullet Resist. 11m Teleport Range. +30% Bullet Resist (Conditional). 6s Buff Duration. (16)"}},{"id":91,"name":"Cheat Death","cat":"Vitality","cost":6400,"active":"Passive","stats":[{"type":"Bonus Health","val":200},{"type":"Spirit Resist %","val":15}],"desc":{"passive":"When you would take lethal damage, instead become temporarily death immune. While death immune, you deal reduced damage, have reduced healing and move slower. 4.5s Death Immunity Duration. -60% Damage Reduction. -60% Healing Reduction. -2 m/s Move Speed. (90s)"}},{"id":92,"name":"Colossus","cat":"Vitality","cost":6400,"active":"Active","stats":[{"type":"Base Health %","val":25},{"type":"Weapon Damage %","val":15},{"type":"Melee Damage %","val":30}],"desc":{"active":"Gain Bullet and Spirit Resist, and slow the movement and dash speed of enemies nearby. Your model size grows by 35%. +30% Bullet Resist (Conditional). +30% Spirit Resist (Conditional). -30% Movement Slow (Conditional). +30% Melee Damage. 14m Radius. 7s Duration. (37s)"}},{"id":93,"name":"Divine Barrier","cat":"Vitality","cost":6400,"active":"Active","stats":[{"type":"Ability Range %","val":10}],"desc":{"active":"Remove all non-stun debuffs from the target and provide them with a Barrier and Move Speed. Can be self-cast. Cooldown is reduced by half when cast on someone else. 600 Barrier. +2.75m/s Move Speed (Conditional). 6s Buff Duration. 40m Cast Range. (45s)"}},{"id":94,"name":"Diviner's Kevlar","cat":"Vitality","cost":6400,"active":"Passive","stats":[{"type":"Ability Duration %","val":15}],"desc":{"passive":"Upon casting an ultimate ability gain temporary Bullet Shield, Spirit Shield, and Spirit Power. 1000 Barrier (Conditional). +35 Spirit Power (Conditional). 20s Buff Duration. (40s)"}},{"id":95,"name":"Healing Tempo","cat":"Vitality","cost":6400,"active":"Passive","stats":[{"type":"Healing Effectiveness %","val":25},{"type":"Spirit Resist %","val":10},{"type":"Health Regen/s","val":6},{"type":"Out of Combat Regen","val":4}],"desc":{"passive":"Applying heal to yourself or an ally grants the target bonus fire rate and bonus move speed. Does not apply on innate Regen or innate Bullet/Spirit Lifesteal. +40% Fire Rate. +1.25 m/s Move Speed. 7s Buff Duration"}},{"id":96,"name":"Infuser","cat":"Vitality","cost":6400,"active":"Active","stats":[{"type":"Spirit Lifesteal %","val":13},{"type":"Spirit Resist %","val":10},{"type":"Bonus Health","val":100}],"desc":{"active":"+70% Spirit Lifesteal (Conditional). +35 Spirit Power (Conditional). 6s Duration. (30s)"}},{"id":97,"name":"Inhibitor","cat":"Vitality","cost":6400,"active":"Passive","stats":[{"type":"Weapon Damage %","val":25},{"type":"Bonus Health","val":150}],"desc":{"passive":"Your bullets reduce the target's outgoing damage and apply healing reduction. -30% Damage Penalty (Conditional). -40% Healing Reduction (Conditional). 5s Debuff Duration. 23% Buildup Per Shot"}},{"id":98,"name":"Juggernaut","cat":"Vitality","cost":6400,"active":"Passive","stats":[{"type":"Slow Resist %","val":50},{"type":"Move Speed m/s","val":2},{"type":"Melee Resist %","val":25},{"type":"Health Regen/s","val":8}],"desc":{"passive":"Enemies that shoot you have their Fire Rate slowed. -40% Fire Rate (Conditional). 4s Duration"}},{"id":99,"name":"Leech","cat":"Vitality","cost":6400,"active":"Passive","stats":[{"type":"Spirit Lifesteal %","val":25},{"type":"Bullet Lifesteal %","val":30},{"type":"Bonus Health","val":160},{"type":"Weapon Damage %","val":12},{"type":"Spirit Power","val":12}],"desc":{}},{"id":100,"name":"Phantom Strike","cat":"Vitality","cost":6400,"active":"Active","stats":[{"type":"Weapon Damage %","val":15},{"type":"Spirit Power","val":8}],"desc":{"active":"Teleport to an enemy target and pull them to the ground. Dealing damage, Move speed reduction and Disarm. Disarm Status Effect. -50% Movement Slow (Conditional). 82 Damage. 25m Cast Range. 3s Disarm & Slow Duration. (35s)"}},{"id":101,"name":"Plated Armor","cat":"Vitality","cost":6400,"active":"Passive","stats":[{"type":"Bonus Health","val":130}],"desc":{"passive":"Gain a chance to either deflect incoming bullets, preventing all weapon damage or prevent all on-hit effects from bullets. 30% Deflection Percent. 50% On-Hit Prevention Percent"}},{"id":102,"name":"Siphon Bullets","cat":"Vitality","cost":6400,"active":"Passive","stats":[{"type":"Weapon Damage %","val":15},{"type":"Bullet Resist %","val":10}],"desc":{"passive":"Your bullets temporarily steal Max HP from enemies. Enemies regain their stolen health when the debuff expires. Permanently steal 1 stacks of health if a siphoned target dies and lose 2 stacks if you die. 35 Max HP Steal Per Bullet. 17s Steal Duration. (1.2s)"}},{"id":103,"name":"Spellbreaker","cat":"Vitality","cost":6400,"active":"Passive","stats":[{"type":"Spirit Resist %","val":18},{"type":"Debuff Resist %","val":25}],"desc":{"passive":"The next instance of high spirit damage you take is significantly reduced. 65% Spirit Damage Reduction. 175 Damage Threshold. (9s)"}},{"id":104,"name":"Unstoppable","cat":"Vitality","cost":6400,"active":"Active","stats":[{"type":"Debuff Resist %","val":25},{"type":"Bonus Health","val":125}],"desc":{"active":"Temporarily suppress negative status effects and become immune to Stun, Silence, Sleep, Root, and Disarm. Cannot be used while Stunned or Slept. 5.5s Duration. (65s)"}},{"id":105,"name":"Vampiric Burst","cat":"Vitality","cost":6400,"active":"Active","stats":[{"type":"Bullet Lifesteal %","val":13},{"type":"Bullet Resist %","val":10},{"type":"Bonus Health","val":100}],"desc":{"active":"Grants Lifesteal, Fire Rate, and Ammo. This added Ammo is not limited by your max magazine size. 70% Bullet Lifesteal. 40% Fire Rate. +75% Ammo. 4.5s Duration. (30s)"}},{"id":106,"name":"Witchmail","cat":"Vitality","cost":6400,"active":"Passive","stats":[{"type":"Spirit Resist %","val":20},{"type":"Spirit Power","val":14}],"desc":{"passive":"Taking heavy hits of spirit damage from an enemy reduces a random ability cooldown. 4s Cooldown Reduction per Hit. 75 Damage Threshold. (1s)"}},{"id":107,"name":"Indomitable","cat":"Vitality","cost":6400,"active":"Passive","stats":[{"type":"Bullet Resist %","val":8},{"type":"Spirit Resist %","val":8}],"desc":{"passive":"The next Stun, Chain, Immobilize, Sleep or Silence is automatically cleansed. When this happens, you gain a barrier and all your ability cooldowns get reduced by 20%. 325 Barrier (Conditional). 10s Duration. (55s)"}},{"id":108,"name":"Extra Charge","cat":"Spirit","cost":800,"active":"Passive","stats":[{"type":"Bonus Ability Charges","val":1},{"type":"Imbued Spirit Power","val":7}],"desc":{}},{"id":109,"name":"Extra Spirit","cat":"Spirit","cost":800,"active":"Passive","stats":[{"type":"Spirit Power","val":10}],"desc":{}},{"id":110,"name":"Mystic Burst","cat":"Spirit","cost":800,"active":"Passive","stats":[],"desc":{"passive":"Charges up over time with bonus spirit damage, causing abilities dealing more than 80 damage to deal additional damage. 40 Bonus Damage. (14s)"}},{"id":111,"name":"Mystic Expansion","cat":"Spirit","cost":800,"active":"Imbue","stats":[{"type":"Ability Range %","val":20}],"desc":{"passive":"Imbue an ability to increase its range and effect radius."}},{"id":112,"name":"Mystic Regeneration","cat":"Spirit","cost":800,"active":"Passive","stats":[{"type":"Bonus Health","val":50}],"desc":{"passive":"Dealing Spirit Damage to enemy Heroes grants you Bonus Health Regen. Stacks when dealing damage to different heroes. 4 HP/s Regeneration. 6s Regeneration Duration"}},{"id":113,"name":"Rusted Barrel","cat":"Spirit","cost":800,"active":"Active","stats":[{"type":"Bonus Health","val":60},{"type":"Bullet Resist %","val":8}],"desc":{"active":"Target an enemy to reduce their Fire Rate. -35% Fire Rate (Conditional). 32m Cast Range. 5s Duration. (16s)"}},{"id":114,"name":"Spirit Strike","cat":"Spirit","cost":800,"active":"Passive","stats":[],"desc":{"passive":"When you perform a Light or Heavy Melee attack against a hero, deal extra Spirit Damage with the attack and reduce the target's Spirit Resist. 40 Spirit Damage. -6% Spirit Resist (Conditional). 6s Duration. (8s)"}},{"id":115,"name":"Golden Goose Egg","cat":"Spirit","cost":800,"active":"Active","stats":[{"type":"Sprint Speed m/s","val":1},{"type":"Out of Combat Regen","val":1}],"desc":{"active":"Hatch the egg, gaining Souls and permanent buffs. The value of the egg grows the longer you hold onto it. 90 Soul Value per Minute"}},{"id":116,"name":"Arcane Surge","cat":"Spirit","cost":1600,"active":"Imbue","stats":[{"type":"Stamina","val":1},{"type":"Stamina Recovery %","val":12}],"desc":{"passive":"When you Dash-Jump, the next ability you use will have bonus Range, Duration and Spirit Power. Lasts up to 7s. +12% Ability Range (Conditional). +15% Ability Duration (Conditional). +20 Spirit Power (Conditional). 7s Duration"}},{"id":117,"name":"Bullet Resist Shredder","cat":"Spirit","cost":1600,"active":"Passive","stats":[{"type":"Bonus Health","val":90},{"type":"Bullet Resist flat","val":7}],"desc":{"passive":"Reduces Bullet Resist on enemies when you deal Spirit Damage. -10% Bullet Resist (Conditional). 8s Duration"}},{"id":118,"name":"Cold Front","cat":"Spirit","cost":1600,"active":"Active","stats":[{"type":"Spirit Resist %","val":6}],"desc":{"active":"Release an expanding ice blast that deals Spirit Damage and Slows targets it hits. 95 Damage. 60% Movement Slow (Conditional). 12m End Radius. 4s Duration. (25s)"}},{"id":119,"name":"Compress Cooldown","cat":"Spirit","cost":1600,"active":"Imbue","stats":[{"type":"Cooldown Reduction %","val":18}],"desc":{"passive":"Imbue an ability to reduce its Cooldown. +18% Cooldown Reduction"}},{"id":120,"name":"Duration Extender","cat":"Spirit","cost":1600,"active":"Imbue","stats":[{"type":"Ability Duration %","val":22}],"desc":{"passive":"Imbue an ability to increase its Duration. +22% Ability Duration"}},{"id":121,"name":"Improved Spirit","cat":"Spirit","cost":1600,"active":"Passive","stats":[{"type":"Spirit Power","val":18},{"type":"Out of Combat Regen","val":1.5}],"desc":{}},{"id":122,"name":"Mystic Slow","cat":"Spirit","cost":1600,"active":"Passive","stats":[{"type":"Bonus Health","val":50},{"type":"Sprint Speed m/s","val":0.75}],"desc":{"passive":"When the target takes Spirit Damage, they have their Move Speed reduced. 30% Movement Slow (Conditional). 2s Duration"}},{"id":123,"name":"Mystic Vulnerability","cat":"Spirit","cost":1600,"active":"Passive","stats":[{"type":"Spirit Resist %","val":8}],"desc":{"passive":"When the target takes Spirit Damage, they have their Spirit Resist reduced. -8% Spirit Resist (Conditional). 7s Duration"}},{"id":124,"name":"Quicksilver Reload","cat":"Spirit","cost":1600,"active":"Imbue","stats":[],"desc":{"passive":"Your Imbued ability charges up over time with bonus spirit damage, bonus fire rate and bonus bullets on use. 44 Damage. +10% Fire Rate. 100% Bullets Reloaded. (18s)"}},{"id":125,"name":"Slowing Hex","cat":"Spirit","cost":1600,"active":"Active","stats":[],"desc":{"active":"Slows movement of enemy target. Also Silences their movement-based items and abilities. Does not affect target's stamina usage. -20% Move Speed (Conditional). -30% Dash Distance (Conditional). 25m Cast Range. 3.5s Duration. (27s)"}},{"id":126,"name":"Spirit Sap","cat":"Spirit","cost":1600,"active":"Active","stats":[{"type":"Bonus Health","val":75}],"desc":{"active":"Target an enemy to reduce their Spirit Resist and Spirit Power. -12% Spirit Resist (Conditional). -30 Spirit Power. 12s Duration. 40m Cast Range. (18s)"}},{"id":127,"name":"Suppressor","cat":"Spirit","cost":1600,"active":"Passive","stats":[{"type":"Spirit Power","val":6},{"type":"Bonus Health","val":75}],"desc":{"passive":"When you deal Spirit Damage to enemies, you also reduce their Fire Rate. -30% Fire Rate (Conditional). 5s Duration"}},{"id":128,"name":"Decay","cat":"Spirit","cost":3200,"active":"Active","stats":[{"type":"Spirit Power","val":8},{"type":"Bonus Health","val":90}],"desc":{"active":"Inflict damage over time to a target, dealing damage based on their current health. 2.63%/sec Bleed Damage. -50% Healing Reduction (Conditional). 21m Cast Range. 10s Duration. (36s)"}},{"id":129,"name":"Disarming Hex","cat":"Spirit","cost":3200,"active":"Active","stats":[{"type":"Bonus Health","val":100},{"type":"Sprint Speed m/s","val":0.75}],"desc":{"active":"Disarms enemy target and reduces their Bullet Resist. Disarm Status Effect. -13% Bullet Resist (Conditional). 32m Cast Range. 4s Duration. (16s)"}},{"id":130,"name":"Greater Expansion","cat":"Spirit","cost":3200,"active":"Passive","stats":[{"type":"Spirit Resist %","val":10},{"type":"Ability Range %","val":30}],"desc":{"passive":"Increases the range and effect radius of your abilities and items. +30% Ability Range"}},{"id":131,"name":"Knockdown","cat":"Spirit","cost":3200,"active":"Active","stats":[{"type":"Bonus Health","val":100},{"type":"Ability Range %","val":5}],"desc":{"active":"Apply a Stun after 2s. Stun duration is increased against airborne targets. Stun Status Effect. 0.5s Stun Duration. 48m Cast Range. (35s)"}},{"id":132,"name":"Rapid Recharge","cat":"Spirit","cost":3200,"active":"Passive","stats":[{"type":"Bonus Ability Charges","val":2},{"type":"Faster Time Between Charges","val":30},{"type":"Cooldown Reduction %","val":14},{"type":"Bonus Spirit Power for Charged Abilities","val":10}],"desc":{"passive":"Reduces cooldown of charged abilities by 14%. +30% Faster Time Between Charges. +10 Bonus Spirit Power for Charged Abilities."}},{"id":133,"name":"Silence Wave","cat":"Spirit","cost":3200,"active":"Active","stats":[{"type":"Bonus Health","val":75}],"desc":{"active":"Launch an expanding projectile which Silences enemies for a short duration. Affected enemies also have their Spirit Resist and Spirit Power reduced for a longer duration. Silence does not interrupt channelling abilities. 100 Impact Damage. 3s Silence Duration. 40m Cast Range. (42s)"}},{"id":134,"name":"Spirit Snatch","cat":"Spirit","cost":3200,"active":"Passive","stats":[{"type":"Melee Damage %","val":7},{"type":"Bonus Health","val":100}],"desc":{"passive":"When you perform a Light or Heavy Melee attack against a hero, the attack deals extra Spirit Damage and steals Spirit Resist and Spirit Power. 50 Spirit Damage. 12% Spirit Resist Steal (Conditional). 15 Spirit Power Steal (Conditional). 10s Duration. (6s)"}},{"id":135,"name":"Superior Cooldown","cat":"Spirit","cost":3200,"active":"Passive","stats":[{"type":"Out of Combat Regen","val":4},{"type":"Cooldown Reduction %","val":20}],"desc":{"passive":"Reduces the Cooldown of your abilities and items. +20 Cooldown Reduction"}},{"id":136,"name":"Superior Duration","cat":"Spirit","cost":3200,"active":"Imbue","stats":[{"type":"Bullet Resist %","val":8},{"type":"Ability Duration %","val":28}],"desc":{"passive":"Increases the duration of your abilities and items. +28% Ability Duration"}},{"id":137,"name":"Surge of Power","cat":"Spirit","cost":3200,"active":"Imbue","stats":[{"type":"Imbued Spirit Power","val":24}],"desc":{"passive":"Imbue an ability with permanent Spirit Power. When that ability is used, gain bonus Move Speed and maintain full speed while attacking. +24 Imbued Ability Spirit Power. 22% Fire Rate Bonus (Conditional). +1.75m/s Move Speed (Conditional). 8s Move Speed Duration. (14s)"}},{"id":138,"name":"Tankbuster","cat":"Spirit","cost":3200,"active":"Passive","stats":[{"type":"Bonus Health","val":75}],"desc":{"passive":"Charges up over time with bonus spirit damage, causing abilities dealing more than 165 damage to deal additional damage. 40 Damage. 8% Current Health Bonus Damage. (14s)"}},{"id":139,"name":"Torment Pulse","cat":"Spirit","cost":3200,"active":"Passive","stats":[{"type":"Bonus Health","val":125},{"type":"Melee Resist %","val":15}],"desc":{"passive":"Periodically deals Spirit Damage to the closest two enemies nearby. 27 Pulse Damage. 9m Pulse Radius. (1.4s)"}},{"id":140,"name":"Radiant Regeneration","cat":"Spirit","cost":3200,"active":"Passive","stats":[{"type":"Bonus Health","val":90}],"desc":{"passive":"Dealing Spirit Damage to enemy Heroes grants you Bonus Health Regen. Stacks when dealing damage to different heroes. 4HP/s Regeneration. 5s Regeneration Duration. Heal and gain bonus Movement Speed for a short duration when you cast an ability. 70 Healing on Ability Cast. +1.75m/s Move Speed. 3s Duration. (6s)"}},{"id":141,"name":"Arctic Blast","cat":"Spirit","cost":6400,"active":"Active","stats":[{"type":"Spirit Resist %","val":10}],"desc":{"active":"Release an expanding ice blast that deals Spirit Damage, Freezing and then Slowing targets it hits. Targets take increased damage while frozen. 175 Damage. 0.75s Freeze Duration. 15% Frozen Bonus Damage. 12m End Radius. (24s)"}},{"id":142,"name":"Boundless Spirit","cat":"Spirit","cost":6400,"active":"Passive","stats":[{"type":"Spirit Power %","val":15},{"type":"Spirit Power","val":35},{"type":"Bonus Health","val":100},{"type":"Out of Combat Regen","val":4}],"desc":{}},{"id":143,"name":"Cursed Relic","cat":"Spirit","cost":6400,"active":"Active","stats":[],"desc":{"active":"Curses an enemy - interrupting, Silencing, Disarming, and preventing item usage. Silenced Status Effect. 3.25s Duration. 20m Cast Range. (55s)"}},{"id":144,"name":"Echo Shard","cat":"Spirit","cost":6400,"active":"Imbue","stats":[{"type":"Fire Rate %","val":5},{"type":"Spirit Resist %","val":5},{"type":"Bullet Resist %","val":5}],"desc":{"active":"Reset the cooldown of the imbued non-ultimate ability. (35s)"}},{"id":145,"name":"Escalating Exposure","cat":"Spirit","cost":6400,"active":"Passive","stats":[{"type":"Spirit Resist %","val":17}],"desc":{"passive":"Dealing Spirit Damage applies a stacking Spirit Amp that increases your Spirit Damage to the target. +4.5% Spirit Amp per Stack. 12 Max Stacks. 12s Duration. (0.7s)"}},{"id":146,"name":"Ethereal Shift","cat":"Spirit","cost":6400,"active":"Active","stats":[],"desc":{"active":"You enter a void state and become untargetable and invincible for a short duration, during which you float slowly and cannot perform actions. Afterwards, you gain Spirit Power, Move Speed, and Spirit Resist. Can be cancelled early. Activation cancels any active ability. +20 Spirit Power. +30% Spirit Resist. +2.5m/s Move Speed. 3.0 Duration. 5s Buff Duration. (35s)"}},{"id":147,"name":"Focus Lens","cat":"Spirit","cost":6400,"active":"Active","stats":[{"type":"Fire Rate %","val":13}],"desc":{"active":"Target an enemy to silence them. A portion of all damage dealt during the silence gets applied to the target when the silence wears off. 4.25s Duration. 30% Damage On Expire. 20m Cast Range. -9% Spirit Resist Reduction. -30 Spirit Power Reduction. 12s Resist Reduction Duration. (43s)"}},{"id":148,"name":"Lightning Scroll","cat":"Spirit","cost":6400,"active":"Passive","stats":[{"type":"Bonus Health","val":75},{"type":"Sprint Speed m/s","val":0.75}],"desc":{"passive":"Damage from your ultimate applies a stun and deals bonus spirit damage after a short delay. This effect can only trigger once per ultimate and cannot activate on ultimate with charges. Stun Status Effect. 0.75s Stun Duration. 150 Damage. 3s Delay Before Effect"}},{"id":149,"name":"Magic Carpet","cat":"Spirit","cost":6400,"active":"Active","stats":[{"type":"Ability Duration %","val":15},{"type":"Spirit Power","val":104},{"type":"Bonus Health","val":125}],"desc":{"active":"Summon a Magic Carpet that will fly you away. While flying you are immune to slows and doing any actions will dismiss the carpet. Cannot use abilities while the carpet is being summoned. 12s Duration. +7m/s Bonus Fly Speed. 1.3s Summon Duration. (32s)"}},{"id":150,"name":"Mercurial Magnum","cat":"Spirit","cost":6400,"active":"Imbue","stats":[{"type":"Max Ammo %","val":20},{"type":"Spirit Power","val":7},{"type":"Base Bullet Damage %","val":28}],"desc":{"passive":"Your imbued ability charges up over time with bonus spirit damage, bonus fire rate, and bonus bullets on use. Until your next reload, your bullets deal bonus Spirit Damage based on your Spirit Power. +28% Base Bullet Damage. 60 Damage. +25% Fire Rate. 100% Bullets Reloaded. (14s)"}},{"id":151,"name":"Mystic Reverb","cat":"Spirit","cost":6400,"active":"Imbue","stats":[{"type":"Spirit Lifesteal %","val":8}],"desc":{"passive":"Imbue an ability to apply slow on a hit target and deal an additional percentage of the damage dealt to enemies around the target after a short delay. 50% Damage (Conditional). 40% Movement Slow (Conditional). 16m Radius. 3s Delay Duration. (6.25s)"}},{"id":152,"name":"Refresher","cat":"Spirit","cost":6400,"active":"Active","stats":[],"desc":{"active":"Reset the cooldown of all your abilities and restore all your charges. (300s)"}},{"id":153,"name":"Scourge","cat":"Spirit","cost":6400,"active":"Active","stats":[{"type":"Bonus Health","val":125},{"type":"Debuff Resist %","val":15}],"desc":{"active":"Apply Spirit Resistance and an aura on a friendly target that deals damage to enemies proportional to their max health. Can be self-cast. 3.5% Max Health per second. +40% Spirit Resist (Conditional). 10s Duration. 35m Cast Range. 10m Radius. (35s)"}},{"id":154,"name":"Spirit Burn","cat":"Spirit","cost":6400,"active":"Passive","stats":[{"type":"Ability Range %","val":6}],"desc":{"passive":"Dealing significant Spirit Damage to an enemy within 5s causes an explosion dealing damage and a burn to nearby enemies. While burning, enemies take damage over time and receive reduced healing. Deals half-damage to non-heroes and does not expend its cooldown unless a hero is hit. 500 Damage Threshold. 110 Explosion Damage. 24 Damage Per Second. 13.2m Explosion Radius. 8s Debuff Duration. -70% Healing Reduction. (20s)"}},{"id":155,"name":"Vortex Web","cat":"Spirit","cost":6400,"active":"Active","stats":[{"type":"Ability Range %","val":8}],"desc":{"active":"Throw a vacuum grenade, pulling all enemies into a small area and applying Slowing Hex. 11m Capture Radius. -35% Move Speed (Conditional). 4s Duration. -40% Dash Distance. (42s)"}},{"id":156,"name":"Transcendent Cooldown","cat":"Spirit","cost":6400,"active":"Passive","stats":[{"type":"Out of Combat Regen","val":4},{"type":"Cooldown Reduction %","val":25},{"type":"Item Cooldown Reduction %","val":25}],"desc":{"passive":"Reduce the Cooldown of your abilities and items. +25% Ability Cooldown Reduction. +25% Item Cooldown Reduction"}}];
 
 const ICONS = {"Active Reload":"weapon_icons/Active_Reload.png","Alchemical Fire":"weapon_icons/Alchemical_Fire.png","Armor Piercing Rounds":"weapon_icons/Armor_Piercing_Rounds.png","Ballistic Enchantment":"weapon_icons/Ballistic_Enchantment.png","Berserker":"weapon_icons/Berserker.png","Blood Tribute":"weapon_icons/Blood_Tribute.png","Burst Fire":"weapon_icons/Burst_Fire.png","Capacitor":"weapon_icons/Capacitor.png","Close Quarters":"weapon_icons/Close_Quarters.png","Crippling Headshot":"weapon_icons/Crippling_Headshot.png","Crushing Fists":"weapon_icons/Crushing_Fists.png","Cultist Sacrifice":"weapon_icons/Cultist_Sacrifice.png","Escalating Resilience":"weapon_icons/Escalating_Resilience.png","Express Shot":"weapon_icons/Express_Shot.png","Extended Magazine":"weapon_icons/Extended_Magazine.png","Fleetfoot":"weapon_icons/Fleetfoot.png","Frenzy":"weapon_icons/Frenzy.png","Glass Cannon":"weapon_icons/Glass_Cannon.png","Headhunter":"weapon_icons/Headhunter.png","Headshot Booster":"weapon_icons/Headshot_Booster.png","Heroic Aura":"weapon_icons/Heroic_Aura.png","High-Velocity Rounds":"weapon_icons/High-Velocity_Rounds.png","Hollow Point":"weapon_icons/Hollow_Point.png","Hunter's Aura":"weapon_icons/Hunter's_Aura.png","Intensifying Magazine":"weapon_icons/Intensifying_Magazine.png","Kinetic Dash":"weapon_icons/Kinetic_Dash.png","Long Range":"weapon_icons/Long_Range.png","Lucky Shot":"weapon_icons/Lucky_Shot.png","Melee Charge":"weapon_icons/Melee_Charge.png","Monster Rounds":"weapon_icons/Monster_Rounds.png","Mystic Shot":"weapon_icons/Mystic_Shot.png","Opening Rounds":"weapon_icons/Opening_Rounds.png","Point Blank":"weapon_icons/Point_Blank.png","Rapid Rounds":"weapon_icons/Rapid_Rounds.png","Recharging Rush":"weapon_icons/Recharging_Rush.png","Restorative Shot":"weapon_icons/Restorative_Shot.png","Ricochet":"weapon_icons/Ricochet.png","Shadow Weave":"weapon_icons/Shadow_Weave.png","Sharpshooter":"weapon_icons/Sharpshooter.png","Silencer":"weapon_icons/Silencer.png","Slowing Bullets":"weapon_icons/Slowing_Bullets.png","Spellslinger":"weapon_icons/Spellslinger.png","Spirit Rend":"weapon_icons/Spirit_Rend.png","Spirit Shredder Bullets":"weapon_icons/Spirit_Shredder_Bullets.png","Spiritual Overflow":"weapon_icons/Spiritual_Overflow.png","Split Shot":"weapon_icons/Split_Shot.png","Stalker":"weapon_icons/Stalker.png","Swift Striker":"weapon_icons/Swift_Striker.png","Tesla Bullets":"weapon_icons/Tesla_Bullets.png","Titanic Magazine":"weapon_icons/Titanic_Magazine.png","Toxic Bullets":"weapon_icons/Toxic_Bullets.png","Weakening Headshot":"weapon_icons/Weakening_Headshot.png","Weighted Shots":"weapon_icons/Weighted_Shots.png","Battle Vest":"vitality_icons/Battle_Vest.png","Bullet Lifesteal":"vitality_icons/Bullet_Lifesteal_(item).png","Bullet Resilience":"vitality_icons/Bullet_Resilience.png","Cheat Death":"vitality_icons/Cheat_Death.png","Colossus":"vitality_icons/Colossus.png","Counterspell":"vitality_icons/Counterspell.png","Debuff Reducer":"vitality_icons/Debuff_Reducer.png","Dispel Magic":"vitality_icons/Dispel_Magic.png","Divine Barrier":"vitality_icons/Divine_Barrier.png","Diviner's Kevlar":"vitality_icons/Diviner's_Kevlar.png","Enchanter's Emblem":"vitality_icons/Enchanter's_Emblem.png","Enduring Speed":"vitality_icons/Enduring_Speed.png","Extra Health":"vitality_icons/Extra_Health.png","Extra Regen":"vitality_icons/Extra_Regen.png","Extra Stamina":"vitality_icons/Extra_Stamina.png","Fortitude":"vitality_icons/Fortitude.png","Fury Trance":"vitality_icons/Fury_Trance.png","Guardian Ward":"vitality_icons/Guardian_Ward.png","Healbane":"vitality_icons/Healbane.png","Healing Booster":"vitality_icons/Healing_Booster.png","Healing Nova":"vitality_icons/Healing_Nova.png","Healing Rite":"vitality_icons/Healing_Rite.png","Healing Tempo":"vitality_icons/Healing_Tempo.png","Indomitable":"vitality_icons/Indomitable.png","Infuser":"vitality_icons/Infuser.png","Inhibitor":"vitality_icons/Inhibitor.png","Juggernaut":"vitality_icons/Juggernaut.png","Leech":"vitality_icons/Leech.png","Lifestrike":"vitality_icons/Lifestrike.png","Majestic Leap":"vitality_icons/Majestic_Leap.png","Melee Lifesteal":"vitality_icons/Melee_Lifesteal.png","Metal Skin":"vitality_icons/Metal_Skin.png","Phantom Strike":"vitality_icons/Phantom_Strike.png","Plated Armor":"vitality_icons/Plated_Armor.png","Reactive Barrier":"vitality_icons/Reactive_Barrier.png","Rebuttal":"vitality_icons/Rebuttal.png","Rescue Beam":"vitality_icons/Rescue_Beam.png","Restorative Locket":"vitality_icons/Restorative_Locket.png","Return Fire":"vitality_icons/Return_Fire.png","Siphon Bullets":"vitality_icons/Siphon_Bullets.png","Spellbreaker":"vitality_icons/Spellbreaker.png","Spirit Lifesteal":"vitality_icons/Spirit_Lifesteal_(item).png","Spirit Resilience":"vitality_icons/Spirit_Resilience.png","Spirit Shielding":"vitality_icons/Spirit_Shielding.png","Sprint Boots":"vitality_icons/Sprint_Boots.png","Stamina Mastery":"vitality_icons/Stamina_Mastery.png","Trophy Collector":"vitality_icons/Trophy_Collector.png","Unstoppable":"vitality_icons/Unstoppable.png","Vampiric Burst":"vitality_icons/Vampiric_Burst.png","Veil Walker":"vitality_icons/Veil_Walker.png","Warp Stone":"vitality_icons/Warp_Stone.png","Weapon Shielding":"vitality_icons/Weapon_Shielding.png","Witchmail":"vitality_icons/Witchmail.png","Arcane Surge":"spirit_icons/Arcane_Surge.png","Arctic Blast":"spirit_icons/Arctic_Blast.png","Boundless Spirit":"spirit_icons/Boundless_Spirit.png","Bullet Resist Shredder":"spirit_icons/Bullet_Resist_Shredder.png","Cold Front":"spirit_icons/Cold_Front.png","Compress Cooldown":"spirit_icons/Compress_Cooldown.png","Cursed Relic":"spirit_icons/Cursed_Relic.png","Decay":"spirit_icons/Decay.png","Disarming Hex":"spirit_icons/Disarming_Hex.png","Duration Extender":"spirit_icons/Duration_Extender.png","Echo Shard":"spirit_icons/Echo_Shard.png","Escalating Exposure":"spirit_icons/Escalating_Exposure.png","Ethereal Shift":"spirit_icons/Ethereal_Shift.png","Extra Charge":"spirit_icons/Extra_Charge.png","Extra Spirit":"spirit_icons/Extra_Spirit.png","Focus Lens":"spirit_icons/Focus_Lens.png","Golden Goose Egg":"spirit_icons/Golden_Goose_Egg.png","Greater Expansion":"spirit_icons/Greater_Expansion.png","Improved Spirit":"spirit_icons/Improved_Spirit.png","Knockdown":"spirit_icons/Knockdown.png","Lightning Scroll":"spirit_icons/Lightning_Scroll.png","Magic Carpet":"spirit_icons/Magic_Carpet.png","Mercurial Magnum":"spirit_icons/Mercurial_Magnum.png","Mystic Burst":"spirit_icons/Mystic_Burst.png","Mystic Expansion":"spirit_icons/Mystic_Expansion.png","Mystic Regeneration":"spirit_icons/Mystic_Regeneration.png","Mystic Reverb":"spirit_icons/Mystic_Reverb.png","Mystic Slow":"spirit_icons/Mystic_Slow.png","Mystic Vulnerability":"spirit_icons/Mystic_Vulnerability.png","Quicksilver Reload":"spirit_icons/Quicksilver_Reload.png","Radiant Regeneration":"spirit_icons/Radiant_Regeneration.png","Rapid Recharge":"spirit_icons/Rapid_Recharge.png","Refresher":"spirit_icons/Refresher.png","Rusted Barrel":"spirit_icons/Rusted_Barrel.png","Scourge":"spirit_icons/Scourge.png","Silence Wave":"spirit_icons/Silence_Wave.png","Slowing Hex":"spirit_icons/Slowing_Hex.png","Spirit Burn":"spirit_icons/Spirit_Burn.png","Spirit Sap":"spirit_icons/Spirit_Sap.png","Spirit Snatch":"spirit_icons/Spirit_Snatch.png","Spirit Strike":"spirit_icons/Spirit_Strike.png","Superior Cooldown":"spirit_icons/Superior_Cooldown.png","Superior Duration":"spirit_icons/Superior_Duration.png","Suppressor":"spirit_icons/Suppressor.png","Surge of Power":"spirit_icons/Surge_of_Power.png","Tankbuster":"spirit_icons/Tankbuster.png","Torment Pulse":"spirit_icons/Torment_Pulse.png","Transcendent Cooldown":"spirit_icons/Transcendent_Cooldown.png","Vortex Web":"spirit_icons/Vortex_Web.png"};
 const SOULS_ICON = "souls_icon.png";
@@ -816,22 +918,79 @@ function load() {
       const parsed = JSON.parse(s);
       const valid = Array.isArray(parsed) && parsed.length > 0 && parsed.every(i => i.id && i.name && i.cat && i.cost && Array.isArray(i.stats));
       if (valid) {
-        // Merge desc from DEFAULTS so ability text is always fresh even with cached data
+        // Build desc lookup from DEFAULTS
         const descMap = {};
         DEFAULTS.forEach(d => { if (d.desc) descMap[d.name] = d.desc; });
         parsed.forEach(item => {
+          // Restore desc from DEFAULTS if missing
           if (!item.desc && descMap[item.name]) item.desc = descMap[item.name];
           // Fix legacy 'Ammo %' → 'Max Ammo %'
           item.stats = (item.stats||[]).map(s => s.type === 'Ammo %' ? {...s, type:'Max Ammo %'} : s);
+          // Deduplicate stats by type — keep the last entry for each type
+          const seen = {};
+          item.stats.forEach((s, i) => { seen[s.type] = i; });
+          item.stats = item.stats.filter((s, i) => seen[s.type] === i);
+          // Migrate (Conditional) segments from desc text into item.conditionals
+          migrateConditionalsFromDesc(item);
         });
         items = parsed;
       } else {
         items = JSON.parse(JSON.stringify(DEFAULTS));
+        items.forEach(item => migrateConditionalsFromDesc(item));
       }
     } else {
       items = JSON.parse(JSON.stringify(DEFAULTS));
+      items.forEach(item => migrateConditionalsFromDesc(item));
     }
   } catch(e) { items = JSON.parse(JSON.stringify(DEFAULTS)); }
+}
+
+// Scans item.desc for segments ending with (Conditional), extracts them into
+// item.conditionals (deduped by type), and removes those segments from the desc text.
+function migrateConditionalsFromDesc(item) {
+  if (!item.desc) return;
+  if (!item.conditionals) item.conditionals = [];
+  const existingTypes = new Set(item.conditionals.map(c => c.type));
+
+  for (const key of Object.keys(item.desc)) {
+    const text = item.desc[key];
+    if (!text) continue;
+
+    // Split into period-delimited segments, process each
+    const segments = text.split(/(?<=\.)\s+|(?<=\))\s+/);
+    const kept = [];
+
+    for (const seg of segments) {
+      const trimmed = seg.trim();
+      if (!trimmed) continue;
+
+      if (/\(Conditional\)/i.test(trimmed)) {
+        // Try to extract a numeric value and stat type via extractDescStats
+        const extracted = extractDescStats({ _tmp: trimmed });
+        if (extracted.length > 0) {
+          for (const ex of extracted) {
+            if (!existingTypes.has(ex.type)) {
+              item.conditionals.push({ type: ex.type, val: ex.val });
+              existingTypes.add(ex.type);
+            }
+          }
+        }
+        // Always drop the segment from desc regardless of whether we matched a stat
+      } else {
+        kept.push(trimmed);
+      }
+    }
+
+    const cleaned = kept.join(' ').replace(/\s{2,}/g, ' ').trim();
+    if (cleaned) {
+      item.desc[key] = cleaned;
+    } else {
+      delete item.desc[key];
+    }
+  }
+
+  // If desc is now empty, remove it
+  if (Object.keys(item.desc).length === 0) delete item.desc;
 }
 
 function save() { try { localStorage.setItem(SK, JSON.stringify(items)); } catch(e) {} }
@@ -934,30 +1093,61 @@ function renderShop(cat) {
         const iconHtml = iconSrc ? `<img class="banner-icon" src="${iconSrc}" alt="${item.name}">` : `<div class="banner-icon-placeholder">✦</div>`;
         // ability badge - only shown when item has a description
         const hasDesc = item.active !== 'Regular' && item.desc && (item.desc.passive || item.desc.active || item.desc.imbue);
-        // Extract a flat duration badge from description texts (e.g. "4s Duration" or "(16s)")
-        let durBadge = '';
-        if (hasDesc) {
-          const allDescText = Object.values(item.desc || {}).join(' ');
-          // Match patterns like "4.5s Duration" or "7s Buff Duration" or standalone "(16s)"
-          const durMatch = allDescText.match(/\b(\d+(?:\.\d+)?)\s*s\b(?:\s+(?:Duration|Buff Duration|Debuff Duration|Stack Duration))?/i);
-          // Also match the cooldown in parens at end: "(16s)"
-          const cdMatch  = allDescText.match(/\((\d+(?:\.\d+)?)s\)\s*$/);
-          const durSec   = durMatch ? durMatch[1] : null;
-          const cdSec    = cdMatch  ? cdMatch[1]  : null;
-          if (durSec) {
-            durBadge = `<span class="active-tag duration-badge"><img src="${DURATION_ICON}" alt="" style="width:15px;height:15px;vertical-align:middle;margin-right:3px;opacity:.9;">${durSec}s</span>`;
+        // Parse duration and cast range — prefer explicit item fields, fall back to desc text for legacy items
+        let durSec = null, cdSec = null, castRange = null;
+        const descObj = item.desc || {};
+        // Build cleaned desc (strip range and duration segments that are now stored explicitly)
+        const cleanedDesc = {};
+        for (const [dKey, dText] of Object.entries(descObj)) {
+          if (!dText) continue;
+          let stripped = dText
+            .replace(/\b\d+(?:\.\d+)?m\s+(?:Cast\s+)?[A-Za-z]*\s*[Rr]ange\b[.\s]*/g, '')
+            .replace(/\b\d+(?:\.\d+)?s\s+(?:Duration|Buff Duration|Debuff Duration|Stack Duration|Regen Duration)\b[.\s]*/gi, '')
+            .replace(/\s{2,}/g, ' ').trim();
+          cleanedDesc[dKey] = stripped || dText;
+        }
+        // Use explicit fields if set, otherwise parse from desc text
+        if (item.duration != null) {
+          durSec = String(item.duration);
+        }
+        if (item.castRange != null) {
+          castRange = item.castRange + 'm Cast Range';
+        }
+        if (hasDesc && (durSec == null || castRange == null)) {
+          const allDescText = Object.values(descObj).join(' ');
+          if (durSec == null) {
+            const durMatch = allDescText.match(/\b(\d+(?:\.\d+)?)s\s+(?:Duration|Buff Duration|Debuff Duration|Stack Duration|Regen Duration)\b/i);
+            durSec = durMatch ? durMatch[1] : null;
+          }
+          if (castRange == null) {
+            const rangeMatch = allDescText.match(/\b(\d+(?:\.\d+)?m\s+(?:Cast\s+)?[A-Za-z]*\s*[Rr]ange)\b/i);
+            castRange = rangeMatch ? rangeMatch[1].trim() : null;
           }
         }
-        const aTag = ''; // moved to sub-banner below
-        // Sub-banner: passive/active label on left, duration on right
-        // Always show sub-banner for consistent card height; blank when no desc
+        if (hasDesc) {
+          const allDescText = Object.values(descObj).join(' ');
+          const cdMatch = allDescText.match(/\((\d+(?:\.\d+)?)s\)\s*$/);
+          cdSec = cdMatch ? cdMatch[1] : null;
+        }
+        // Prefer explicit item.cooldown field over desc-parsed value
+        if (item.cooldown != null) cdSec = String(item.cooldown);
+        const durBadge = (hasDesc && cdSec)
+          ? `<span class="active-tag duration-badge"><img src="${DURATION_ICON}" alt="" style="width:15px;height:15px;vertical-align:middle;margin-right:3px;opacity:.9;">${cdSec}s</span>`
+          : '';
+        // Top sub-banner
         const subBannerHtml = `<div class="card-sub-banner ${cl}${!hasDesc ? ' sub-banner-blank' : ''}">
           ${hasDesc ? `<span class="sub-banner-type">${item.active}</span>` : ''}
           ${hasDesc && durBadge ? `<span class="sub-banner-dur">${durBadge}</span>` : ''}
         </div>`;
+        // Bottom sub-banner — only shown if duration or cast range present
+        const showBottomBanner = durSec || castRange;
+        const bottomBannerHtml = showBottomBanner ? `<div class="card-bottom-banner">
+          <span class="card-bottom-banner-dur">${durSec ? `<img src="ability-duration-icon.png" alt="" style="width:15px;height:15px;object-fit:contain;opacity:.85;">${durSec}s Duration` : ''}</span>
+          <span class="card-bottom-banner-range">${castRange ? `${castRange}<img src="ability-range-icon.png" alt="" style="width:15px;height:15px;object-fit:contain;opacity:.85;">` : ''}</span>
+        </div>` : '';
 
-        // description block
-        const desc = item.desc || {};
+        // description block — use cleanedDesc (cast range stripped)
+        const desc = cleanedDesc;
         let descHtml = '';
         if (desc.passive) descHtml += `<div class="item-desc"><span class="desc-body">${renderDescText(desc.passive,'passive')}</span></div>`;
         if (desc.active)  descHtml += `<div class="item-desc"><span class="desc-body">${renderDescText(desc.active,'active')}</span></div>`;
@@ -972,7 +1162,12 @@ function renderShop(cat) {
           const cbId_eff = 'dscb_' + item.id + '_' + ds.type.replace(/[^a-z0-9]/gi,'_') + '_' + ds.source;
           return descStatChecked[cbId_eff] !== false;
         });
-        const effectiveStats = [...item.stats, ...descStats_eff.map(d=>({type:d.type,val:d.val}))];
+        // Also include item.conditionals in effectiveStats
+        const condStats_eff = (item.conditionals||[]).filter(c => {
+          const cbId_eff = 'dscb_' + item.id + '_' + c.type.replace(/[^a-z0-9]/gi,'_') + '_conditional';
+          return descStatChecked[cbId_eff] !== false;
+        });
+        const effectiveStats = [...item.stats, ...descStats_eff.map(d=>({type:d.type,val:d.val})), ...condStats_eff.map(c=>({type:c.type,val:c.val}))];
 
         const filteredDescStats = extractDescStats(item.desc||{}).filter(ds => !item.stats.some(s => s.type === ds.type));
 
@@ -1026,9 +1221,9 @@ function renderShop(cat) {
           if (item.stats.some(s => s.type === ds.type)) return; // skip if already a card stat
           const sign = ds.val < 0 ? '' : '+';
           const pct  = ds.type.includes('%') ? '%' : '';
-          const srcLabel  = 'Given by ' + ds.source.charAt(0).toUpperCase() + ds.source.slice(1);
+          const srcLabel  = 'Given by Conditional';
           const cbId     = 'dscb_' + item.id + '_' + ds.type.replace(/[^a-z0-9]/gi,'_') + '_' + ds.source;
-          const srcBadge = `<span class="desc-stat-badge ${item.cat.toLowerCase()}">${srcLabel}</span>`;
+          const srcBadge = `<span class="desc-stat-badge ${item.cat.toLowerCase()}${ds.source==='conditional'?' conditional':''}">${srcLabel}</span>`;
           const cbIsChecked = descStatChecked[cbId] !== false;
           const cbHtml   = `<input type="checkbox" class="desc-stat-checkbox" id="${cbId}" ${cbIsChecked ? 'checked' : ''}
             onchange="toggleDescStat('${cbId}',this.checked)"
@@ -1068,9 +1263,53 @@ function renderShop(cat) {
           </div>`;
         });
 
+        // Render item.conditionals — stats stored explicitly on the item (not parsed from desc text)
+        (item.conditionals||[]).forEach(cs => {
+          if (item.stats.some(s => s.type === cs.type)) return;
+          const sign   = cs.val < 0 ? '' : '+';
+          const pct    = cs.type.includes('%') ? '%' : '';
+          const cbId   = 'dscb_' + item.id + '_' + cs.type.replace(/[^a-z0-9]/gi,'_') + '_conditional';
+          const srcBadge = `<span class="desc-stat-badge ${item.cat.toLowerCase()} conditional">Given by Conditional</span>`;
+          const cbIsChecked = descStatChecked[cbId] !== false;
+          const cbHtml = `<input type="checkbox" class="desc-stat-checkbox" id="${cbId}" ${cbIsChecked ? 'checked' : ''}
+            onchange="toggleDescStat('${cbId}',this.checked)"
+            title="Include in soul cost calculation">`;
+          const nameHtml = getStatNameHtml(cs.type);
+          const csAlloc     = getAllocatedCosts({cost:item.cost, stats:effectiveStats});
+          const csAllocCost = csAlloc[cs.type] || 0;
+          const csAllocSPU  = cs.val > 0 ? csAllocCost / cs.val : 0;
+          const csSpuFmt    = csAllocSPU >= 100 ? csAllocSPU.toFixed(1) : csAllocSPU >= 10 ? csAllocSPU.toFixed(2) : csAllocSPU.toFixed(3);
+          const csAllocFmt  = csAllocCost >= 100 ? csAllocCost.toFixed(0) : csAllocCost.toFixed(1);
+          const csUnitLabel = cs.type.includes('%') ? '1%' : '1';
+          const csCls2      = cs.val > 0 ? (csAllocSPU < 50 ? 'good' : csAllocSPU < 200 ? 'ok' : 'poor') : '';
+          const csSpvId     = 'spv_' + item.id + '_' + cs.type.replace(/[^a-z0-9]/gi,'_') + '_cond';
+          const csActualRate  = useActualRates ? (ACTUAL_RATES_MAP[cs.type] || null) : null;
+          const csActualTotal = csActualRate && cs.val > 0 ? cs.val * csActualRate : null;
+          const csActualFmt   = csActualTotal ? (csActualTotal >= 1000 ? csActualTotal.toFixed(0) : csActualTotal >= 100 ? csActualTotal.toFixed(1) : csActualTotal.toFixed(2)) : null;
+          const csIsNA        = useActualRates && ACTUAL_RATES_MAP[cs.type] === null;
+          const csSpvLine = cs.val > 0
+            ? (csIsNA
+                ? `<span class="stat-spu poor" id="${csSpvId}" data-cbid="${cbId}" style="color:#e09040;">Unknown Worth</span>`
+                : (useActualRates && csActualFmt
+                    ? `<span class="stat-spu good" id="${csSpvId}" data-cbid="${cbId}">Worth ${csActualFmt} souls</span>`
+                    : `<span class="stat-spu ${csCls2}" id="${csSpvId}" data-cbid="${cbId}">${csUnitLabel} = ${csSpuFmt} souls</span>`))
+            : '';
+          const csCstId    = 'cst_' + item.id + '_' + cs.type.replace(/[^a-z0-9]/gi,'_') + '_cond';
+          const csCostLine = (cs.val > 0 && !useActualRates) ? `<span class="stat-cost" id="${csCstId}" data-cbid="${cbId}">${csAllocFmt} of ${item.cost} souls</span>` : '';
+          statsHtml += `<div class="stat-row-item desc-stat-row">
+            <div class="desc-stat-badge-row">${srcBadge}${cbHtml}</div>
+            <div class="stat-row-top">
+              <span class="stat-name" id="${cbId}_name">${nameHtml}</span>
+              <span class="stat-val-display${cs.val<0?' negative':''}" id="${cbId}_val">${sign}${cs.val}${pct}</span>
+            </div>
+            ${csSpvLine || csCostLine ? `<div class="stat-row-meta" id="${cbId}_meta">${csSpvLine}${csCostLine}</div>` : ''}
+          </div>`;
+        });
+
         html+=`<div class="item-card ${cl}">
           <div class="card-banner ${cl}">${iconHtml}<span class="banner-name">${item.name}</span></div>
           ${subBannerHtml}<div class="card-body"><div class="card-stats">${statsHtml}</div>${descHtml}</div>
+          ${bottomBannerHtml}
           <div class="card-footer ${cl}">
             <span class="cost-display"><img class="souls-icon" src="${SOULS_ICON}" alt="souls"><span class="cost-num">${item.cost.toLocaleString()}</span></span>
 ${buildActualTotal(item)}
@@ -1191,12 +1430,39 @@ function renderPending() {
   ).join('');
 }
 function removePending(i){pendingStats.splice(i,1);renderPending();}
+function addConditionalRow() {
+  const typeEl = document.getElementById('add-cond-type');
+  const valEl  = document.getElementById('add-cond-val');
+  const list   = document.getElementById('add-conditionals-list');
+  if (!typeEl || !list) return;
+  const statType = typeEl.value.trim();
+  if (!statType) return;
+  const val  = valEl && valEl.value.trim();
+  const sign = val && parseFloat(val) >= 0 ? '+' : '';
+  const pct  = statType.includes('%') ? '%' : '';
+  const label = val ? `${sign}${val}${pct} ${statType}` : statType;
+  // Append row directly
+  const row = document.createElement('div');
+  row.style.cssText = 'display:flex;align-items:center;gap:6px;';
+  row.dataset.condLabel = label;
+  row.innerHTML = `<span style="flex:1;font-family:var(--font-body);font-size:13px;color:#ffb3c6;background:var(--bg-card);border:1px solid rgba(255,179,198,0.25);border-radius:3px;padding:4px 8px;">${label}</span>
+    <button onclick="this.closest('[data-cond-label]').remove()" style="background:none;border:none;cursor:pointer;color:var(--text3);font-size:15px;padding:2px 5px;" onmouseover="this.style.color='#e06040'" onmouseout="this.style.color='var(--text3)'">&#x2715;</button>`;
+  list.appendChild(row);
+  typeEl.value = '';
+  if (valEl) valEl.value = '';
+}
+window.addConditionalRow = addConditionalRow;
+
 function saveItem() {
   const name=document.getElementById('new-name').value.trim();
   if(!name){notify('Enter an item name');return;}
-  const passiveDesc=(document.getElementById('new-desc-passive').value||'').trim();
-  const activeDesc=(document.getElementById('new-desc-active').value||'').trim();
+  const addCondItems=[...(document.querySelectorAll('#add-conditionals-list [data-cond-label]')||[])].map(el=>el.dataset.condLabel);
+  const condPrefix=addCondItems.map(l=>l+' (Conditional).').join(' ');
+  const passiveRaw=(document.getElementById('new-desc-passive').value||'').trim();
+  const activeRaw=(document.getElementById('new-desc-active').value||'').trim();
   const imbueDesc=(document.getElementById('new-desc-imbue').value||'').trim();
+  const passiveDesc=condPrefix&&!activeRaw?(condPrefix+(passiveRaw?' '+passiveRaw:'')):passiveRaw;
+  const activeDesc=condPrefix&&activeRaw?(condPrefix+' '+activeRaw):activeRaw;
   const desc={};
   if(passiveDesc) desc.passive=passiveDesc;
   if(activeDesc)  desc.active=activeDesc;
@@ -1223,6 +1489,12 @@ function clearAdd() {
   document.getElementById('new-desc-passive').value='';
   document.getElementById('new-desc-active').value='';
   document.getElementById('new-desc-imbue').value='';
+  const addCondList=document.getElementById('add-conditionals-list');
+  if(addCondList) addCondList.innerHTML='';
+  const addCondType=document.getElementById('add-cond-type');
+  if(addCondType) addCondType.value='';
+  const addCondVal=document.getElementById('add-cond-val');
+  if(addCondVal) addCondVal.value='';
   pendingStats=[];renderPending();updatePanel();
   newIconDataUrl=null;
   const canvas=document.getElementById('new-icon-preview');
@@ -1341,7 +1613,7 @@ function renderSoulRate() {
         const itemCatColorMap = {Weapon:'var(--weapon-light)',Vitality:'var(--vitality-light)',Spirit:'var(--spirit-light)'};
         const itemColor = itemCatColorMap[e.cat] || 'var(--text)';
         return `<span ${srCbId} style="${fade}display:inline-block;">${badge}<span style="color:${itemColor};font-family:var(--font-arcas);font-size:14px;">${e.name}</span>${useActualRates ? '' : ` <span style="font-size:13px;font-style:italic;color:var(--text3);">(+${e.val}${type.includes('%')?'%':''} = ${af} of $${e.cost.toLocaleString()})</span>`}</span>`;
-      }).join('<br>');
+      }).filter(Boolean).join('<br>');
       html += `<tr>
         <td><span class="sr-stat">${getStatNameHtml(type)}</span></td>
         <td><span class="sr-souls ${cls2}">${fmtN(avg)}</span>${entries.length>1?`<div class="sr-avg">(${entries.length} items)</div>`:''}</td>
@@ -1357,18 +1629,22 @@ function renderSoulRate() {
 
 // ── EDIT MODAL ──
 let editItemId = null;
-let editStats = [];
-
+let editStats = [];       // base stats being edited
+let editConds = [];       // conditional stats being edited
 let editIconDataUrl = null;
 
 function openEdit(id) {
   const item = items.find(i => i.id === id);
   if (!item) return;
   editItemId = id;
-  editStats = item.stats.map(s => ({...s}));
-  editIconDataUrl = item.customIcon || null;
+  // Deep-copy stats and conditionals
+  editStats = (item.stats || []).map(s => ({...s}));
+  editConds = (item.conditionals || []).map(c => ({...c}));
+  editIconDataUrl = item.customIcon !== undefined ? item.customIcon : null;
+
   document.getElementById('edit-title').textContent = 'Edit: ' + item.name;
-  // Populate all fields
+
+  // Populate basic fields
   const nameEl = document.getElementById('edit-name');
   const catEl  = document.getElementById('edit-cat');
   const costEl = document.getElementById('edit-cost');
@@ -1377,8 +1653,27 @@ function openEdit(id) {
   if (catEl)  catEl.value  = item.cat;
   if (costEl) costEl.value = String(item.cost);
   if (actEl)  actEl.value  = item.active || 'Regular';
+
+  // Populate single description textarea — join all desc fields
+  const desc = item.desc || {};
+  const descParts = [desc.passive, desc.active, desc.imbue].filter(Boolean);
+  const descEl = document.getElementById('edit-desc');
+  if (descEl) descEl.value = descParts.join('\n') || '';
+
+  // Populate duration, cast range and cooldown
+  const durEl   = document.getElementById('edit-duration');
+  const rangeEl = document.getElementById('edit-cast-range');
+  const cdEl    = document.getElementById('edit-cooldown');
+  if (durEl)   durEl.value   = item.duration  != null ? String(item.duration)  : '';
+  if (rangeEl) rangeEl.value = item.castRange  != null ? String(item.castRange) : '';
+  if (cdEl)    cdEl.value    = item.cooldown   != null ? String(item.cooldown)  : '';
+
+  // Render stats and conditionals lists
+  renderEditStats();
+  renderEditConds();
+
   // Icon preview
-  const canvas = document.getElementById('edit-icon-preview');
+  const canvas   = document.getElementById('edit-icon-preview');
   const clearBtn = document.getElementById('clear-edit-icon-btn');
   if (canvas) {
     if (editIconDataUrl) {
@@ -1393,117 +1688,38 @@ function openEdit(id) {
       if (clearBtn) clearBtn.style.display = 'none';
     }
   }
-  renderEditStats();
-  // Populate desc fields
-  const desc = item.desc || {};
-  const pa = document.getElementById('edit-desc-passive');
-  const ac = document.getElementById('edit-desc-active');
-  const im = document.getElementById('edit-desc-imbue');
-  if (pa) pa.value = desc.passive || '';
-  if (ac) ac.value = desc.active  || '';
-  if (im) im.value = desc.imbue   || '';
-  const overlay = document.getElementById('edit-overlay');
-  overlay.style.display = 'flex';
+
+  document.getElementById('edit-overlay').style.display = 'flex';
   setTimeout(updateEditPreview, 0);
-}
-
-function editPreviewIcon(input) {
-  const file = input.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = e => {
-    editIconDataUrl = e.target.result;
-    const canvas = document.getElementById('edit-icon-preview');
-    const btn    = document.getElementById('clear-edit-icon-btn');
-    if (canvas) {
-      const ctx = canvas.getContext('2d');
-      const img = new Image();
-      img.onload = () => { ctx.clearRect(0,0,50,50); ctx.drawImage(img,0,0,50,50); canvas.style.display='block'; };
-      img.src = editIconDataUrl;
-    }
-    if (btn) btn.style.display = 'inline-block';
-    updateEditPreview();
-  };
-  reader.readAsDataURL(file);
-}
-
-function clearEditIcon() {
-  editIconDataUrl = null;
-  const input  = document.getElementById('edit-icon-file');
-  const canvas = document.getElementById('edit-icon-preview');
-  const btn    = document.getElementById('clear-edit-icon-btn');
-  if (input)  input.value = '';
-  if (canvas) { const ctx = canvas.getContext('2d'); ctx.clearRect(0,0,50,50); canvas.style.display='none'; }
-  if (btn)    btn.style.display = 'none';
-  updateEditPreview();
-}
-
-function updateEditPreview() {
-  const container = document.getElementById('edit-item-preview');
-  if (!container) return;
-  const name   = (document.getElementById('edit-name') && document.getElementById('edit-name').value || '').trim() || 'Item Name';
-  const cat    = (document.getElementById('edit-cat')  && document.getElementById('edit-cat').value)  || 'Weapon';
-  const cost   = parseInt((document.getElementById('edit-cost') && document.getElementById('edit-cost').value) || '800');
-  const active = (document.getElementById('edit-active') && document.getElementById('edit-active').value) || 'Regular';
-  const cl     = cat.toLowerCase();
-  const iconSrc = editIconDataUrl || getIcon(name);
-  const iconHtml = iconSrc
-    ? `<img class="banner-icon" src="${iconSrc}" alt="${name}">`
-    : `<div class="banner-icon-placeholder">✦</div>`;
-  const hasDescVal = active !== 'Regular';
-  const subBannerHtml = `<div class="card-sub-banner ${cl}${!hasDescVal?' sub-banner-blank':''}">
-    ${hasDescVal ? `<span class="sub-banner-type">${active}</span>` : ''}
-  </div>`;
-  let statsHtml = editStats.length === 0
-    ? '<div class="no-stats-note">No stats added yet</div>'
-    : editStats.map(s => {
-        const sign = s.val < 0 ? '' : '+';
-        const pct  = s.type.includes('%') ? '%' : '';
-        return `<div class="stat-row-item">
-          <div class="stat-row-top">
-            <span class="stat-name">${getStatNameHtml(s.type)}</span>
-            <span class="stat-val-display${s.val<0?' negative':''}">${sign}${s.val}${pct}</span>
-          </div>
-        </div>`;
-      }).join('');
-  const passiveDesc = (document.getElementById('edit-desc-passive') && document.getElementById('edit-desc-passive').value || '').trim();
-  const activeDesc  = (document.getElementById('edit-desc-active')  && document.getElementById('edit-desc-active').value  || '').trim();
-  const imbueDesc   = (document.getElementById('edit-desc-imbue')   && document.getElementById('edit-desc-imbue').value   || '').trim();
-  let descHtml = '';
-  if (passiveDesc) descHtml += `<div class="item-desc"><span class="desc-body">${passiveDesc}</span></div>`;
-  if (activeDesc)  descHtml += `<div class="item-desc"><span class="desc-body">${activeDesc}</span></div>`;
-  if (imbueDesc)   descHtml += `<div class="item-desc"><span class="desc-body">${imbueDesc}</span></div>`;
-  container.innerHTML = `<div class="item-card ${cl}" style="pointer-events:none;">
-    <div class="card-banner ${cl}">${iconHtml}<span class="banner-name">${name}</span></div>
-    ${subBannerHtml}
-    <div class="card-body"><div class="card-stats">${statsHtml}</div>${descHtml}</div>
-    <div class="card-footer ${cl}">
-      <span class="cost-display"><img class="souls-icon" src="${SOULS_ICON}" alt="souls"><span class="cost-num">${cost.toLocaleString()}</span></span>
-    </div>
-  </div>`;
 }
 
 function closeEdit() {
   document.getElementById('edit-overlay').style.display = 'none';
   editItemId = null;
-  editStats = [];
+  editStats  = [];
+  editConds  = [];
 }
 
+// ── Render the base stats list ──
 function renderEditStats() {
   const container = document.getElementById('edit-stats-list');
+  if (!container) return;
   if (!editStats.length) {
-    container.innerHTML = '<div style="font-size:13px;font-style:italic;color:var(--text3);padding:6px 0;">No stats — item has active/proc effects only.</div>';
+    container.innerHTML = '<div style="font-size:12px;font-style:italic;color:var(--text3);padding:4px 0;">No base stats — add one above.</div>';
     return;
   }
   container.innerHTML = editStats.map((s, i) => `
-    <div style="display:flex;align-items:center;gap:8px;padding:6px 10px;background:var(--bg-dark);border-radius:3px;margin-bottom:4px;border:1px solid var(--border-dim);">
+    <div data-stat-row data-stat-idx="${i}" style="display:flex;align-items:center;gap:8px;padding:5px 8px;background:var(--bg-dark);border-radius:3px;margin-bottom:3px;border:1px solid var(--border-dim);">
       <span style="flex:1;font-size:13px;color:var(--text2);">${s.type}</span>
-      <input type="number" value="${s.val}" step="0.5"
-        onchange="editStats[${i}].val = parseFloat(this.value) || 0"
-        style="width:80px;background:var(--bg-card);border:1px solid var(--border-mid);border-radius:3px;padding:4px 8px;color:var(--text);font-family:var(--font-body);font-size:14px;outline:none;text-align:right;">
-      <button onclick="editRemoveStat(${i})" style="background:none;border:none;cursor:pointer;color:var(--text3);font-size:15px;padding:2px 6px;opacity:.5;" onmouseover="this.style.color='#e06040';this.style.opacity='1'" onmouseout="this.style.color='var(--text3)';this.style.opacity='.5'">✕</button>
-    </div>`
-  ).join('');
+      <input type="number" data-stat-val value="${s.val}" step="0.5" oninput="syncEditStatVal(${i}, this.value)"
+        style="width:80px;background:var(--bg-card);border:1px solid var(--border-mid);border-radius:3px;padding:4px 8px;color:var(--text);font-family:var(--font-body);font-size:13px;outline:none;text-align:right;">
+      <button onclick="editRemoveStat(${i})" style="background:none;border:none;cursor:pointer;color:var(--text3);font-size:14px;padding:2px 5px;opacity:.5;" onmouseover="this.style.color='#e06040';this.style.opacity='1'" onmouseout="this.style.color='var(--text3)';this.style.opacity='.5'">✕</button>
+    </div>`).join('');
+}
+
+function syncEditStatVal(i, v) {
+  if (editStats[i]) editStats[i].val = parseFloat(v) || 0;
+  updateEditPreview();
 }
 
 function editRemoveStat(i) {
@@ -1514,33 +1730,141 @@ function editRemoveStat(i) {
 
 function editAddStat() {
   const type = document.getElementById('edit-new-stat-type').value;
-  const val = parseFloat(document.getElementById('edit-new-stat-val').value) || 0;
+  const val  = parseFloat(document.getElementById('edit-new-stat-val').value) || 0;
   if (val === 0) { notify('Enter a non-zero stat value'); return; }
   editStats.push({type, val});
   renderEditStats();
   updateEditPreview();
 }
 
+// ── Render the conditionals list ──
+function renderEditConds() {
+  const container = document.getElementById('edit-conditionals-list');
+  if (!container) return;
+  if (!editConds.length) {
+    container.innerHTML = '<div style="font-size:12px;font-style:italic;color:var(--text3);padding:2px 0;">No conditionals — add one below.</div>';
+    return;
+  }
+  container.innerHTML = editConds.map((c, i) => {
+    const sign = c.val >= 0 ? '+' : '';
+    const pct  = c.type.includes('%') ? '%' : '';
+    return `<div style="display:flex;align-items:center;gap:8px;padding:5px 8px;background:var(--bg-dark);border-radius:3px;border:1px solid rgba(255,179,198,0.2);">
+      <span style="flex:1;font-size:13px;color:#ffb3c6;">${sign}${c.val}${pct} ${c.type}</span>
+      <input type="number" value="${c.val}" step="0.5" oninput="syncEditCondVal(${i}, this.value)"
+        style="width:80px;background:var(--bg-card);border:1px solid var(--border-mid);border-radius:3px;padding:4px 8px;color:var(--text);font-family:var(--font-body);font-size:13px;outline:none;text-align:right;">
+      <button onclick="editRemoveCond(${i})" style="background:none;border:none;cursor:pointer;color:var(--text3);font-size:14px;padding:2px 5px;opacity:.5;" onmouseover="this.style.color='#e06040';this.style.opacity='1'" onmouseout="this.style.color='var(--text3)';this.style.opacity='.5'">✕</button>
+    </div>`;
+  }).join('');
+}
+
+function syncEditCondVal(i, v) {
+  if (editConds[i]) editConds[i].val = parseFloat(v) || 0;
+}
+
+function editRemoveCond(i) {
+  editConds.splice(i, 1);
+  renderEditConds();
+}
+
+function editAddConditional() {
+  const typeEl = document.getElementById('edit-cond-type');
+  const valEl  = document.getElementById('edit-cond-val');
+  if (!typeEl) return;
+  const type = typeEl.value.trim();
+  if (!type) { notify('Select a stat type'); return; }
+  const val = parseFloat(valEl && valEl.value) || 0;
+  if (val === 0) { notify('Enter a non-zero conditional value'); return; }
+  editConds.push({type, val});
+  renderEditConds();
+  typeEl.value = '';
+  if (valEl) valEl.value = '';
+}
+window.editAddConditional = editAddConditional;
+
+// ── Save ──
 function saveEdit() {
   if (!editItemId) return;
   const idx = items.findIndex(i => i.id === editItemId);
   if (idx < 0) return;
-  const newCost = parseInt(document.getElementById('edit-cost').value);
-  const editDesc = {};
-  const epv = document.getElementById('edit-desc-passive');
-  const eac = document.getElementById('edit-desc-active');
-  const eim = document.getElementById('edit-desc-imbue');
-  if (epv && epv.value.trim()) editDesc.passive = epv.value.trim();
-  if (eac && eac.value.trim()) editDesc.active  = eac.value.trim();
-  if (eim && eim.value.trim()) editDesc.imbue   = eim.value.trim();
-  const newName   = (document.getElementById('edit-name')   && document.getElementById('edit-name').value.trim())   || items[idx].name;
-  const newCat    = (document.getElementById('edit-cat')    && document.getElementById('edit-cat').value)              || items[idx].cat;
-  const newActive = (document.getElementById('edit-active') && document.getElementById('edit-active').value)           || items[idx].active;
-  items[idx] = {...items[idx], name: newName, cat: newCat, cost: newCost, active: newActive, stats: editStats.map(s => ({...s})), desc: editDesc, customIcon: editIconDataUrl || items[idx].customIcon};
+
+  const newName   = (document.getElementById('edit-name')   && document.getElementById('edit-name').value.trim())  || items[idx].name;
+  const newCat    = (document.getElementById('edit-cat')    && document.getElementById('edit-cat').value)           || items[idx].cat;
+  const newCost   = parseInt((document.getElementById('edit-cost') && document.getElementById('edit-cost').value))  || items[idx].cost;
+  const newActive = (document.getElementById('edit-active') && document.getElementById('edit-active').value)        || items[idx].active;
+
+  // Base stats — read directly from editStats array (kept in sync via oninput)
+  const newStats = editStats.filter(s => s.type && s.val !== 0);
+
+  // Conditional stats — stored in a separate `conditionals` array on the item
+  const newConds = editConds.filter(c => c.type && c.val !== 0);
+
+  // Description — single textarea, stored under the key matching the item type
+  const descRaw = (document.getElementById('edit-desc') && document.getElementById('edit-desc').value || '').trim();
+  const descKey = newActive === 'Active' ? 'active' : newActive === 'Imbue' ? 'imbue' : 'passive';
+  const newDesc = descRaw ? {[descKey]: descRaw} : {};
+
+  // Duration, cast range and cooldown — stored directly on the item
+  const durRaw   = document.getElementById('edit-duration')   && document.getElementById('edit-duration').value.trim();
+  const rangeRaw = document.getElementById('edit-cast-range') && document.getElementById('edit-cast-range').value.trim();
+  const cdRaw    = document.getElementById('edit-cooldown')   && document.getElementById('edit-cooldown').value.trim();
+  const newDuration  = durRaw   ? parseFloat(durRaw)   : null;
+  const newCastRange = rangeRaw ? parseFloat(rangeRaw) : null;
+  const newCooldown  = cdRaw    ? parseFloat(cdRaw)    : null;
+
+  items[idx] = {
+    ...items[idx],
+    name:         newName,
+    cat:          newCat,
+    cost:         newCost,
+    active:       newActive,
+    stats:        newStats,
+    conditionals: newConds,
+    desc:         newDesc,
+    duration:     newDuration,
+    castRange:    newCastRange,
+    cooldown:     newCooldown,
+    customIcon:   editIconDataUrl !== null ? editIconDataUrl : items[idx].customIcon,
+  };
   save();
   closeEdit();
   renderShop(activeTab !== 'add' && activeTab !== 'compare' && activeTab !== 'soulrate' ? activeTab : 'weapon');
   notify('Changes saved');
+}
+
+function updateEditPreview() {
+  const container = document.getElementById('edit-item-preview');
+  if (!container) return;
+  const name   = (document.getElementById('edit-name') && document.getElementById('edit-name').value || '').trim() || 'Item Name';
+  const cat    = (document.getElementById('edit-cat')  && document.getElementById('edit-cat').value)  || 'Weapon';
+  const cost   = parseInt((document.getElementById('edit-cost') && document.getElementById('edit-cost').value) || '800');
+  const active = (document.getElementById('edit-active') && document.getElementById('edit-active').value) || 'Regular';
+  const cl     = cat.toLowerCase();
+  const iconSrc  = editIconDataUrl || getIcon(name);
+  const iconHtml = iconSrc ? `<img class="banner-icon" src="${iconSrc}" alt="${name}">` : `<div class="banner-icon-placeholder">✦</div>`;
+  const hasDesc  = active !== 'Regular';
+  const subBannerHtml = `<div class="card-sub-banner ${cl}${!hasDesc?' sub-banner-blank':''}">
+    ${hasDesc ? `<span class="sub-banner-type">${active}</span>` : ''}
+  </div>`;
+  let statsHtml = editStats.length === 0
+    ? '<div class="no-stats-note">No stats added yet</div>'
+    : editStats.map(s => {
+        const sign = s.val < 0 ? '' : '+';
+        const pct  = s.type.includes('%') ? '%' : '';
+        return `<div class="stat-row-item"><div class="stat-row-top">
+          <span class="stat-name">${getStatNameHtml(s.type)}</span>
+          <span class="stat-val-display${s.val<0?' negative':''}">${sign}${s.val}${pct}</span>
+        </div></div>`;
+      }).join('');
+  const descRaw = (document.getElementById('edit-desc') && document.getElementById('edit-desc').value || '').trim();
+  const descHtml = descRaw ? `<div class="item-desc"><span class="desc-body">${descRaw}</span></div>` : '';
+  container.innerHTML = `<div class="item-card ${cl}" style="pointer-events:none;">
+    <div class="card-banner ${cl}">${iconHtml}<span class="banner-name">${name}</span></div>
+    ${subBannerHtml}
+    <div class="card-body"><div class="card-stats">${statsHtml}</div>${descHtml}</div>
+    <div class="card-footer ${cl}">
+      <span class="cost-display"><img class="souls-icon" src="${SOULS_ICON}" alt="souls"><span class="cost-num">${cost.toLocaleString()}</span></span>
+    </div>
+  </div>`;
 }
 
 function exportHTML() {
@@ -2249,14 +2573,14 @@ function renderDescText(text, activeType) {
     }
     
     if (statType || hasStat) {
-      // Highlight: green for positive stat lines, red-ish for negative/penalties
+      // Segments that start with +/-number AND match a stat keyword are already
+      // shown as Given by badge rows — remove them from the description text.
+      const isClearStat = /^[+\-]\d/.test(trimmed) && statType;
+      if (isClearStat || isConditional) return null;
+      // Stat-adjacent line that didn't fully match — show with colour
       const isNeg = /^-\d/.test(trimmed);
       const color = isNeg ? '#f87171' : '#4ecc6e';
-      const cond  = isConditional 
-        ? ` <span style="font-size:10px;color:var(--text3);font-style:italic;">(Conditional)</span>`
-        : '';
-      const cleanSeg = trimmed.replace(/\s*\(Conditional\)/gi, '');
-      return `<span style="color:${color};font-size:13px;">${iconHtml}${cleanSeg}</span>${cond}`;
+      return `<span style="color:${color};font-size:13px;">${iconHtml}${trimmed}</span>`;
     }
     
     // Non-stat sentence: render normally but style times/ranges dimly
@@ -2290,7 +2614,7 @@ function extractDescStats(desc) {
             extracted.push({
               type: sType,
               val: rawVal,
-              source: srcKey,
+              source: isConditional ? 'conditional' : srcKey,
               label: seg.trim().replace(/\s*\(Conditional\)/gi,'').trim()
             });
           }
@@ -2337,7 +2661,11 @@ function toggleDescStat(cbId, checked) {
     const cid = 'dscb_' + item.id + '_' + ds.type.replace(/[^a-z0-9]/gi,'_') + '_' + ds.source;
     return descStatChecked[cid] !== false;
   });
-  const effStats = [...item.stats, ...dse.map(d=>({type:d.type,val:d.val}))];
+  const cse = (item.conditionals||[]).filter(c => {
+    const cid = 'dscb_' + item.id + '_' + c.type.replace(/[^a-z0-9]/gi,'_') + '_conditional';
+    return descStatChecked[cid] !== false;
+  });
+  const effStats = [...item.stats, ...dse.map(d=>({type:d.type,val:d.val})), ...cse.map(c=>({type:c.type,val:c.val}))];
   const alloc    = getAllocatedCosts({cost:item.cost, stats:effStats});
 
   const actualTotalEl = document.getElementById('actual_total_' + item.id);
@@ -2986,7 +3314,14 @@ function getActualTotalValue(item) {
       return descStatChecked[cid] !== false;
     })
     .reduce((sum, ds) => sum + ds.val * ACTUAL_RATES_MAP[ds.type], 0);
-  return baseTotal + descTotal;
+  const condTotal = (item.conditionals||[])
+    .filter(c => c.val > 0 && ACTUAL_RATES_MAP[c.type] && !item.stats.some(s => s.type === c.type))
+    .filter(c => {
+      const cid = 'dscb_' + item.id + '_' + c.type.replace(/[^a-z0-9]/gi,'_') + '_conditional';
+      return descStatChecked[cid] !== false;
+    })
+    .reduce((sum, c) => sum + c.val * ACTUAL_RATES_MAP[c.type], 0);
+  return baseTotal + descTotal + condTotal;
 }
 
 function formatActualTotal(total) {
@@ -3044,8 +3379,6 @@ window.toggleActualRates=toggleActualRates;
 window.updateSVTabState=updateSVTabState;
 window.renderActualSoulRates=renderActualSoulRates;
 window.toggleDescStat=toggleDescStat;
-window.editPreviewIcon=editPreviewIcon;
-window.clearEditIcon=clearEditIcon;
 window.updateEditPreview=updateEditPreview;
 window.renderEggChart=renderEggChart;
 window.renderInvestCharts=renderInvestCharts;
@@ -3057,6 +3390,10 @@ window.openEdit=openEdit;
 window.closeEdit=closeEdit;
 window.editAddStat=editAddStat;
 window.editRemoveStat=editRemoveStat;
+window.syncEditStatVal=syncEditStatVal;
+window.editRemoveCond=editRemoveCond;
+window.syncEditCondVal=syncEditCondVal;
+window.renderEditConds=renderEditConds;
 window.saveEdit=saveEdit;
 window.exportHTML=exportHTML;
 
