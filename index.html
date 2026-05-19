@@ -2966,14 +2966,14 @@ const HERO_STATS = [
   {key:'dps',          label:'Bullets Per/Sec',       fmt:v=>v!=null?v.toFixed(2):'—', higher:true},
   {key:'falloffStart', label:'Falloff Start',         fmt:v=>v!=null?v.toFixed(0)+'m':'—', higher:true},
   {key:'falloffEnd',   label:'Falloff End',           fmt:v=>v!=null?v.toFixed(0)+'m':'—', higher:true},
-  {key:'rangeBonus',   label:'Weapon Range (+)',      fmt:v=>v!=null?v.toFixed(1):'—', higher:true},
+  {key:'rangeBonus',   label:'Weapon Range (+)',      desc:'Characters with fixed ranges', fmt:v=>v!=null?v.toFixed(1):'—', higher:true},
   {key:'pellets',      label:'Pellet #',              fmt:v=>v!=null?v.toFixed(0):'—', higher:true},
   {key:'ammo',         label:'Ammo #',                fmt:v=>v!=null?v.toFixed(0):'—', higher:true},
   // Damage
   {key:'dpsTotal',     label:'DPS',                   fmt:v=>v!=null?v.toFixed(1):'—', higher:true},
   {key:'dpsMag',       label:'DPS (Full Magazine)',   fmt:v=>v!=null?v.toFixed(1):'—', higher:true},
   {key:'critBonus',    label:'Crit Bonus',            fmt:v=>v!=null?(v*100).toFixed(0)+'%':'—', higher:true},
-  {key:'sp',           label:'Spirit Power (+)',      fmt:v=>v!=null?v.toFixed(1):'—', higher:true},
+  {key:'spPlus',       label:'Spirit Power (+)',      fmt:v=>v!=null?(v*100).toFixed(0)+'%':'—', higher:true},
   // Melee
   {key:'meleeLt',      label:'Light Melee',           fmt:v=>v!=null?v.toFixed(0):'—', higher:true},
   {key:'meleeHv',      label:'Heavy Melee',           fmt:v=>v!=null?v.toFixed(0):'—', higher:true},
@@ -2986,12 +2986,12 @@ const HERO_STATS = [
   // Movement
   {key:'speed',        label:'Move Speed',            fmt:v=>v!=null?v.toFixed(2)+'m/s':'—', higher:true},
   {key:'dashSpeed',    label:'Dash Speed',            fmt:v=>v!=null?v.toFixed(2):'—', higher:true},
-  {key:'moveBucket',   label:'Movement Bucket',       fmt:v=>v!=null?v.toFixed(0):'—', higher:true},
+  {key:'moveBucket',   label:'Movement Bucket',       fmt:v=>v!=null?String(v):'—', higher:null, text:true},
   {key:'staminaCD',    label:'Stamina Cooldown',      fmt:v=>v!=null?v.toFixed(2)+'s':'—', higher:false},
-  {key:'staminaSP',    label:'Stamina (SP)',          fmt:v=>v!=null?v.toFixed(0):'—', higher:true},
-  {key:'airAccel',     label:'Air Acceleration',      fmt:v=>v!=null?v.toFixed(1):'—', higher:true},
-  {key:'airControl',   label:'Air Control',           fmt:v=>v!=null?v.toFixed(1):'—', higher:true},
-  {key:'gravity',      label:'Gravity',               fmt:v=>v!=null?v.toFixed(2):'—', higher:false},
+  {key:'sp',           label:'Stamina Points',        fmt:v=>v!=null?v.toFixed(0):'—', higher:true},
+  {key:'airAccel',     label:'Air Acceleration',      fmt:v=>v!=null?v.toFixed(1):'Normal', higher:true},
+  {key:'airControl',   label:'Air Control',           fmt:v=>v!=null?v.toFixed(1):'Normal', higher:true},
+  {key:'gravity',      label:'Gravity',               fmt:v=>v!=null?v.toFixed(2):'Normal', higher:false},
   {key:'sprint',       label:'Sprint',                fmt:v=>v!=null?v.toFixed(2):'—', higher:true},
   // Resistance
   {key:'critResist',   label:'Crit Resist',           fmt:v=>v!=null?(v*100).toFixed(0)+'%':'—', higher:true},
@@ -3009,10 +3009,10 @@ const HERO_STATS = [
 const HERO_STAT_CATS = {
   gun:        ['class','accuracy','recoil','reload','burstFire','singleShot'],
   bullet:     ['bulletVel','bulletCycle','dmg','dmgPlus','dps','falloffStart','falloffEnd','rangeBonus','pellets','ammo'],
-  damage:     ['dpsTotal','dpsMag','critBonus','sp'],
+  damage:     ['dpsTotal','dpsMag','critBonus'],
   melee:      ['meleeLt','meleeHv','meleeBase'],
   health:     ['hpRegen','hp','maxHp','hpPlus'],
-  movement:   ['speed','dashSpeed','moveBucket','staminaCD','staminaSP','airAccel','airControl','gravity','sprint'],
+  movement:   ['speed','dashSpeed','moveBucket','staminaCD','sp','airAccel','airControl','gravity','sprint'],
   resistance: ['critResist','meleeResist'],
   other:      ['bonusStat','bonusStatVal','spPlus','spRatio','spPlus2','spRatio2'],
 };
@@ -3208,6 +3208,9 @@ function renderHeroes() {
       const iconHtml = iconPath
         ? `<img src="${iconPath}" alt="" style="width:13px;height:13px;object-fit:contain;vertical-align:middle;margin-right:4px;opacity:.85;">`
         : '';
+      const descHtml = stat.desc
+        ? `<div style="font-size:14px;color:var(--text3);font-style:italic;margin-top:2px;text-align:left;margin-left:17px;">${stat.desc}</div>`
+        : '';
 
       // Collect numeric values for bar scaling (skip text stats)
       const isText = stat.text || stat.higher === null;
@@ -3229,13 +3232,14 @@ function renderHeroes() {
       html += `<tr style="border-bottom:1px solid var(--border-dim);">
         <td style="padding:8px 10px;vertical-align:middle;">
           <span style="font-family:var(--font-arcas);color:${catColor};font-size:15px;">${iconHtml}${stat.label}</span>
+          ${descHtml}
         </td>`;
 
       heroes.forEach(h => {
         const raw = h[stat.key];
         const isBest = !isText && raw != null && raw === bestVal;
         const hCol = HERO_COLORS[h.name] || '#aaa';
-        const display = (raw == null) ? '—' : (() => { try { return stat.fmt(raw); } catch(e) { return '—'; } })();
+        const display = (() => { try { return stat.fmt(raw); } catch(e) { return '—'; } })();
 
         let barHtml = '';
         if (!isText && raw != null && typeof raw === 'number') {
