@@ -250,18 +250,7 @@ body{background:linear-gradient(rgba(0,0,0,0.15),rgba(0,0,0,0.15)),url("black_ba
 <body>
 <header class="header">
   <div class="logo-wrap"><img src="deadlock_curiosity_shop_logo_2.png" alt="Deadlock Curiosity Shop" style="height:62px;width:auto;object-fit:contain;"></div></div></div>
-  <div style="display:flex;align-items:center;gap:10px;"><div style="display:inline-flex;align-items:center;user-select:none;border-radius:3px;overflow:hidden;border:1px solid rgb(201 113 49 / 35%);height:29px;box-sizing:border-box;" id="actual-rates-switch">
-      <div id="actual-rates-btn-actual"
-        onclick="toggleActualRates(true);"
-        style="height:100%;display:flex;align-items:center;padding:0 14px;cursor:pointer;font-family:var(--font-arcas);font-size:14px;letter-spacing:.06em;transition:background .15s,color .15s;background:rgba(60,160,80,0.28);color:#4ecc6e;border-right:1px solid rgb(201 113 49 / 35%);">
-        Actual
-      </div>
-      <div id="actual-rates-btn-theoretical"
-        onclick="toggleActualRates(false);"
-        style="height:100%;display:flex;align-items:center;padding:0 14px;cursor:pointer;font-family:var(--font-arcas);font-size:14px;letter-spacing:.06em;transition:background .15s,color .15s;background:#000;color:#3d5a52;">
-        Theoretical
-      </div>
-    </div>
+  <div style="display:flex;align-items:center;gap:10px;">
     <button onclick="resetDefaults()" style="height:29px;padding:0 14px;border-radius:3px;border:1px solid rgb(201 113 49 / 35%);background:#000;color:var(--text2);font-family:var(--font-arcas);font-size:14px;letter-spacing:.06em;cursor:pointer;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--text2)'">Reset All</button><a href="https://x.com/morningcawfee" target="_blank" rel="noopener" class="patch-tag" style="text-decoration:none;cursor:pointer;" onclick="if(event.shiftKey){exportHTML();event.preventDefault();}">Created by Cawfee ☕</a></div>
 </header>
 <nav class="tab-nav">
@@ -343,6 +332,15 @@ body{background:linear-gradient(rgba(0,0,0,0.15),rgba(0,0,0,0.15)),url("black_ba
 <div class="compare-page">
     <div class="compare-title">Compare Heroes</div>
     <div class="compare-sub">Select up to 5 heroes and sort stats to compare side by side.</div>
+
+    <!-- Hero subtabs -->
+    <div class="subtab-row" style="margin-bottom:1.25rem;">
+      <button class="subtab-btn active" id="hero-tab-btn-compare" onclick="switchHeroTab('compare')">Compare Heroes</button>
+      <button class="subtab-btn" id="hero-tab-btn-csv" onclick="switchHeroTab('csv')">Import / Export CSV</button>
+    </div>
+
+    <!-- Compare Heroes panel -->
+    <div id="hero-subtab-compare">
     <div class="soulrate-note" style="margin-bottom:.75rem;">
       <strong style="color:var(--gold-light)">Explanation:</strong> Select heroes below to compare their base stats and see how they stack up. Bars are scaled relative to the selected heroes' best/worst value. Use the stat filter to narrow down categories. Art shown is by <a href="https://linktr.ee/ToastyGhostey" target="_blank" rel="noopener" style="color:var(--gold-light);text-decoration:underline;text-underline-offset:3px;">ToastyGhostey</a>
     </div>
@@ -368,6 +366,49 @@ body{background:linear-gradient(rgba(0,0,0,0.15),rgba(0,0,0,0.15)),url("black_ba
     </div>
 
     <div id="heroes-content"></div>
+    </div><!-- end hero-subtab-compare -->
+
+    <!-- Hero CSV subtab -->
+    <div id="hero-subtab-csv" style="display:none;">
+      <div class="add-title" style="font-size:20px;margin-bottom:4px;">Import / Export CSV</div>
+      <div class="add-sub" style="margin-bottom:1.25rem;">Export all hero stats to a CSV file, edit it in any spreadsheet app, then import it back to update everything at once.</div>
+
+      <!-- Column reference -->
+      <div class="form-panel" style="border-left-color:var(--gold);background:rgba(200,160,48,.04);margin-bottom:1.5rem;">
+        <div class="form-panel-title" style="color:var(--gold-light);">CSV Column Reference</div>
+        <p style="font-size:15px;color:var(--text2);margin:0 0 8px 0;">Each row is one hero. Every column maps directly to a stat key. Numeric fields use <code style="background:var(--bg-dark);padding:2px 5px;border-radius:2px;font-size:12px;">null</code> when the value is unknown or not applicable for that hero.</p>
+        <div style="overflow-x:auto;max-height:280px;">
+          <table style="width:100%;border-collapse:collapse;font-size:15px;">
+            <thead>
+              <tr style="border-bottom:1px solid var(--border-mid);">
+                <th style="text-align:left;padding:6px 12px;font-family:var(--font-arcas);font-size:13px;letter-spacing:.08em;color:var(--text3);white-space:nowrap;">Column</th>
+                <th style="text-align:left;padding:6px 12px;font-family:var(--font-arcas);font-size:13px;letter-spacing:.08em;color:var(--text3);">Description</th>
+              </tr>
+            </thead>
+            <tbody id="hero-csv-col-ref"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Export -->
+      <div class="form-panel" style="border-left-color:#4ecc6e;background:rgba(78,204,110,.04);">
+        <div class="form-panel-title" style="color:#4ecc6e;">Export</div>
+        <p style="font-size:15px;color:var(--text2);margin:0 0 12px 0;">Downloads all current hero stats as a <code style="background:var(--bg-dark);padding:2px 5px;border-radius:2px;font-size:13px;">heroes.csv</code> file.</p>
+        <button onclick="exportHeroCSV()" style="padding:10px 24px;border-radius:3px;border:1px solid #4ecc6e;background:rgba(78,204,110,.12);color:#4ecc6e;font-family:var(--font-arcas);font-size:13px;letter-spacing:.08em;cursor:pointer;">⬇ Export heroes.csv</button>
+      </div>
+
+      <!-- Import -->
+      <div class="form-panel" style="border-left-color:#7cc8ff;background:rgba(124,200,255,.04);">
+        <div class="form-panel-title" style="color:#7cc8ff;">Import</div>
+        <p style="font-size:15px;color:var(--text2);margin:0 0 8px 0;">Select a CSV file exported from this tool. <strong style="color:#f87171;">This will replace all current hero data.</strong></p>
+        <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+          <input type="file" id="hero-csv-import-file" accept=".csv,text/csv" style="flex:1;min-width:200px;background:var(--bg-dark);border:1px solid var(--border-dim);border-radius:3px;padding:8px 10px;color:var(--text2);font-family:var(--font-arcas);font-size:12px;cursor:pointer;outline:none;">
+          <button onclick="importHeroCSV()" style="padding:10px 24px;border-radius:3px;border:1px solid #7cc8ff;background:rgba(124,200,255,.12);color:#7cc8ff;font-family:var(--font-arcas);font-size:13px;letter-spacing:.08em;cursor:pointer;white-space:nowrap;">⬆ Import CSV</button>
+        </div>
+        <div id="hero-csv-import-status" style="margin-top:10px;font-size:13px;min-height:20px;"></div>
+      </div>
+    </div><!-- end hero-subtab-csv -->
+
   </div>
     </div>
     <div class="cv-panel" id="cv-panel-invest">
@@ -456,96 +497,158 @@ body{background:linear-gradient(rgba(0,0,0,0.15),rgba(0,0,0,0.15)),url("black_ba
   </div>
 </div>
 <div class="view" id="view-add"><div class="add-page">
+
+  <!-- Sub-tabs -->
+  <div class="subtab-row" style="margin-bottom:1.5rem;">
+    <button class="subtab-btn active" id="add-tab-btn-form" onclick="switchAddTab('form')">Add Item</button>
+    <button class="subtab-btn" id="add-tab-btn-csv" onclick="switchAddTab('csv')">Import / Export CSV</button>
+  </div>
+
+  <!-- Add Item form (existing) -->
+  <div id="add-subtab-form">
   <div class="add-title">Add New Item</div>
   <div class="add-sub">Add a new item in case you want to test stuff.</div>
-  <div class="form-panel gold" id="add-panel">
-    <div class="form-panel-title" id="add-panel-title">Item Details</div>
+
+  <!-- Item Details -->
+  <div style="background:rgba(0,0,0,.18);border:1px solid var(--border-dim);border-radius:4px;padding:10px 12px;margin-bottom:1rem;">
+    <div style="display:inline-block;background:var(--gold);color:#000;font-family:var(--font-arcas);font-size:16px;letter-spacing:.08em;padding:2px 24px;border-radius:3px;margin-bottom:10px;" id="add-panel-title">Item Details</div>
     <div class="form-grid">
-      <div class="form-field"><label>Item Name</label><input class="field-input" type="text" id="new-name" placeholder="e.g. Burst Fire" oninput="updatePanel();updatePreview()"></div>
-      <div class="form-field"><label>Category</label><select class="field-select" id="new-cat" onchange="updatePanel();updatePreview()"><option>Weapon</option><option>Vitality</option><option>Spirit</option></select></div>
-      <div class="form-field"><label>Cost (Souls)</label><select class="field-select" id="new-cost" onchange="updatePreview()" style="font-family:Georgia,'Times New Roman',serif;"><option value="800">⬟ 800 — T1</option><option value="1600">⬟ 1,600 — T2</option><option value="3200">⬟ 3,200 — T3</option><option value="6400">⬟ 6,400 — T4</option><option value="8000">⬟ 8,000 — T5</option></select></div>
-      <div class="form-field"><label>Type</label><select class="field-select" id="new-active" onchange="updatePreview()"><option value="Regular">No Type</option><option value="Passive">Passive</option><option value="Active">Active</option><option value="Imbue">Imbue</option></select></div>
+      <div class="form-field"><label>Item Name</label><input class="field-input" type="text" id="new-name" placeholder="e.g. Burst Fire" oninput="updatePanel();updatePreview()" style="font-size:14px;"></div>
+      <div class="form-field"><label>Category</label><select class="field-select" id="new-cat" onchange="updatePanel();updatePreview()" style="font-size:14px;"><option>Weapon</option><option>Vitality</option><option>Spirit</option></select></div>
+      <div class="form-field"><label>Cost (Souls)</label><select class="field-select" id="new-cost" onchange="updatePreview()" style="font-size:14px;font-family:Georgia,'Times New Roman',serif;"><option value="800">⬟ 800 — T1</option><option value="1600">⬟ 1,600 — T2</option><option value="3200">⬟ 3,200 — T3</option><option value="6400">⬟ 6,400 — T4</option><option value="8000">⬟ 8,000 — T5</option></select></div>
+      <div class="form-field"><label>Type</label><select class="field-select" id="new-active" onchange="updatePreview()" style="font-size:14px;"><option value="Regular">No Type</option><option value="Passive">Passive</option><option value="Active">Active</option><option value="Imbue">Imbue</option></select></div>
     </div>
   </div>
-  <div class="form-panel gold">
-    <div class="form-panel-title" id="add-icon-title">Item Icon</div>
+
+  <!-- Item Icon -->
+  <div style="background:rgba(0,0,0,.18);border:1px solid var(--border-dim);border-radius:4px;padding:10px 12px;margin-bottom:1rem;">
+    <div style="display:inline-block;background:var(--gold);color:#000;font-family:var(--font-arcas);font-size:16px;letter-spacing:.08em;padding:2px 24px;border-radius:3px;margin-bottom:10px;" id="add-icon-title">Item Icon</div>
     <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
       <input type="file" id="new-icon-file" accept="image/*" onchange="previewIcon(this)"
-        style="flex:1;min-width:200px;background:var(--bg-dark);border:1px solid var(--border-dim);border-radius:3px;padding:8px 10px;color:var(--text2);font-family:var(--font-arcas);font-size:12px;letter-spacing:.06em;cursor:pointer;outline:none;">
+        style="flex:1;min-width:200px;background:var(--bg-dark);border:1px solid var(--border-dim);border-radius:3px;padding:8px 10px;color:var(--text2);font-family:var(--font-arcas);font-size:13px;letter-spacing:.06em;cursor:pointer;outline:none;">
       <div style="display:flex;align-items:center;gap:10px;">
         <canvas id="new-icon-preview" width="50" height="50" style="display:none;border:1px solid var(--border-dim);border-radius:2px;"></canvas>
-        <button onclick="clearIcon()" id="clear-icon-btn" style="display:none;padding:5px 10px;background:none;border:1px solid var(--border-dim);border-radius:3px;color:var(--text3);font-family:var(--font-arcas);font-size:11px;cursor:pointer;">Clear Icon</button>
+        <button onclick="clearIcon()" id="clear-icon-btn" style="display:none;padding:5px 10px;background:none;border:1px solid var(--border-dim);border-radius:3px;color:var(--text3);font-family:var(--font-arcas);font-size:13px;cursor:pointer;">Clear Icon</button>
       </div>
     </div>
   </div>
-  <div class="form-panel gold">
-    <div class="form-panel-title">Statistics (permanent, non-conditional only)</div>
-    <div class="stat-add-grid">
-      <select class="field-select" id="stat-type-sel"><option>Bonus Health</option><option>Weapon Damage %</option><option>Fire Rate %</option><option>Max Ammo %</option><option>Max Ammo %</option><option>Bullet Velocity %</option><option>Bullet Lifesteal %</option><option>Bullet Resist %</option><option>Bullet Resist</option><option>Spirit Power</option><option>Spirit Power %</option><option>Spirit Resist %</option><option>Spirit Resist</option><option>Spirit Lifesteal %</option><option>Move Speed m/s</option><option>Sprint Speed m/s</option><option>Out of Combat Regen</option><option>Health Regen/s</option><option>Stamina</option><option>Stamina Recovery %</option><option>Melee Damage %</option><option>Melee Resist %</option><option>Cooldown Reduction %</option><option>Ability Range %</option><option>Ability Duration %</option><option>Debuff Resist %</option><option>Slow Resist %</option><option>Slide Distance %</option><option>Heavy Melee Distance %</option><option>Base Health %</option><option>Bonus Ability Charges</option><option>Other</option></select>
-      <input class="field-input" type="number" id="stat-val-in" value="10" step="0.5">
-      <button class="btn btn-ghost" onclick="pushStat()">+ Add</button>
+
+  <!-- Base Stats -->
+  <div style="background:rgba(0,0,0,.18);border:1px solid var(--border-dim);border-radius:4px;padding:10px 12px;margin-bottom:1rem;">
+    <div style="display:inline-block;background:var(--weapon);color:#000;font-family:var(--font-arcas);font-size:16px;letter-spacing:.08em;padding:2px 24px;border-radius:3px;margin-bottom:10px;">Base Stats</div>
+    <div class="stat-add-grid" style="margin-bottom:6px;">
+      <select class="field-select" id="stat-type-sel" style="font-size:14px;"><option>Bonus Health</option><option>Weapon Damage %</option><option>Fire Rate %</option><option>Max Ammo %</option><option>Bullet Velocity %</option><option>Bullet Lifesteal %</option><option>Bullet Resist %</option><option>Bullet Resist</option><option>Spirit Power</option><option>Spirit Power %</option><option>Spirit Resist %</option><option>Spirit Resist</option><option>Spirit Lifesteal %</option><option>Move Speed m/s</option><option>Sprint Speed m/s</option><option>Out of Combat Regen</option><option>Health Regen/s</option><option>Stamina</option><option>Stamina Recovery %</option><option>Melee Damage %</option><option>Melee Resist %</option><option>Cooldown Reduction %</option><option>Ability Range %</option><option>Ability Duration %</option><option>Debuff Resist %</option><option>Slow Resist %</option><option>Slide Distance %</option><option>Heavy Melee Distance %</option><option>Base Health %</option><option>Bonus Ability Charges</option><option>Other</option></select>
+      <input class="field-input" type="number" id="stat-val-in" value="10" step="0.5" style="font-size:14px;">
+      <button class="btn btn-ghost" onclick="pushStat()" style="font-size:14px;">+ Add</button>
     </div>
     <div id="pending-stats-list"></div>
-
   </div>
-  <div class="form-panel" style="border-left-color:#d06060;background:rgba(0,0,0,0.16);">
-    <div class="form-panel-title" style="color:#e08080;">Ability Description</div>
+
+  <!-- Ability Description -->
+  <div style="background:rgba(0,0,0,.18);border:1px solid rgba(124,200,255,0.2);border-radius:4px;padding:10px 12px;margin-bottom:1rem;">
+    <div style="display:inline-block;background:#7cc8ff;color:#000;font-family:var(--font-arcas);font-size:16px;letter-spacing:.08em;padding:2px 24px;border-radius:3px;margin-bottom:10px;">Ability Description</div>
     <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;">
       <div class="form-field">
-        <label>Passive Description</label>
-        <textarea class="field-input" id="new-desc-passive" rows="4" placeholder="Describe the passive effect..." oninput="updatePreview()" style="resize:vertical;font-family:var(--font-body);font-size:13px;line-height:1.5;"></textarea>
+        <label>Passive</label>
+        <textarea class="field-input" id="new-desc-passive" rows="4" placeholder="Describe the passive effect..." oninput="updatePreview()" style="resize:vertical;font-family:var(--font-body);font-size:14px;line-height:1.5;"></textarea>
       </div>
       <div class="form-field">
-        <label>Active Description</label>
-        <textarea class="field-input" id="new-desc-active" rows="4" placeholder="Describe the active ability..." oninput="updatePreview()" style="resize:vertical;font-family:var(--font-body);font-size:13px;line-height:1.5;"></textarea>
+        <label>Active</label>
+        <textarea class="field-input" id="new-desc-active" rows="4" placeholder="Describe the active ability..." oninput="updatePreview()" style="resize:vertical;font-family:var(--font-body);font-size:14px;line-height:1.5;"></textarea>
       </div>
       <div class="form-field">
-        <label>Imbue Description</label>
-        <textarea class="field-input" id="new-desc-imbue" rows="4" placeholder="Describe the imbue effect..." oninput="updatePreview()" style="resize:vertical;font-family:var(--font-body);font-size:13px;line-height:1.5;"></textarea>
+        <label>Imbue</label>
+        <textarea class="field-input" id="new-desc-imbue" rows="4" placeholder="Describe the imbue effect..." oninput="updatePreview()" style="resize:vertical;font-family:var(--font-body);font-size:14px;line-height:1.5;"></textarea>
       </div>
     </div>
   </div>
-  <div class="form-panel" style="border-left-color:var(--border-mid);background:var(--bg-mid);" id="preview-panel">
-    <div class="form-panel-title" style="color:var(--text2);">Item Preview</div>
+
+  <!-- Item Preview -->
+  <div style="background:rgba(0,0,0,.18);border:1px solid var(--border-dim);border-radius:4px;padding:10px 12px;margin-bottom:1rem;" id="preview-panel">
+    <div style="display:inline-block;background:var(--gold);color:#000;font-family:var(--font-arcas);font-size:16px;letter-spacing:.08em;padding:2px 24px;border-radius:3px;margin-bottom:10px;">Item Preview</div>
     <div style="display:flex;justify-content:center;padding:8px 0;">
       <div id="add-item-preview" style="width:280px;"></div>
     </div>
   </div>
 
-  <div class="form-panel" style="border-left-color:rgba(255,179,198,0.5);background:rgba(255,179,198,0.04);">
-    <div class="form-panel-title" style="color:#ffb3c6;">Given by Conditional</div>
-    <div id="add-conditionals-list" style="display:flex;flex-direction:column;gap:6px;margin-bottom:8px;"></div>
+  <!-- Conditional Stats -->
+  <div style="background:rgba(0,0,0,.18);border:1px solid rgba(255,179,198,0.2);border-radius:4px;padding:10px 12px;margin-bottom:1rem;">
+    <div style="display:inline-block;background:#ffb3c6;color:#000;font-family:var(--font-arcas);font-size:16px;letter-spacing:.08em;padding:2px 24px;border-radius:3px;margin-bottom:10px;">Conditional Stats</div>
+    <div id="add-conditionals-list" style="display:flex;flex-direction:column;gap:4px;margin-bottom:8px;"></div>
     <div style="display:grid;grid-template-columns:2fr 1fr auto;gap:8px;">
-      <select id="add-cond-type" style="background:var(--bg-dark);border:1px solid var(--border-dim);border-radius:3px;padding:7px 9px;color:var(--text);font-family:var(--font-body);font-size:13px;outline:none;">
-      <option value="">— Select stat type —</option>
-          <option>Bonus Health</option><option>Base Health %</option><option>Max Health %</option>
-          <option>Health Regen/s</option><option>Out of Combat Regen</option><option>Healing Effectiveness %</option>
-          <option>Bullet Lifesteal %</option><option>Spirit Lifesteal %</option>
-          <option>Weapon Damage %</option><option>Weapon Damage flat</option><option>Base Bullet Damage %</option>
-          <option>Fire Rate %</option><option>Max Ammo %</option><option>Reload Time</option>
-          <option>Bullet Velocity %</option><option>Fall Off Range %</option><option>Weapon Zoom %</option>
-          <option>Melee Damage %</option><option>Heavy Melee Distance %</option>
-          <option>Bullet Resist %</option><option>Bullet Resist flat</option><option>Bullet Resist % vs NPCs</option>
-          <option>Bullet Resist Shred %</option><option>Spirit Resist %</option><option>Spirit Resist flat</option>
-          <option>Melee Resist %</option><option>Debuff Resist %</option><option>Slow Resist %</option>
-          <option>Spirit Power</option><option>Spirit Power %</option><option>Imbued Spirit Power</option>
-          <option>Cooldown Reduction %</option><option>Ability Duration %</option><option>Ability Range %</option>
-          <option>Bonus Ability Charges</option><option>Faster Time Between Charges</option>
-          <option>Bonus Spirit Power for Charged Abilities</option>
-          <option>Move Speed m/s</option><option>Sprint Speed m/s</option><option>Slide Distance %</option>
-          <option>Air Jump/Dash Distance %</option><option>Stamina</option><option>Stamina Recovery %</option>
-          <option>Other</option>
+      <select id="add-cond-type" style="background:var(--bg-dark);border:1px solid var(--border-dim);border-radius:3px;padding:7px 9px;color:var(--text);font-family:var(--font-body);font-size:14px;outline:none;">
+        <option value="">— Select stat type —</option>
+        <option>Bonus Health</option><option>Base Health %</option><option>Max Health %</option>
+        <option>Health Regen/s</option><option>Out of Combat Regen</option><option>Healing Effectiveness %</option>
+        <option>Bullet Lifesteal %</option><option>Spirit Lifesteal %</option>
+        <option>Weapon Damage %</option><option>Weapon Damage flat</option><option>Base Bullet Damage %</option>
+        <option>Fire Rate %</option><option>Max Ammo %</option><option>Reload Time</option>
+        <option>Bullet Velocity %</option><option>Fall Off Range %</option><option>Weapon Zoom %</option>
+        <option>Melee Damage %</option><option>Heavy Melee Distance %</option>
+        <option>Bullet Resist %</option><option>Bullet Resist flat</option><option>Bullet Resist % vs NPCs</option>
+        <option>Bullet Resist Shred %</option><option>Spirit Resist %</option><option>Spirit Resist flat</option>
+        <option>Melee Resist %</option><option>Debuff Resist %</option><option>Slow Resist %</option>
+        <option>Spirit Power</option><option>Spirit Power %</option><option>Imbued Spirit Power</option>
+        <option>Cooldown Reduction %</option><option>Ability Duration %</option><option>Ability Range %</option>
+        <option>Bonus Ability Charges</option><option>Faster Time Between Charges</option>
+        <option>Bonus Spirit Power for Charged Abilities</option>
+        <option>Move Speed m/s</option><option>Sprint Speed m/s</option><option>Slide Distance %</option>
+        <option>Air Jump/Dash Distance %</option><option>Stamina</option><option>Stamina Recovery %</option>
+        <option>Other</option>
       </select>
-      <input type="number" id="add-cond-val" placeholder="value" step="0.5" style="background:var(--bg-dark);border:1px solid var(--border-dim);border-radius:3px;padding:7px 9px;color:var(--text);font-family:var(--font-body);font-size:13px;outline:none;">
-      <button onclick="addConditionalRow()" style="padding:7px 14px;border-radius:3px;border:1px solid rgba(255,179,198,0.4);background:rgba(255,179,198,0.08);color:#ffb3c6;font-family:var(--font-arcas);font-size:11px;cursor:pointer;white-space:nowrap;">+ Add</button>
+      <input type="number" id="add-cond-val" placeholder="value" step="0.5" style="background:var(--bg-dark);border:1px solid var(--border-dim);border-radius:3px;padding:7px 9px;color:var(--text);font-family:var(--font-body);font-size:14px;outline:none;">
+      <button onclick="addConditionalRow()" style="padding:7px 14px;border-radius:3px;border:1px solid rgba(255,179,198,0.4);background:rgba(255,179,198,0.08);color:#ffb3c6;font-family:var(--font-arcas);font-size:14px;cursor:pointer;white-space:nowrap;">+ Add</button>
     </div>
   </div>
 
   <div class="btn-row">
     <button class="btn btn-add-item" onclick="saveItem()">&#x2736; Add Item</button>
     <button class="btn btn-ghost" onclick="clearAdd()">Clear</button>
-    
   </div>
+  </div><!-- end add-subtab-form -->
+
+  <!-- Import / Export CSV subtab -->
+  <div id="add-subtab-csv" style="display:none;">
+    <div class="add-title">Import / Export CSV</div>
+    <div class="add-sub">Export all items to a CSV file, edit it in any spreadsheet app, then import it back to update everything at once.</div>
+
+    <!-- CSV Format reference -->
+    <div class="form-panel" style="border-left-color:var(--gold);background:rgba(200,160,48,.04);margin-bottom:1.5rem;">
+      <div class="form-panel-title" style="color:var(--gold-light);">CSV Column Reference</div>
+      <div style="overflow-x:auto;">
+        <table style="width:100%;border-collapse:collapse;font-size:15px;">
+          <thead>
+            <tr style="border-bottom:1px solid var(--border-mid);">
+              <th style="text-align:left;padding:6px 12px;font-family:var(--font-arcas);font-size:13px;letter-spacing:.08em;color:var(--text3);">Column</th>
+              <th style="text-align:left;padding:6px 12px;font-family:var(--font-arcas);font-size:13px;letter-spacing:.08em;color:var(--text3);">Description</th>
+              <th style="text-align:left;padding:6px 12px;font-family:var(--font-arcas);font-size:13px;letter-spacing:.08em;color:var(--text3);">Example</th>
+            </tr>
+          </thead>
+          <tbody id="csv-col-ref">
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Export -->
+    <div class="form-panel" style="border-left-color:#4ecc6e;background:rgba(78,204,110,.04);">
+      <div class="form-panel-title" style="color:#4ecc6e;">Export</div>
+      <p style="font-size:15px;color:var(--text2);margin:0 0 12px 0;">Downloads all current items as a <code style="background:var(--bg-dark);padding:2px 5px;border-radius:2px;font-size:13px;">items.csv</code> file. Open it in Excel, Google Sheets, or any text editor to make changes.</p>
+      <button onclick="exportCSV()" style="padding:10px 24px;border-radius:3px;border:1px solid #4ecc6e;background:rgba(78,204,110,.12);color:#4ecc6e;font-family:var(--font-arcas);font-size:13px;letter-spacing:.08em;cursor:pointer;">⬇ Export items.csv</button>
+    </div>
+
+    <!-- Import -->
+    <div class="form-panel" style="border-left-color:#7cc8ff;background:rgba(124,200,255,.04);">
+      <div class="form-panel-title" style="color:#7cc8ff;">Import</div>
+      <p style="font-size:13px;color:var(--text2);margin:0 0 8px 0;">Select a CSV file exported from this tool. <strong style="color:#f87171;">This will replace all current items.</strong> A backup will be offered first.</p>
+      <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+        <input type="file" id="csv-import-file" accept=".csv,text/csv" style="flex:1;min-width:200px;background:var(--bg-dark);border:1px solid var(--border-dim);border-radius:3px;padding:8px 10px;color:var(--text2);font-family:var(--font-arcas);font-size:12px;cursor:pointer;outline:none;">
+        <button onclick="importCSV()" style="padding:10px 24px;border-radius:3px;border:1px solid #7cc8ff;background:rgba(124,200,255,.12);color:#7cc8ff;font-family:var(--font-arcas);font-size:13px;letter-spacing:.08em;cursor:pointer;white-space:nowrap;">⬆ Import CSV</button>
+      </div>
+      <div id="csv-import-status" style="margin-top:10px;font-size:13px;min-height:20px;"></div>
+    </div>
+  </div><!-- end add-subtab-csv -->
+
 </div></div>
 <div class="view" id="view-soulrate">
   <div class="soulrate-page">
@@ -571,7 +674,25 @@ body{background:linear-gradient(rgba(0,0,0,0.15),rgba(0,0,0,0.15)),url("black_ba
         <strong style="color:var(--gold-light)">Explanation:</strong> For each stat type, every item that grants that stat contributes a data point: <em>souls &divide; stat value</em>. For example, Extra Spirit gives +10 Spirit Power for 800 souls, so 1 Spirit Power = 80 souls. Compress Cooldown gives +18% CDR for 1600 souls, so 1% CDR = 88.9 souls. The <strong>average</strong> across all items granting that stat is shown, along with the min/max range and source items.
       </div>
       <div class="soulrate-note" style="border-left-color:#e05a5a;margin-top:-1rem;">
-        <strong style="color:#e07070;">Disclaimer:</strong> My math might be off because I lowkey slapped my face against a calculator and a chatbot until things made sense :3
+        <strong style="color:#e07070;">Disclaimer:</strong> This section is purely for the hypothetical assumption that stat values are split up based on the item's total soul cost.<br>This calculation isn't very useful for itemization, but it's a practice in comparing our Actual Values with how costs are split and to get a picture in trying to assume Valve's intentions.
+      </div>
+      <!-- Actual / Theoretical toggle inside a disclaimer note -->
+      <div class="soulrate-note" style="border-left-color:rgba(201,113,49,0.5);margin-top:-1rem;">
+        <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
+          <div style="display:inline-flex;align-items:center;user-select:none;border-radius:3px;overflow:hidden;border:1px solid rgb(201 113 49 / 35%);height:29px;box-sizing:border-box;flex-shrink:0;" id="actual-rates-switch">
+            <div id="actual-rates-btn-actual"
+              onclick="toggleActualRates(true);"
+              style="height:100%;display:flex;align-items:center;padding:0 14px;cursor:pointer;font-family:var(--font-arcas);font-size:14px;letter-spacing:.06em;transition:background .15s,color .15s;background:rgba(60,160,80,0.28);color:#4ecc6e;border-right:1px solid rgb(201 113 49 / 35%);">
+              Actual
+            </div>
+            <div id="actual-rates-btn-theoretical"
+              onclick="toggleActualRates(false);"
+              style="height:100%;display:flex;align-items:center;padding:0 14px;cursor:pointer;font-family:var(--font-arcas);font-size:14px;letter-spacing:.06em;transition:background .15s,color .15s;background:#000;color:#3d5a52;">
+              Theoretical
+            </div>
+          </div>
+          <span style="font-size:13px;color:var(--text3);line-height:1.5;">Toggling this option will switch between computational modes for all items. Read the above before changing.</span>
+        </div>
       </div>
       <div style="margin-bottom:1rem;">
         <input type="text" id="soulrate-search" placeholder="Search by stat type or item name..."
@@ -607,9 +728,11 @@ body{background:linear-gradient(rgba(0,0,0,0.15),rgba(0,0,0,0.15)),url("black_ba
     <!-- FAQ subtabs -->
     <div style="display:flex;gap:0;margin-bottom:1.5rem;border-bottom:2px solid var(--border-mid);">
       <button id="faq-tab-faq" onclick="switchFaqTab('faq')"
-        style="font-family:var(--font-arcas);font-size:13px;letter-spacing:.08em;padding:7px 20px;border:none;border-bottom:3px solid #80c0ff;background:rgba(128,192,255,0.08);color:#80c0ff;cursor:pointer;margin-bottom:-2px;">FAQ</button>
+        style="font-family:var(--font-arcas);font-size:15px;letter-spacing:.08em;padding:8px 20px;border:none;border-bottom:3px solid #80c0ff;background:rgba(128,192,255,0.08);color:#80c0ff;cursor:pointer;margin-bottom:-2px;">FAQ</button>
       <button id="faq-tab-credits" onclick="switchFaqTab('credits')"
-        style="font-family:var(--font-arcas);font-size:13px;letter-spacing:.08em;padding:7px 20px;border:none;border-bottom:3px solid transparent;background:none;color:var(--text3);cursor:pointer;margin-bottom:-2px;">Credits</button>
+        style="font-family:var(--font-arcas);font-size:15px;letter-spacing:.08em;padding:8px 20px;border:none;border-bottom:3px solid transparent;background:none;color:var(--text3);cursor:pointer;margin-bottom:-2px;">Credits</button>
+      <button id="faq-tab-assumptions" onclick="switchFaqTab('assumptions')"
+        style="font-family:var(--font-arcas);font-size:15px;letter-spacing:.08em;padding:8px 20px;border:none;border-bottom:3px solid transparent;background:none;color:var(--text3);cursor:pointer;margin-bottom:-2px;">Assumptions</button>
     </div>
     <!-- FAQ panel -->
     <div id="faq-panel-faq" style="display:block;">
@@ -693,6 +816,14 @@ body{background:linear-gradient(rgba(0,0,0,0.15),rgba(0,0,0,0.15)),url("black_ba
       </div>
     </div><!-- end credits panel -->
 
+    <!-- Assumptions panel -->
+    <div id="faq-panel-assumptions" style="display:none;">
+      <div class="soulrate-note" style="margin-bottom:1rem;">
+        <div style="font-family:var(--font-arcas);font-size:14px;letter-spacing:.08em;color:#80c0ff;margin-bottom:8px;">Assumptions</div>
+        <p style="color:var(--text2);line-height:1.7;margin:0 0 8px 0;"><strong style="color:var(--text);">Explanation:</strong> This section is designed to give reference for any assumptions made in the calculation process. Things like assuming 100% uptime on passives, or assuming range for procs, etc.</p>
+      </div>
+    </div><!-- end assumptions panel -->
+
   </div>
 </div>
 
@@ -714,17 +845,17 @@ body{background:linear-gradient(rgba(0,0,0,0.15),rgba(0,0,0,0.15)),url("black_ba
       <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:8px;">
         <div>
           <label style="font-family:var(--font-arcas);font-size:14px;letter-spacing:.06em;text-transform:uppercase;color:var(--text3);display:block;margin-bottom:3px;">Name</label>
-          <input id="edit-name" type="text" style="width:100%;background:var(--bg-dark);border:1px solid var(--border-dim);border-radius:3px;padding:7px 9px;color:var(--text);font-family:var(--font-body);font-size:13px;outline:none;box-sizing:border-box;">
+          <input id="edit-name" type="text" style="width:100%;background:var(--bg-dark);border:1px solid var(--border-dim);border-radius:3px;padding:7px 9px;color:var(--text);font-family:var(--font-body);font-size:14px;outline:none;box-sizing:border-box;">
         </div>
         <div>
           <label style="font-family:var(--font-arcas);font-size:14px;letter-spacing:.06em;text-transform:uppercase;color:var(--text3);display:block;margin-bottom:3px;">Category</label>
-          <select id="edit-cat" onchange="updateEditPreview()" style="width:100%;background:var(--bg-dark);border:1px solid var(--border-dim);border-radius:3px;padding:7px 9px;color:var(--text);font-family:var(--font-body);font-size:13px;outline:none;">
+          <select id="edit-cat" onchange="updateEditPreview()" style="width:100%;background:var(--bg-dark);border:1px solid var(--border-dim);border-radius:3px;padding:7px 9px;color:var(--text);font-family:var(--font-body);font-size:14px;outline:none;">
             <option>Weapon</option><option>Vitality</option><option>Spirit</option>
           </select>
         </div>
         <div>
           <label style="font-family:var(--font-arcas);font-size:14px;letter-spacing:.06em;text-transform:uppercase;color:var(--text3);display:block;margin-bottom:3px;">Soul Cost</label>
-          <select id="edit-cost" onchange="updateEditPreview()" style="width:100%;background:var(--bg-dark);border:1px solid var(--border-dim);border-radius:3px;padding:7px 9px;color:var(--text);font-family:var(--font-arcas);font-size:13px;outline:none;">
+          <select id="edit-cost" onchange="updateEditPreview()" style="width:100%;background:var(--bg-dark);border:1px solid var(--border-dim);border-radius:3px;padding:7px 9px;color:var(--text);font-family:var(--font-arcas);font-size:14px;outline:none;">
             <option value="800">800 — T1</option>
             <option value="1600">1,600 — T2</option>
             <option value="3200">3,200 — T3</option>
@@ -734,7 +865,7 @@ body{background:linear-gradient(rgba(0,0,0,0.15),rgba(0,0,0,0.15)),url("black_ba
         </div>
         <div>
           <label style="font-family:var(--font-arcas);font-size:14px;letter-spacing:.06em;text-transform:uppercase;color:var(--text3);display:block;margin-bottom:3px;">Type</label>
-          <select id="edit-active" onchange="updateEditPreview()" style="width:100%;background:var(--bg-dark);border:1px solid var(--border-dim);border-radius:3px;padding:7px 9px;color:var(--text);font-family:var(--font-body);font-size:13px;outline:none;">
+          <select id="edit-active" onchange="updateEditPreview()" style="width:100%;background:var(--bg-dark);border:1px solid var(--border-dim);border-radius:3px;padding:7px 9px;color:var(--text);font-family:var(--font-body);font-size:14px;outline:none;">
             <option value="Regular">None</option>
             <option value="Passive">Passive</option>
             <option value="Active">Active</option>
@@ -744,11 +875,11 @@ body{background:linear-gradient(rgba(0,0,0,0.15),rgba(0,0,0,0.15)),url("black_ba
       </div>
 
       <!-- Row 2: Base Stats -->
-      <div>
-        <label style="font-family:var(--font-arcas);font-size:14px;letter-spacing:.06em;text-transform:uppercase;color:var(--text3);display:block;margin-bottom:6px;">Base Stats</label>
+      <div style="background:rgba(0,0,0,.18);border:1px solid var(--border-dim);border-radius:4px;padding:10px 12px;">
+        <div style="display:inline-block;background:var(--weapon);color:#000;font-family:var(--font-arcas);font-size:16px;letter-spacing:.08em;padding:2px 24px;border-radius:3px;margin-bottom:8px;">Base Stats</div>
         <!-- Add stat row -->
         <div style="display:grid;grid-template-columns:2fr 1fr auto;gap:6px;margin-bottom:6px;">
-          <select id="edit-new-stat-type" style="background:var(--bg-card);border:1px solid var(--border-dim);border-radius:3px;padding:6px 8px;color:var(--text);font-family:var(--font-body);font-size:13px;outline:none;">
+          <select id="edit-new-stat-type" style="background:var(--bg-card);border:1px solid var(--border-dim);border-radius:3px;padding:6px 8px;color:var(--text);font-family:var(--font-body);font-size:14px;outline:none;">
             <option>Bonus Health</option><option>Weapon Damage %</option><option>Fire Rate %</option><option>Max Ammo %</option>
             <option>Bullet Velocity %</option><option>Bullet Lifesteal %</option><option>Bullet Resist %</option><option>Bullet Resist flat</option>
             <option>Spirit Power</option><option>Spirit Power %</option><option>Spirit Resist %</option><option>Spirit Resist flat</option><option>Spirit Lifesteal %</option>
@@ -761,18 +892,18 @@ body{background:linear-gradient(rgba(0,0,0,0.15),rgba(0,0,0,0.15)),url("black_ba
             <option>Stamina Recovery %</option><option>Other</option>
           </select>
           <input type="number" id="edit-new-stat-val" value="10" step="0.5" style="background:var(--bg-card);border:1px solid var(--border-dim);border-radius:3px;padding:6px 8px;color:var(--text);font-family:var(--font-body);font-size:14px;outline:none;">
-          <button onclick="editAddStat()" style="padding:6px 14px;border-radius:3px;border:1px solid var(--border-dim);background:var(--bg-card);color:var(--text2);font-family:var(--font-arcas);font-size:11px;cursor:pointer;white-space:nowrap;">+ Add</button>
+          <button onclick="editAddStat()" style="padding:6px 14px;border-radius:3px;border:1px solid var(--border-dim);background:var(--bg-card);color:var(--text2);font-family:var(--font-arcas);font-size:14px;cursor:pointer;white-space:nowrap;">+ Add</button>
         </div>
         <!-- Current stats list -->
         <div id="edit-stats-list"></div>
       </div>
 
       <!-- Row 3: Conditionals -->
-      <div>
-        <label style="font-family:var(--font-arcas);font-size:14px;letter-spacing:.06em;text-transform:uppercase;color:var(--text3);display:block;margin-bottom:6px;">Conditional Stats <span style="color:var(--text3);font-size:13px;font-style:italic;text-transform:none;letter-spacing:0;">(given only under a condition)</span></label>
+      <div style="background:rgba(0,0,0,.18);border:1px solid rgba(255,179,198,0.2);border-radius:4px;padding:10px 12px;">
+        <div style="display:inline-block;background:#ffb3c6;color:#000;font-family:var(--font-arcas);font-size:16px;letter-spacing:.08em;padding:2px 24px;border-radius:3px;margin-bottom:8px;">Conditional Stats</div>
         <div id="edit-conditionals-list" style="display:flex;flex-direction:column;gap:4px;margin-bottom:6px;"></div>
         <div style="display:grid;grid-template-columns:2fr 1fr auto;gap:6px;">
-          <select id="edit-cond-type" style="background:var(--bg-card);border:1px solid var(--border-dim);border-radius:3px;padding:6px 8px;color:var(--text);font-family:var(--font-body);font-size:13px;outline:none;">
+          <select id="edit-cond-type" style="background:var(--bg-card);border:1px solid var(--border-dim);border-radius:3px;padding:6px 8px;color:var(--text);font-family:var(--font-body);font-size:14px;outline:none;">
             <option value="">— Select stat type —</option>
             <option>Bonus Health</option><option>Base Health %</option><option>Max Health %</option>
             <option>Health Regen/s</option><option>Out of Combat Regen</option><option>Healing Effectiveness %</option>
@@ -792,36 +923,36 @@ body{background:linear-gradient(rgba(0,0,0,0.15),rgba(0,0,0,0.15)),url("black_ba
             <option>Air Jump/Dash Distance %</option><option>Stamina</option><option>Stamina Recovery %</option>
             <option>Other</option>
           </select>
-          <input type="number" id="edit-cond-val" placeholder="value" step="0.5" style="background:var(--bg-card);border:1px solid var(--border-dim);border-radius:3px;padding:6px 8px;color:var(--text);font-family:var(--font-body);font-size:13px;outline:none;">
-          <button onclick="editAddConditional()" style="padding:6px 12px;border-radius:3px;border:1px solid rgba(255,179,198,0.4);background:rgba(255,179,198,0.08);color:#ffb3c6;font-family:var(--font-arcas);font-size:11px;cursor:pointer;white-space:nowrap;">+ Add</button>
+          <input type="number" id="edit-cond-val" placeholder="value" step="0.5" style="background:var(--bg-card);border:1px solid var(--border-dim);border-radius:3px;padding:6px 8px;color:var(--text);font-family:var(--font-body);font-size:14px;outline:none;">
+          <button onclick="editAddConditional()" style="padding:6px 12px;border-radius:3px;border:1px solid rgba(255,179,198,0.4);background:rgba(255,179,198,0.08);color:#ffb3c6;font-family:var(--font-arcas);font-size:14px;cursor:pointer;white-space:nowrap;">+ Add</button>
         </div>
       </div>
 
       <!-- Row 4: Ability Description (single textarea) -->
-      <div>
-        <label style="font-family:var(--font-arcas);font-size:14px;letter-spacing:.06em;text-transform:uppercase;color:var(--text3);display:block;margin-bottom:6px;">Ability Description</label>
+      <div style="background:rgba(0,0,0,.18);border:1px solid rgba(124,200,255,0.2);border-radius:4px;padding:10px 12px;">
+        <div style="display:inline-block;background:#7cc8ff;color:#000;font-family:var(--font-arcas);font-size:16px;letter-spacing:.08em;padding:2px 24px;border-radius:3px;margin-bottom:8px;">Ability Description</div>
         <textarea id="edit-desc" rows="4" oninput="updateEditPreview()" style="width:100%;background:var(--bg-dark);border:1px solid var(--border-dim);border-radius:3px;padding:7px 9px;color:var(--text);font-family:var(--font-body);font-size:13px;outline:none;resize:vertical;line-height:1.5;box-sizing:border-box;" placeholder="Describe the ability effect..."></textarea>
       </div>
 
       <!-- Row 5: Duration / Cast Range / Cooldown -->
       <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;">
-        <div>
-          <label style="font-family:var(--font-arcas);font-size:14px;letter-spacing:.06em;text-transform:uppercase;color:var(--text3);display:block;margin-bottom:3px;">
-            <img src="ability-duration-icon.png" alt="" style="width:13px;height:13px;object-fit:contain;opacity:.8;vertical-align:middle;margin-right:4px;">Duration (s)
-          </label>
-          <input id="edit-duration" type="number" min="0" step="0.5" placeholder="e.g. 4" style="width:100%;background:var(--bg-dark);border:1px solid var(--border-dim);border-radius:3px;padding:7px 9px;color:var(--text);font-family:var(--font-body);font-size:13px;outline:none;box-sizing:border-box;">
+        <div style="background:rgba(0,0,0,.18);border:1px solid rgba(217,189,74,0.25);border-radius:4px;padding:10px 12px;">
+          <div style="display:inline-block;background:#d9bd4a;color:#000;font-family:var(--font-arcas);font-size:16px;letter-spacing:.08em;padding:2px 24px;border-radius:3px;margin-bottom:8px;">
+            <img src="stat_icons/ability-duration-icon.png" alt="" style="width:13px;height:13px;object-fit:contain;vertical-align:middle;margin-right:4px;">Duration (s)
+          </div>
+          <input id="edit-duration" type="number" min="0" step="0.5" placeholder="e.g. 4" style="width:100%;background:var(--bg-dark);border:1px solid var(--border-dim);border-radius:3px;padding:7px 9px;color:var(--text);font-family:var(--font-body);font-size:14px;outline:none;box-sizing:border-box;">
         </div>
-        <div>
-          <label style="font-family:var(--font-arcas);font-size:14px;letter-spacing:.06em;text-transform:uppercase;color:var(--text3);display:block;margin-bottom:3px;">
-            <img src="ability-range-icon.png" alt="" style="width:13px;height:13px;object-fit:contain;opacity:.8;vertical-align:middle;margin-right:4px;">Cast Range (m)
-          </label>
-          <input id="edit-cast-range" type="number" min="0" step="0.5" placeholder="e.g. 20" style="width:100%;background:var(--bg-dark);border:1px solid var(--border-dim);border-radius:3px;padding:7px 9px;color:var(--text);font-family:var(--font-body);font-size:13px;outline:none;box-sizing:border-box;">
+        <div style="background:rgba(0,0,0,.18);border:1px solid rgba(79,136,232,0.25);border-radius:4px;padding:10px 12px;">
+          <div style="display:inline-block;background:#4f88e8;color:#000;font-family:var(--font-arcas);font-size:16px;letter-spacing:.08em;padding:2px 24px;border-radius:3px;margin-bottom:8px;">
+            <img src="stat_icons/ability-range-icon.png" alt="" style="width:13px;height:13px;object-fit:contain;vertical-align:middle;margin-right:4px;">Cast Range (m)
+          </div>
+          <input id="edit-cast-range" type="number" min="0" step="0.5" placeholder="e.g. 20" style="width:100%;background:var(--bg-dark);border:1px solid var(--border-dim);border-radius:3px;padding:7px 9px;color:var(--text);font-family:var(--font-body);font-size:14px;outline:none;box-sizing:border-box;">
         </div>
-        <div>
-          <label style="font-family:var(--font-arcas);font-size:14px;letter-spacing:.06em;text-transform:uppercase;color:var(--text3);display:block;margin-bottom:3px;">
-            <img src="stat_icons/ability-cooldown-icon.png" alt="" style="width:13px;height:13px;object-fit:contain;opacity:.8;vertical-align:middle;margin-right:4px;">Cooldown (s)
-          </label>
-          <input id="edit-cooldown" type="number" min="0" step="0.5" placeholder="e.g. 16" style="width:100%;background:var(--bg-dark);border:1px solid var(--border-dim);border-radius:3px;padding:7px 9px;color:var(--text);font-family:var(--font-body);font-size:13px;outline:none;box-sizing:border-box;">
+        <div style="background:rgba(0,0,0,.18);border:1px solid rgba(232,232,232,0.15);border-radius:4px;padding:10px 12px;">
+          <div style="display:inline-block;background:#e8e8e8;color:#000;font-family:var(--font-arcas);font-size:16px;letter-spacing:.08em;padding:2px 24px;border-radius:3px;margin-bottom:8px;">
+            <img src="stat_icons/ability-cooldown-icon.png" alt="" style="width:13px;height:13px;object-fit:contain;vertical-align:middle;margin-right:4px;">Cooldown (s)
+          </div>
+          <input id="edit-cooldown" type="number" min="0" step="0.5" placeholder="e.g. 16" style="width:100%;background:var(--bg-dark);border:1px solid var(--border-dim);border-radius:3px;padding:7px 9px;color:var(--text);font-family:var(--font-body);font-size:14px;outline:none;box-sizing:border-box;">
         </div>
       </div>
 
@@ -1015,8 +1146,7 @@ function switchTab(t) {
   else if (t === 'faq') {}
   else if (t === 'soulrate') {
     updateSVTabState();
-    if (useActualRates) renderActualSoulRates();
-    else renderSoulRate();
+    switchSVTab(activeSVTab || 'actual');
   }
   else if (t !== 'add') renderShop(t);
 }
@@ -1142,8 +1272,8 @@ function renderShop(cat) {
         // Bottom sub-banner — only shown if duration or cast range present
         const showBottomBanner = durSec || castRange;
         const bottomBannerHtml = showBottomBanner ? `<div class="card-bottom-banner">
-          <span class="card-bottom-banner-dur">${durSec ? `<img src="ability-duration-icon.png" alt="" style="width:15px;height:15px;object-fit:contain;opacity:.85;">${durSec}s Duration` : ''}</span>
-          <span class="card-bottom-banner-range">${castRange ? `${castRange}<img src="ability-range-icon.png" alt="" style="width:15px;height:15px;object-fit:contain;opacity:.85;">` : ''}</span>
+          <span class="card-bottom-banner-dur">${durSec ? `<img src="stat_icons/ability-duration-icon.png" alt="" style="width:15px;height:15px;object-fit:contain;opacity:.85;">${durSec}s Duration` : ''}</span>
+          <span class="card-bottom-banner-range">${castRange ? `${castRange}<img src="stat_icons/ability-range-icon.png" alt="" style="width:15px;height:15px;object-fit:contain;opacity:.85;">` : ''}</span>
         </div>` : '';
 
         // description block — use cleanedDesc (cast range stripped)
@@ -1425,9 +1555,14 @@ function pushStat() { setTimeout(updatePreview, 0);
   pendingStats.push({type,val}); renderPending();
 }
 function renderPending() {
-  document.getElementById('pending-stats-list').innerHTML=pendingStats.map((s,i)=>
-    `<div class="stat-row-form"><span class="stat-row-type">${s.type}</span><span class="stat-row-val">${s.val>0?'+':''}${s.val}${s.type.includes('%')?'%':''}</span><button class="card-del" onclick="removePending(${i})">✕</button></div>`
-  ).join('');
+  document.getElementById('pending-stats-list').innerHTML = pendingStats.map((s, i) => {
+    const col = getStatCatColor(s.type);
+    return `<div class="stat-row-form" style="background:${col};border-radius:3px;padding:8px 18px;margin-bottom:3px;">
+      <span class="stat-row-type" style="color:#000;font-family:var(--font-arcas);font-size:14px;letter-spacing:.04em;">${s.type}</span>
+      <span class="stat-row-val" style="color:#000;font-size:14px;">${s.val>0?'+':''}${s.val}${s.type.includes('%')?'%':''}</span>
+      <button onclick="removePending(${i})" style="background:#000;border:none;cursor:pointer;color:#fff;font-size:13px;padding:4px 7px;border-radius:4px;line-height:1;" onmouseover="this.style.background='#c00'" onmouseout="this.style.background='#000'">✕</button>
+    </div>`;
+  }).join('');
 }
 function removePending(i){pendingStats.splice(i,1);renderPending();}
 function addConditionalRow() {
@@ -1701,6 +1836,13 @@ function closeEdit() {
 }
 
 // ── Render the base stats list ──
+function getStatCatColor(type) {
+  for (const [cat, stats] of Object.entries(ACTUAL_CATS)) {
+    if (stats.includes(type)) return ACTUAL_CAT_COLORS[cat];
+  }
+  return '#888'; // fallback grey for unmapped stats
+}
+
 function renderEditStats() {
   const container = document.getElementById('edit-stats-list');
   if (!container) return;
@@ -1708,13 +1850,15 @@ function renderEditStats() {
     container.innerHTML = '<div style="font-size:12px;font-style:italic;color:var(--text3);padding:4px 0;">No base stats — add one above.</div>';
     return;
   }
-  container.innerHTML = editStats.map((s, i) => `
-    <div data-stat-row data-stat-idx="${i}" style="display:flex;align-items:center;gap:8px;padding:5px 8px;background:var(--bg-dark);border-radius:3px;margin-bottom:3px;border:1px solid var(--border-dim);">
-      <span style="flex:1;font-size:13px;color:var(--text2);">${s.type}</span>
+  container.innerHTML = editStats.map((s, i) => {
+    const col = getStatCatColor(s.type);
+    return `<div data-stat-row data-stat-idx="${i}" style="display:flex;align-items:center;gap:8px;padding:8px 18px;background:${col};border-radius:3px;margin-bottom:3px;">
+      <span style="flex:1;font-size:14px;color:#000;font-family:var(--font-arcas);letter-spacing:.04em;">${s.type}</span>
       <input type="number" data-stat-val value="${s.val}" step="0.5" oninput="syncEditStatVal(${i}, this.value)"
-        style="width:80px;background:var(--bg-card);border:1px solid var(--border-mid);border-radius:3px;padding:4px 8px;color:var(--text);font-family:var(--font-body);font-size:13px;outline:none;text-align:right;">
-      <button onclick="editRemoveStat(${i})" style="background:none;border:none;cursor:pointer;color:var(--text3);font-size:14px;padding:2px 5px;opacity:.5;" onmouseover="this.style.color='#e06040';this.style.opacity='1'" onmouseout="this.style.color='var(--text3)';this.style.opacity='.5'">✕</button>
-    </div>`).join('');
+        style="width:80px;background:rgba(0,0,0,.2);border:1px solid rgba(0,0,0,.3);border-radius:3px;padding:4px 8px;color:#000;font-family:var(--font-body);font-size:14px;outline:none;text-align:right;">
+      <button onclick="editRemoveStat(${i})" style="background:#000;border:none;cursor:pointer;color:#fff;font-size:13px;padding:4px 7px;border-radius:4px;line-height:1;" onmouseover="this.style.background='#c00'" onmouseout="this.style.background='#000'">✕</button>
+    </div>`;
+  }).join('');
 }
 
 function syncEditStatVal(i, v) {
@@ -3143,8 +3287,8 @@ const ACTUAL_SOUL_RATES = [
   // Resistances
   {stat:'Melee Resist %',          spu:null,          unit:'N/A'},
   {stat:'Spirit Resist %',         spu:77.03703704,   unit:'1%'},
-  {stat:'Debuff Resist %',         spu:null,          unit:'N/A'},
-  {stat:'Slow Resist %',           spu:null,          unit:'N/A'},
+  {stat:'Debuff Resist %',         spu:64,            unit:'1%'},
+  {stat:'Slow Resist %',           spu:32,            unit:'1%'},
   {stat:'Bullet Resist %',         spu:71.11111111,   unit:'1%'},
   {stat:'Bullet Resist Shred %',   spu:78.34920635,   unit:'1%'},
   {stat:'Bullet Resist % vs NPCs', spu:null,          unit:'N/A'},
@@ -3197,27 +3341,35 @@ const ACTUAL_CAT_COLORS = {
   Stamina:'#a673e8',
 };
 
+let activeSVTab = 'actual';
+
 function switchSVTab(tab) {
-  toggleActualRates(tab === 'actual');
+  activeSVTab = tab;
+  const thPanel = document.getElementById('sv-panel-theoretical');
+  const acPanel = document.getElementById('sv-panel-actual');
+  const thBtn   = document.getElementById('sv-tab-theoretical');
+  const acBtn   = document.getElementById('sv-tab-actual');
+  if (!thPanel || !acPanel) return;
+  const showTheoretical = tab === 'theoretical';
+  thPanel.style.display = showTheoretical ? '' : 'none';
+  acPanel.style.display = showTheoretical ? 'none' : '';
+  if (thBtn) thBtn.classList.toggle('active', showTheoretical);
+  if (acBtn) acBtn.classList.toggle('active', !showTheoretical);
+  if (showTheoretical) renderSoulRate();
+  else renderActualSoulRates();
 }
 
 function updateSVTabState() {
-  const thPanel  = document.getElementById('sv-panel-theoretical');
-  const acPanel  = document.getElementById('sv-panel-actual');
-  const thBtn    = document.getElementById('sv-tab-theoretical');
-  const acBtn    = document.getElementById('sv-tab-actual');
-  if (!thPanel || !acPanel) return;
-  if (!useActualRates) {
-    thPanel.style.display = '';
-    acPanel.style.display = 'none';
-    if (thBtn) thBtn.classList.add('active');
-    if (acBtn) acBtn.classList.remove('active');
-  } else {
-    thPanel.style.display = 'none';
-    acPanel.style.display = '';
-    if (acBtn) acBtn.classList.add('active');
-    if (thBtn) thBtn.classList.remove('active');
-    renderActualSoulRates();
+  // Only updates the toggle button visual state — does not change which subtab is active
+  const actualBtn = document.getElementById('actual-rates-btn-actual');
+  const theorBtn  = document.getElementById('actual-rates-btn-theoretical');
+  if (actualBtn) {
+    actualBtn.style.background = useActualRates ? 'rgba(60,160,80,0.28)' : '#000';
+    actualBtn.style.color      = useActualRates ? '#4ecc6e' : '#3d5a52';
+  }
+  if (theorBtn) {
+    theorBtn.style.background = useActualRates ? '#000' : 'rgba(60,160,80,0.28)';
+    theorBtn.style.color      = useActualRates ? '#3d5a52' : '#4ecc6e';
   }
 }
 
@@ -3281,7 +3433,6 @@ function renderActualSoulRates() {
   container.innerHTML = html || `<div style="padding:1.5rem;text-align:center;font-style:italic;color:var(--text3);">No matching stat types.</div>`;
 }
 function toggleActualRates(checked) {
-  // Animate toggle track and thumb
   const btnT = document.getElementById('actual-rates-btn-theoretical');
   const btnA = document.getElementById('actual-rates-btn-actual');
   if (btnT) {
@@ -3293,15 +3444,10 @@ function toggleActualRates(checked) {
     btnA.style.color       = checked ? '#4ecc6e' : '#3d5a52';
   }
   useActualRates = checked;
-  updateSVTabState();
-  // Update toggle label
-  // labels handled by btn styles above
-  // Re-render active shop tab (rebuilds all spvLine/costLine)
+  // Re-render active shop tab only — never touch Soul Values
   ['weapon','vitality','spirit'].forEach(cat => {
     if (activeTab === cat) renderShop(cat);
   });
-  // Also re-render soulrate if visible
-  if (activeTab === 'soulrate') renderSoulRate();
 }
 
 function getActualTotalValue(item) {
@@ -3356,7 +3502,7 @@ function toggleSourceItems(show) {
   });
 }
 function switchFaqTab(tab) {
-  ['faq','credits'].forEach(t => {
+  ['faq','credits','assumptions'].forEach(t => {
     const panel = document.getElementById('faq-panel-' + t);
     const btn   = document.getElementById('faq-tab-' + t);
     if (panel) panel.style.display = t === tab ? 'block' : 'none';
@@ -3625,6 +3771,354 @@ document.addEventListener('DOMContentLoaded',function(){
     startParallax();
   }
 })();
+
+// ── HERO TAB SWITCHER ──
+function switchHeroTab(tab) {
+  document.getElementById('hero-subtab-compare').style.display = tab === 'compare' ? '' : 'none';
+  document.getElementById('hero-subtab-csv').style.display     = tab === 'csv'     ? '' : 'none';
+  document.getElementById('hero-tab-btn-compare').classList.toggle('active', tab === 'compare');
+  document.getElementById('hero-tab-btn-csv').classList.toggle('active',     tab === 'csv');
+  if (tab === 'csv') renderHeroCsvColRef();
+}
+
+// All keys present on a hero object, in order
+const HERO_CSV_KEYS = [
+  'name','class',
+  'dmg','dmgPlus','dps','pellets','burstFire','singleShot','dpsTotal',
+  'ammo','reload','dpsMag','bulletVel','bulletCycle',
+  'falloffStart','falloffEnd','accuracy','recoil',
+  'meleeLt','meleeHv','meleeBase','meleeResist',
+  'hp','hpPlus','maxHp','hpRegen',
+  'speed','sprint','staminaCD','sp','dashSpeed','moveBucket',
+  'spPlus','spPlus2','spRatio','spRatio2','staminaSP',
+  'bonusStat','bonusStatVal','critResist','critBonus','rangeBonus',
+  'airAccel','airControl','gravity',
+];
+
+const HERO_CSV_DESCS = {
+  name:'Hero name (must be unique)',
+  class:'Gun class description (text)',
+  dmg:'Base bullet damage per pellet',dmgPlus:'Bullet damage per level',
+  dps:'Bullets per second (fire rate)',pellets:'Pellets per shot',
+  burstFire:'Shots per burst',singleShot:'Effective single-shot damage',
+  dpsTotal:'Total DPS (all pellets)',ammo:'Magazine size',
+  reload:'Reload time in seconds',dpsMag:'Damage per magazine',
+  bulletVel:'Bullet velocity (m/s)',bulletCycle:'Time between bullets (s)',
+  falloffStart:'Falloff start range (m)',falloffEnd:'Falloff end range (m)',
+  accuracy:'Accuracy rating',recoil:'Recoil rating',
+  meleeLt:'Light melee damage',meleeHv:'Heavy melee damage',
+  meleeBase:'Melee base multiplier',meleeResist:'Melee resistance',
+  hp:'Base health',hpPlus:'Health per level',maxHp:'Max health at max level',
+  hpRegen:'Base health regen/s',speed:'Move speed (m/s)',sprint:'Sprint bonus (m/s)',
+  staminaCD:'Stamina cooldown (s)',sp:'Stamina points',dashSpeed:'Dash speed (m/s)',
+  moveBucket:'Movement bucket classification',
+  spPlus:'Spirit power scaling',spPlus2:'Secondary spirit power scaling',
+  spRatio:'Spirit ratio',spRatio2:'Secondary spirit ratio',staminaSP:'Stamina spirit power',
+  bonusStat:'Bonus stat label (text)',bonusStatVal:'Bonus stat value',
+  critResist:'Crit resistance',critBonus:'Crit damage bonus',rangeBonus:'Range bonus',
+  airAccel:'Air acceleration',airControl:'Air control',gravity:'Gravity modifier',
+};
+
+function renderHeroCsvColRef() {
+  const tbody = document.getElementById('hero-csv-col-ref');
+  if (!tbody || tbody.dataset.rendered) return;
+  tbody.dataset.rendered = '1';
+  tbody.innerHTML = HERO_CSV_KEYS.map(k => `<tr style="border-bottom:1px solid var(--border-dim);">
+    <td style="padding:5px 12px;font-family:var(--font-arcas);font-size:13px;color:var(--gold-light);white-space:nowrap;">${k}</td>
+    <td style="padding:5px 12px;font-size:15px;color:var(--text2);">${HERO_CSV_DESCS[k] || ''}</td>
+  </tr>`).join('');
+}
+
+// ── EXPORT HEROES CSV ──
+function exportHeroCSV() {
+  const header = HERO_CSV_KEYS.join(',');
+  const rows = [header];
+  HERO_DATA.forEach(h => {
+    rows.push(HERO_CSV_KEYS.map(k => csvEscape(h[k] != null ? h[k] : '')).join(','));
+  });
+  const blob = new Blob([rows.join('\n')], {type:'text/csv'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'heroes.csv';
+  a.click();
+  URL.revokeObjectURL(a.href);
+  notify('Exported ' + HERO_DATA.length + ' heroes');
+}
+
+// ── IMPORT HEROES CSV ──
+function importHeroCSV() {
+  const fileInput = document.getElementById('hero-csv-import-file');
+  const statusEl  = document.getElementById('hero-csv-import-status');
+  if (!fileInput || !fileInput.files.length) {
+    statusEl.textContent = 'Please select a CSV file first.';
+    statusEl.style.color = '#f87171';
+    return;
+  }
+  const file = fileInput.files[0];
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      const text  = e.target.result;
+      const lines = text.split(/\r?\n/).filter(l => l.trim());
+      if (lines.length < 2) throw new Error('File appears empty or has no data rows.');
+
+      const headerFields = csvParseLine(lines[0]).map(h => h.trim().toLowerCase());
+      const colIdx = {};
+      HERO_CSV_KEYS.forEach(k => { colIdx[k] = headerFields.indexOf(k.toLowerCase()); });
+
+      const missing = HERO_CSV_KEYS.filter(k => colIdx[k] === -1 && k === 'name');
+      if (missing.length) throw new Error('Missing required column: name');
+
+      const parsed = [];
+      for (let i = 1; i < lines.length; i++) {
+        const f   = csvParseLine(lines[i]);
+        const get = k => colIdx[k] !== -1 ? (f[colIdx[k]] || '').trim() : null;
+        const toNum = v => (v === '' || v === null) ? null : parseFloat(v);
+        const hero = {};
+        HERO_CSV_KEYS.forEach(k => {
+          const raw = get(k);
+          // name, class, bonusStat, moveBucket are string fields; everything else is numeric
+          if (['name','class','bonusStat','moveBucket'].includes(k)) {
+            hero[k] = raw || null;
+          } else {
+            hero[k] = toNum(raw);
+          }
+        });
+        if (!hero.name) continue;
+        parsed.push(hero);
+      }
+
+      if (!parsed.length) throw new Error('No valid heroes found in file.');
+
+      const doImport = confirm(
+        `Import ${parsed.length} heroes?\n\nThis will replace all current hero data (${HERO_DATA.length} heroes).\nClick OK to continue or Cancel to abort.`
+      );
+      if (!doImport) { statusEl.textContent = 'Import cancelled.'; statusEl.style.color = 'var(--text3)'; return; }
+
+      // Replace HERO_DATA in-place (it's a const array, so splice/push)
+      HERO_DATA.splice(0, HERO_DATA.length, ...parsed);
+      heroCompareSelected = [];
+      renderHeroes();
+      statusEl.innerHTML = `<span style="color:#4ecc6e;">✓ Imported ${parsed.length} heroes successfully.</span>`;
+      fileInput.value = '';
+      notify('Imported ' + parsed.length + ' heroes');
+    } catch(err) {
+      statusEl.innerHTML = `<span style="color:#f87171;">✗ Error: ${err.message}</span>`;
+    }
+  };
+  reader.readAsText(file);
+}
+
+function switchAddTab(tab) {
+  document.getElementById('add-subtab-form').style.display = tab === 'form' ? '' : 'none';
+  document.getElementById('add-subtab-csv').style.display  = tab === 'csv'  ? '' : 'none';
+  document.getElementById('add-tab-btn-form').classList.toggle('active', tab === 'form');
+  document.getElementById('add-tab-btn-csv').classList.toggle('active',  tab === 'csv');
+  if (tab === 'csv') renderCsvColRef();
+}
+window.switchHeroTab = switchHeroTab;
+window.exportHeroCSV = exportHeroCSV;
+window.importHeroCSV = importHeroCSV;
+
+
+// ── CSV COLUMN REFERENCE ──
+const CSV_COLS = [
+  {col:'id',          desc:'Unique numeric ID. Keep existing IDs unchanged; use a new unique number for new items.',  ex:'1'},
+  {col:'name',        desc:'Item display name.',                                                                       ex:'Burst Fire'},
+  {col:'cat',         desc:'Category: Weapon, Vitality, or Spirit.',                                                  ex:'Weapon'},
+  {col:'cost',        desc:'Soul cost: 800, 1600, 3200, 6400, or 8000.',                                              ex:'3200'},
+  {col:'active',      desc:'Item type: Regular, Passive, Active, or Imbue.',                                          ex:'Passive'},
+  {col:'duration',    desc:'Active duration in seconds. Leave blank if none.',                                         ex:'4.5'},
+  {col:'castRange',   desc:'Cast range in metres. Leave blank if none.',                                               ex:'20'},
+  {col:'cooldown',    desc:'Cooldown in seconds. Leave blank if none.',                                                ex:'16'},
+  {col:'desc',        desc:'Ability description text. Leave blank if none.',                                           ex:'Briefly gain Fire Rate...'},
+  {col:'stat_type',   desc:'Base stat type. Repeat the item row for each additional stat.',                            ex:'Fire Rate %'},
+  {col:'stat_val',    desc:'Base stat value (numeric).',                                                               ex:'35'},
+  {col:'cond_type',   desc:'Conditional stat type. Repeat the item row for each additional conditional.',              ex:'Move Speed m/s'},
+  {col:'cond_val',    desc:'Conditional stat value (numeric).',                                                        ex:'1.25'},
+];
+
+function renderCsvColRef() {
+  const tbody = document.getElementById('csv-col-ref');
+  if (!tbody) return;
+  tbody.innerHTML = CSV_COLS.map(r => `<tr style="border-bottom:1px solid var(--border-dim);">
+    <td style="padding:6px 12px;font-family:var(--font-arcas);font-size:13px;color:var(--gold-light);white-space:nowrap;">${r.col}</td>
+    <td style="padding:6px 12px;font-size:15px;color:var(--text2);">${r.desc}</td>
+    <td style="padding:6px 12px;font-size:15px;color:var(--text3);font-style:italic;">${r.ex}</td>
+  </tr>`).join('');
+}
+
+// ── CSV HELPERS ──
+function csvEscape(val) {
+  if (val == null) return '';
+  const s = String(val);
+  if (s.includes(',') || s.includes('"') || s.includes('\n')) return '"' + s.replace(/"/g, '""') + '"';
+  return s;
+}
+
+function csvParseLine(line) {
+  const fields = [];
+  let cur = '', inQ = false;
+  for (let i = 0; i < line.length; i++) {
+    const c = line[i];
+    if (inQ) {
+      if (c === '"' && line[i+1] === '"') { cur += '"'; i++; }
+      else if (c === '"') inQ = false;
+      else cur += c;
+    } else {
+      if (c === '"') inQ = true;
+      else if (c === ',') { fields.push(cur); cur = ''; }
+      else cur += c;
+    }
+  }
+  fields.push(cur);
+  return fields;
+}
+
+// ── EXPORT CSV ──
+function exportCSV() {
+  const header = CSV_COLS.map(c => c.col).join(',');
+  const rows = [header];
+
+  items.forEach(item => {
+    const desc = item.desc || {};
+    const descText = [desc.passive, desc.active, desc.imbue].filter(Boolean).join(' | ');
+    const stats = (item.stats || []);
+    const conds = (item.conditionals || []);
+    const maxRows = Math.max(1, stats.length, conds.length);
+
+    for (let i = 0; i < maxRows; i++) {
+      const s = stats[i] || {type:'', val:''};
+      const c = conds[i] || {type:'', val:''};
+      const row = [
+        i === 0 ? item.id         : '',
+        i === 0 ? item.name       : '',
+        i === 0 ? item.cat        : '',
+        i === 0 ? item.cost       : '',
+        i === 0 ? (item.active || 'Regular') : '',
+        i === 0 ? (item.duration  != null ? item.duration  : '') : '',
+        i === 0 ? (item.castRange != null ? item.castRange : '') : '',
+        i === 0 ? (item.cooldown  != null ? item.cooldown  : '') : '',
+        i === 0 ? descText        : '',
+        s.type, s.val,
+        c.type, c.val,
+      ].map(csvEscape).join(',');
+      rows.push(row);
+    }
+  });
+
+  const blob = new Blob([rows.join('\n')], {type:'text/csv'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'items.csv';
+  a.click();
+  URL.revokeObjectURL(a.href);
+  notify('Exported ' + items.length + ' items');
+}
+
+// ── IMPORT CSV ──
+function importCSV() {
+  const fileInput = document.getElementById('csv-import-file');
+  const statusEl  = document.getElementById('csv-import-status');
+  if (!fileInput || !fileInput.files.length) {
+    statusEl.textContent = 'Please select a CSV file first.';
+    statusEl.style.color = '#f87171';
+    return;
+  }
+  const file = fileInput.files[0];
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      const text = e.target.result;
+      const lines = text.split(/\r?\n/).filter(l => l.trim());
+      if (lines.length < 2) throw new Error('File appears empty or has no data rows.');
+
+      const headerFields = csvParseLine(lines[0]).map(h => h.trim().toLowerCase());
+      const colIdx = {};
+      CSV_COLS.forEach(c => { colIdx[c.col] = headerFields.indexOf(c.col.toLowerCase()); });
+
+      const missing = CSV_COLS.map(c => c.col).filter(c => colIdx[c] === -1);
+      if (missing.length) throw new Error('Missing columns: ' + missing.join(', '));
+
+      // Parse into a map keyed by id, accumulating stat/cond rows
+      const map = new Map();
+      for (let i = 1; i < lines.length; i++) {
+        const f = csvParseLine(lines[i]);
+        const get = col => (f[colIdx[col]] !== undefined ? f[colIdx[col]] : '').trim();
+
+        const idRaw = get('id');
+        if (idRaw) {
+          // New item header row
+          const id = parseInt(idRaw);
+          if (isNaN(id)) throw new Error(`Row ${i+1}: invalid id "${idRaw}"`);
+          const cost = parseInt(get('cost'));
+          if (isNaN(cost)) throw new Error(`Row ${i+1}: invalid cost "${get('cost')}"`);
+          const descRaw = get('desc');
+          const active  = get('active') || 'Regular';
+          const descKey = active === 'Active' ? 'active' : active === 'Imbue' ? 'imbue' : 'passive';
+          const desc    = descRaw ? {[descKey]: descRaw} : {};
+          const durRaw  = get('duration');
+          const rngRaw  = get('castRange');
+          const cdRaw   = get('cooldown');
+          map.set(id, {
+            id,
+            name:      get('name'),
+            cat:       get('cat'),
+            cost,
+            active,
+            duration:  durRaw  ? parseFloat(durRaw)  : null,
+            castRange: rngRaw  ? parseFloat(rngRaw)  : null,
+            cooldown:  cdRaw   ? parseFloat(cdRaw)   : null,
+            desc,
+            stats:        [],
+            conditionals: [],
+          });
+        }
+
+        // Append stat/cond on any row (including the header row)
+        const lastId = idRaw ? parseInt(idRaw) : [...map.keys()].pop();
+        const item = map.get(lastId);
+        if (!item) continue;
+
+        const st = get('stat_type'), sv = get('stat_val');
+        if (st && sv !== '') {
+          const v = parseFloat(sv);
+          if (!isNaN(v)) item.stats.push({type: st, val: v});
+        }
+        const ct = get('cond_type'), cv = get('cond_val');
+        if (ct && cv !== '') {
+          const v = parseFloat(cv);
+          if (!isNaN(v)) item.conditionals.push({type: ct, val: v});
+        }
+      }
+
+      const parsed = [...map.values()];
+      if (!parsed.length) throw new Error('No valid items found in file.');
+
+      // Validate basics
+      parsed.forEach((item, i) => {
+        if (!item.name) throw new Error(`Item at row group ${i+1} has no name.`);
+        if (!['Weapon','Vitality','Spirit'].includes(item.cat)) throw new Error(`Item "${item.name}": invalid cat "${item.cat}"`);
+      });
+
+      // Offer backup before replacing
+      const doBackup = confirm(
+        `Import ${parsed.length} items?\n\nClick OK to continue (your current ${items.length} items will be replaced).\nClick Cancel to abort.`
+      );
+      if (!doBackup) { statusEl.textContent = 'Import cancelled.'; statusEl.style.color = 'var(--text3)'; return; }
+
+      items = parsed;
+      save();
+      renderShop(activeTab !== 'add' && activeTab !== 'compare' && activeTab !== 'soulrate' ? activeTab : 'weapon');
+      statusEl.innerHTML = `<span style="color:#4ecc6e;">✓ Imported ${parsed.length} items successfully.</span>`;
+      fileInput.value = '';
+      notify('Imported ' + parsed.length + ' items');
+    } catch(err) {
+      statusEl.innerHTML = `<span style="color:#f87171;">✗ Error: ${err.message}</span>`;
+    }
+  };
+  reader.readAsText(file);
+}
 </script>
 </body>
 </html>
